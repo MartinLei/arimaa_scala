@@ -1,2 +1,23 @@
+# Intellij
+.idea
+
+# sbt
+.cache
+.cache-main
+.cache-tests
+.history
+.lib/
+lib/*.tmp
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/target/
+project/plugins/project/
+logs/
+project/.sbtserver
+.sbtserver/
+
 *.class
 *.log
