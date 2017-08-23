@@ -1,4 +1,4 @@
-package model.imp
+package model
 
 import com.typesafe.scalalogging.Logger
 import model.TileNameEnum.TileNameEnum

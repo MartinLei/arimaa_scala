@@ -1,6 +1,5 @@
 import com.typesafe.scalalogging.Logger
-import model.TileNameEnum
-import model.imp.Tile
+import model.{Tile, TileNameEnum}
 import util.Position
 
 object Arimaa {
