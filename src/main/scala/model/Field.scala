@@ -14,8 +14,6 @@ class Field() {
       playerGold.getTiles
     case PlayerNameEnum.SILVER =>
       playerSilver.getTiles
-    case _ =>
-      null
   }
 
   private def getInitGoldPlayer: Player = {

@@ -76,4 +76,15 @@ class PlayerSpec extends FlatSpec with Matchers {
     player1 should not be player2
   }
 
+  it should "not be equal if its not a player object" in {
+    val tiles1: mutable.Set[Tile] = new mutable.HashSet()
+    val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))
+    val t11: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 3))
+    tiles1 add t1
+    tiles1 add t11
+    val player1: Player = new Player(PlayerNameEnum.GOLD, tiles1)
+
+    player1 should not be 1
+  }
+
 }

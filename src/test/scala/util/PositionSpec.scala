@@ -29,7 +29,11 @@ class PositionSpec extends FlatSpec with Matchers {
     val pos1: Position = new Position(1, 2)
     val pos2: Position = new Position(1, 3)
 
-    pos1 should not be (pos2)
+    pos1 should not be pos2
   }
 
+  it should "not be equal object, if its not a position object" in {
+    val pos1: Position = new Position(1, 2)
+    pos1 should not be 1
+  }
 }
