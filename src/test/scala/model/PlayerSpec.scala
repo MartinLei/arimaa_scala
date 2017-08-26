@@ -98,7 +98,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     player1 should not be 1
   }
 
-  it should "move a tile to a new position" in {
+  "move" should "move a tile to a new position" in {
     val tiles: mutable.Set[Tile] = new mutable.HashSet()
     val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
     tiles add t1
@@ -114,4 +114,19 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.getTileName(new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
 
+  it should "be false if on given position is no tile" in {
+    val tiles: mutable.Set[Tile] = new mutable.HashSet()
+    val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
+    tiles add t1
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    player.getTileName(new Position(1, 2)) should be(TileNameEnum.NONE)
+
+    player.moveTile(new Position(1, 2), new Position(1, 1)) should be(false)
+
+    player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    player.getTileName(new Position(1, 2)) should be(TileNameEnum.NONE)
+  }
 }
