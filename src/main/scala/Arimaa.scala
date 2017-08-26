@@ -1,15 +1,17 @@
+import aview.tui.Tui
 import com.typesafe.scalalogging.Logger
-import model.FieldTrait
-import model.impl.Field
+import controller.ControllerTrait
+import controller.impl.Controller
+
+import scala.io.StdIn.readLine
 
 object Arimaa {
   val logger = Logger("Arimaa")
+  val controller: ControllerTrait = new Controller()
+  val tui: Tui = new Tui(controller)
 
   def main(ags: Array[String]): Unit = {
-    val field: FieldTrait = new Field()
-
     logger.info("Arimaa")
-    logger.info(field.toString)
-
+    while (tui.processInputLine(readLine)) {}
   }
 }
