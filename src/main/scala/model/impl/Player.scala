@@ -19,12 +19,23 @@ class Player(val name: PlayerNameEnum, newTiles: mutable.Set[Tile]) {
     tiles.exists { t: Tile => t.pos.equals(pos) }
   }
 
-  def getTile(pos: Position): TileNameEnum = {
+  def getTileName(pos: Position): TileNameEnum = {
     val tileFiltered: mutable.Set[Tile] = tiles.filter { t: Tile => t.pos.equals(pos) }
     if (tileFiltered.isEmpty)
       return TileNameEnum.NONE
 
     tileFiltered.head.name
+  }
+
+  def moveTile(posOld: Position, posNew: Position): Boolean = {
+    val tileFiltered: Option[Tile] = tiles.find { t: Tile => t.pos.equals(posOld) }
+
+    if (tileFiltered.isEmpty)
+      return false
+
+    val tile: Tile = tileFiltered.get
+    tiles remove tile
+    tiles add new Tile(tile.name, posNew)
   }
 
   override def equals(that: scala.Any): Boolean = that match {

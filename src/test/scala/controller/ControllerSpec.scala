@@ -1,7 +1,9 @@
 package controller
 
 import controller.impl.Controller
+import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
+import util.Position
 
 class ControllerSpec extends FlatSpec with Matchers {
 
@@ -22,5 +24,23 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller: ControllerTrait = new Controller()
 
     controller.getFieldAsString should be(field99of9String)
+  }
+
+  it should "give the tile on the given position" in {
+    val controller: ControllerTrait = new Controller()
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+  }
+  "move" should "move a tile on his given Position" in {
+    val controller: ControllerTrait = new Controller()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should be(true)
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
   }
 }

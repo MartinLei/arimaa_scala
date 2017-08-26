@@ -12,6 +12,9 @@ object Arimaa {
 
   def main(ags: Array[String]): Unit = {
     logger.info("Arimaa")
+    logger.info(controller.getFieldAsString)
+    logger.info("Input::")
+
     while (tui.processInputLine(readLine)) {}
   }
 }

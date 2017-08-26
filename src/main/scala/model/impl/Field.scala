@@ -118,7 +118,12 @@ class Field() extends FieldTrait {
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = player match {
-    case PlayerNameEnum.GOLD => playerGold.getTile(pos)
-    case PlayerNameEnum.SILVER => playerSilver.getTile(pos)
+    case PlayerNameEnum.GOLD => playerGold.getTileName(pos)
+    case PlayerNameEnum.SILVER => playerSilver.getTileName(pos)
+  }
+
+  override def moveTile(player: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = player match {
+    case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)
+    case PlayerNameEnum.SILVER => playerSilver.moveTile(posFrom, posTo)
   }
 }

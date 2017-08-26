@@ -81,4 +81,16 @@ class FieldSpec extends FlatSpec with Matchers {
     val field: FieldTrait = new Field
     field.toString should be(field99of9String)
   }
+
+  it should "move a player tile with given position" in {
+    val field: FieldTrait = new Field()
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+    field.moveTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(true)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+  }
 }
