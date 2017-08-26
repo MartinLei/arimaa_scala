@@ -1,15 +1,14 @@
 import com.typesafe.scalalogging.Logger
-import model.{Tile, TileNameEnum}
-import util.Position
+import model.Field
 
 object Arimaa {
   val logger = Logger("Arimaa")
 
   def main(ags: Array[String]): Unit = {
-    logger.info("Arimaa")
+    val field: Field = new Field()
 
-    val tile1pos: Position = new Position(1, 2)
-    val tile1: Tile = new Tile(TileNameEnum.CAMEL, tile1pos)
-    logger.info(tile1.toString)
+    logger.info("Arimaa")
+    logger.info(field.toString)
+
   }
 }

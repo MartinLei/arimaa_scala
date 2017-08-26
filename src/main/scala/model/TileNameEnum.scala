@@ -8,4 +8,6 @@ object TileNameEnum extends Enumeration {
   val HORSE: Value = Value("H")
   val CAMEL: Value = Value("L")
   val ELEPHANT: Value = Value("E")
+
+  val NONE: Value = Value("NONE")
 }

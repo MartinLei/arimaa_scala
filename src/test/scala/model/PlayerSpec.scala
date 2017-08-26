@@ -46,6 +46,16 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.isATileThere(new Position(1, 3)) should be(false)
   }
 
+  it should "give the name of the tile on a position if there is one" in {
+    val tiles: mutable.Set[Tile] = new mutable.HashSet()
+    val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
+    tiles add t1
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.getTile(new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    player.getTile(new Position(1, 2)) should be(TileNameEnum.NONE)
+  }
+
   it should "be equal if the tile name and position is the same" in {
     val tiles1: mutable.Set[Tile] = new mutable.HashSet()
     val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))

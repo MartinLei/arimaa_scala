@@ -11,6 +11,8 @@ class TileNameEnumSpec extends FlatSpec with Matchers {
     TileNameEnum.HORSE.toString should be("H")
     TileNameEnum.CAMEL.toString should be("L")
     TileNameEnum.ELEPHANT.toString should be("E")
+
+    TileNameEnum.NONE.toString should be("NONE")
   }
 
 }
