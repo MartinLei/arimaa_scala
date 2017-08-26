@@ -1,5 +1,6 @@
 package model
 
+import model.impl.{Tile, TileNameEnum}
 import org.scalatest._
 import util.Position
 

@@ -1,4 +1,4 @@
-package model
+package model.impl
 
 object TileNameEnum extends Enumeration {
   type TileNameEnum = Value

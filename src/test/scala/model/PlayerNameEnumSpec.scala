@@ -1,5 +1,6 @@
 package model
 
+import model.impl.PlayerNameEnum
 import org.scalatest._
 
 class PlayerNameEnumSpec extends FlatSpec with Matchers {

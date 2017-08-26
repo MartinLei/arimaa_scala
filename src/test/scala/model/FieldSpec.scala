@@ -1,5 +1,6 @@
 package model
 
+import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 
@@ -26,7 +27,7 @@ class FieldSpec extends FlatSpec with Matchers {
     tilesGoldShouldBe add new Tile(TileNameEnum.HORSE, new Position(7, 2))
     tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 2))
 
-    val field: Field = new Field()
+    val field: FieldTrait = new Field()
     val tilesGold: mutable.Set[Tile] = field.getPlayerTiles(PlayerNameEnum.GOLD)
 
     tilesGold shouldEqual tilesGoldShouldBe
@@ -51,13 +52,13 @@ class FieldSpec extends FlatSpec with Matchers {
     tilesSilverShouldBe add new Tile(TileNameEnum.HORSE, new Position(7, 7))
     tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 7))
 
-    val field: Field = new Field()
+    val field: FieldTrait = new Field()
     val tilesSilver: mutable.Set[Tile] = field.getPlayerTiles(PlayerNameEnum.SILVER)
     tilesSilver shouldEqual tilesSilverShouldBe
   }
 
   it should "give to a player and position the tale, if their is one" in {
-    val field: Field = new Field()
+    val field: FieldTrait = new Field()
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
@@ -77,7 +78,7 @@ class FieldSpec extends FlatSpec with Matchers {
       "  +-----------------+\n" +
       "    a b c d e f g h  \n"
 
-    val field: Field = new Field
+    val field: FieldTrait = new Field
     field.toString should be(field99of9String)
   }
 }

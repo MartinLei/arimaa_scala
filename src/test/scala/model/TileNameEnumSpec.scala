@@ -1,5 +1,6 @@
 package model
 
+import model.impl.TileNameEnum
 import org.scalatest._
 
 class TileNameEnumSpec extends FlatSpec with Matchers {

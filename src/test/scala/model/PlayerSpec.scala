@@ -1,5 +1,6 @@
 package model
 
+import model.impl.{Player, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 

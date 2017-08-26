@@ -1,7 +1,7 @@
-package model
+package model.impl
 
 import com.typesafe.scalalogging.Logger
-import model.TileNameEnum.TileNameEnum
+import model.impl.TileNameEnum.TileNameEnum
 import util.Position
 
 class Tile(val name: TileNameEnum, val pos: Position) {

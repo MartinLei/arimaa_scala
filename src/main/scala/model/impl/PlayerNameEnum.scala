@@ -1,4 +1,4 @@
-package model
+package model.impl
 
 object PlayerNameEnum extends Enumeration {
   type PlayerNameEnum = Value

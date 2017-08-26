@@ -1,21 +1,15 @@
-package model
+package model.impl
 
-import model.PlayerNameEnum.PlayerNameEnum
-import model.TileNameEnum.TileNameEnum
+import model.FieldTrait
+import model.impl.PlayerNameEnum.PlayerNameEnum
+import model.impl.TileNameEnum.TileNameEnum
 import util.Position
 
 import scala.collection.mutable
 
-class Field() {
+class Field() extends FieldTrait {
   private val playerGold: Player = getInitGoldPlayer
   private val playerSilver: Player = getInitSilverPlayer
-
-  def getPlayerTiles(player: PlayerNameEnum): mutable.Set[Tile] = player match {
-    case PlayerNameEnum.GOLD =>
-      playerGold.getTiles
-    case PlayerNameEnum.SILVER =>
-      playerSilver.getTiles
-  }
 
   private def getInitGoldPlayer: Player = {
     val tilesGold: mutable.Set[Tile] = new mutable.HashSet()
@@ -61,6 +55,14 @@ class Field() {
     new Player(PlayerNameEnum.SILVER, tilesSilver)
   }
 
+
+  override def getPlayerTiles(player: PlayerNameEnum): mutable.Set[Tile] = player match {
+    case PlayerNameEnum.GOLD =>
+      playerGold.getTiles
+    case PlayerNameEnum.SILVER =>
+      playerSilver.getTiles
+  }
+
   override def toString: String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
     sb.append("\n")
@@ -71,7 +73,7 @@ class Field() {
     sb.toString()
   }
 
-  def fieldAsString: String = {
+  private def fieldAsString: String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
     for (y <- 8 to 1 by -1) {
       sb.append(y + " | ")
@@ -84,7 +86,7 @@ class Field() {
     sb.toString()
   }
 
-  def cellAsString(pos: Position): String = {
+  private def cellAsString(pos: Position): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
     val traps: Set[Position] =
       Set(new Position(3, 3), new Position(6, 3),
@@ -99,7 +101,7 @@ class Field() {
     sb.toString()
   }
 
-  def cellTileAsString(pos: Position): String = {
+  private def cellTileAsString(pos: Position): String = {
     val sb: mutable.StringBuilder = new mutable.StringBuilder()
 
     val tileNameGold: TileNameEnum = getTileName(PlayerNameEnum.GOLD, pos)
@@ -115,13 +117,8 @@ class Field() {
     sb.toString()
   }
 
-
-
-  def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = player match {
+  override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = player match {
     case PlayerNameEnum.GOLD => playerGold.getTile(pos)
     case PlayerNameEnum.SILVER => playerSilver.getTile(pos)
   }
-
-
-
 }
