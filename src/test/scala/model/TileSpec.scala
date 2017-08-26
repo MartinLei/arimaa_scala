@@ -24,14 +24,14 @@ class TileSpec extends FlatSpec with Matchers {
     tile.toString should be(tileString)
   }
 
-  it should "be the same object if name and position is equal" in {
+  "equal" should "objects, if name and position is equal" in {
     val tile1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
     val tile2: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
 
     tile1 should be(tile2)
   }
 
-  it should "be not the same object if name or position is not equal" in {
+  it should "not equal, if name or position is different" in {
     val tile1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 1))
     val tile2: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))
 

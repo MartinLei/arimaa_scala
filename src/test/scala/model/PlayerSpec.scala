@@ -57,7 +57,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.getTileName(new Position(1, 2)) should be(TileNameEnum.NONE)
   }
 
-  it should "be equal if the tile name and position is the same" in {
+  "equal" should "objects, if the tile name and position is the same" in {
     val tiles1: mutable.Set[Tile] = new mutable.HashSet()
     val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))
     tiles1 add t1
@@ -71,7 +71,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     player1 should be(player2)
   }
 
-  it should "not be equal if the tile name or position is not the same" in {
+  it should "not equal, if the tile name or position is different" in {
     val tiles1: mutable.Set[Tile] = new mutable.HashSet()
     val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))
     val t11: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 3))
@@ -87,7 +87,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     player1 should not be player2
   }
 
-  it should "not be equal if its not a player object" in {
+  it should "not equal, if its not a player object" in {
     val tiles1: mutable.Set[Tile] = new mutable.HashSet()
     val t1: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 2))
     val t11: Tile = new Tile(TileNameEnum.RABBIT, new Position(1, 3))
