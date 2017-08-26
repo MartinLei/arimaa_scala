@@ -6,7 +6,7 @@ object TileNameEnum extends Enumeration {
   val CAT: Value = Value("C")
   val DOG: Value = Value("D")
   val HORSE: Value = Value("H")
-  val CAMEL: Value = Value("L")
+  val CAMEL: Value = Value("M")
   val ELEPHANT: Value = Value("E")
 
   val NONE: Value = Value("NONE")

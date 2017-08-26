@@ -9,7 +9,7 @@ class TileNameEnumSpec extends FlatSpec with Matchers {
     TileNameEnum.CAT.toString should be("C")
     TileNameEnum.DOG.toString should be("D")
     TileNameEnum.HORSE.toString should be("H")
-    TileNameEnum.CAMEL.toString should be("L")
+    TileNameEnum.CAMEL.toString should be("M")
     TileNameEnum.ELEPHANT.toString should be("E")
 
     TileNameEnum.NONE.toString should be("NONE")

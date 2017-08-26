@@ -10,7 +10,15 @@ class FieldSpec extends FlatSpec with Matchers {
   "A Field" should "have two player with a start tiles position" in {
     val tilesGoldShouldBe: mutable.Set[Tile] = new mutable.HashSet[Tile]
     tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 1))
-
+    /*
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(2, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(3, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(4, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(5, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(6, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(7, 1))
+    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 1))
+*/
     val tilesSilverShouldBe: mutable.Set[Tile] = new mutable.HashSet[Tile]
     tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 8))
 
@@ -35,24 +43,17 @@ class FieldSpec extends FlatSpec with Matchers {
 
   it should "have a string representation of its field" in {
     val fieldString: String = "\n" +
-      "  +-------------SILVER------------+\n" +
-      "8 | R |   |   |   |   |   |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "7 |   |   |   |   |   |   |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "6 |   |   | # |   |   | # |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "5 |   |   |   |   |   |   |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "4 |   |   |   |   |   |   |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "3 |   |   | # |   |   | # |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "2 |   |   |   |   |   |   |   |   |\n" +
-      "  +---+---+---+---+---+---+---+---+\n" +
-      "1 | r |   |   |   |   |   |   |   |\n" +
-      "  +-------------GOLD--------------+\n" +
-      "    1   2   3   4   5   6   7   8  \n"
+      "  +-----------------+\n" +
+      "8 | r               |\n" +
+      "7 |                 |\n" +
+      "6 |     X     X     |\n" +
+      "5 |                 |\n" +
+      "4 |                 |\n" +
+      "3 |     X     X     |\n" +
+      "2 |                 |\n" +
+      "1 | R               |\n" +
+      "  +-----------------+\n" +
+      "    a b c d e f g h  \n"
 
     val field: Field = new Field
     field.toString should be(fieldString)
