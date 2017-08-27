@@ -11,6 +11,13 @@ class PositionSpec extends FlatSpec with Matchers {
     pos.y should be(2)
   }
 
+  it should "throw NoSuchElementException if pos is not between 1,1 - 8,8" in {
+    an[IllegalArgumentException] should be thrownBy new Position(1, 9)
+    an[IllegalArgumentException] should be thrownBy new Position(9, 1)
+    an[IllegalArgumentException] should be thrownBy new Position(-1, 1)
+    an[IllegalArgumentException] should be thrownBy new Position(1, -1)
+  }
+
   "toString" should "have given output" in {
     val pos = new Position(1, 2)
     val posString = "{1,2}"
