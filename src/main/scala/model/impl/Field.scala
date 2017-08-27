@@ -64,7 +64,7 @@ class Field() extends FieldTrait {
   }
 
   override def toString: String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder()
+    val sb: StringBuilder = new StringBuilder()
     sb.append("\n")
     sb.append("  +-----------------+\n")
     sb.append(fieldAsString)
@@ -74,7 +74,7 @@ class Field() extends FieldTrait {
   }
 
   private def fieldAsString: String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder()
+    val sb: StringBuilder = new StringBuilder()
     for (y <- 8 to 1 by -1) {
       sb.append(y + " | ")
       for (x <- 1 until 9) {
@@ -87,7 +87,7 @@ class Field() extends FieldTrait {
   }
 
   private def cellAsString(pos: Position): String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder()
+    val sb: StringBuilder = new StringBuilder()
     val traps: Set[Position] =
       Set(new Position(3, 3), new Position(6, 3),
         new Position(3, 6), new Position(6, 6))
@@ -102,7 +102,7 @@ class Field() extends FieldTrait {
   }
 
   private def cellTileAsString(pos: Position): String = {
-    val sb: mutable.StringBuilder = new mutable.StringBuilder()
+    val sb: StringBuilder = new StringBuilder()
 
     val tileNameGold: TileNameEnum = getTileName(PlayerNameEnum.GOLD, pos)
     val tileNameSilver: TileNameEnum = getTileName(PlayerNameEnum.SILVER, pos)
