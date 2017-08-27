@@ -5,62 +5,60 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.Position
 
-import scala.collection.mutable
 
 class Field() extends FieldTrait {
   private val playerGold: Player = getInitGoldPlayer
   private val playerSilver: Player = getInitSilverPlayer
 
+  override def getPlayerTiles(player: PlayerNameEnum): Set[Tile] = player match {
+    case PlayerNameEnum.GOLD =>
+      playerGold.getTiles
+    case PlayerNameEnum.SILVER =>
+      playerSilver.getTiles
+  }
+
   private def getInitGoldPlayer: Player = {
-    val tilesGold: mutable.Set[Tile] = new mutable.HashSet()
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(1, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(2, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(3, 1))
-    tilesGold add new Tile(TileNameEnum.DOG, new Position(4, 1))
-    tilesGold add new Tile(TileNameEnum.DOG, new Position(5, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(6, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(7, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(8, 1))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(1, 2))
-    tilesGold add new Tile(TileNameEnum.HORSE, new Position(2, 2))
-    tilesGold add new Tile(TileNameEnum.CAT, new Position(3, 2))
-    tilesGold add new Tile(TileNameEnum.CAMEL, new Position(4, 2))
-    tilesGold add new Tile(TileNameEnum.ELEPHANT, new Position(5, 2))
-    tilesGold add new Tile(TileNameEnum.CAT, new Position(6, 2))
-    tilesGold add new Tile(TileNameEnum.HORSE, new Position(7, 2))
-    tilesGold add new Tile(TileNameEnum.RABBIT, new Position(8, 2))
+    val tilesGold: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(3, 1)),
+      new Tile(TileNameEnum.DOG, new Position(4, 1)),
+      new Tile(TileNameEnum.DOG, new Position(5, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(6, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(7, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)),
+      new Tile(TileNameEnum.HORSE, new Position(2, 2)),
+      new Tile(TileNameEnum.CAT, new Position(3, 2)),
+      new Tile(TileNameEnum.CAMEL, new Position(4, 2)),
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 2)),
+      new Tile(TileNameEnum.CAT, new Position(6, 2)),
+      new Tile(TileNameEnum.HORSE, new Position(7, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
 
     new Player(PlayerNameEnum.GOLD, tilesGold)
   }
 
   private def getInitSilverPlayer: Player = {
-    val tilesSilver: mutable.Set[Tile] = new mutable.HashSet()
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(1, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(2, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(3, 8))
-    tilesSilver add new Tile(TileNameEnum.DOG, new Position(4, 8))
-    tilesSilver add new Tile(TileNameEnum.DOG, new Position(5, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(6, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(7, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(8, 8))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(1, 7))
-    tilesSilver add new Tile(TileNameEnum.HORSE, new Position(2, 7))
-    tilesSilver add new Tile(TileNameEnum.CAT, new Position(3, 7))
-    tilesSilver add new Tile(TileNameEnum.ELEPHANT, new Position(4, 7))
-    tilesSilver add new Tile(TileNameEnum.CAMEL, new Position(5, 7))
-    tilesSilver add new Tile(TileNameEnum.CAT, new Position(6, 7))
-    tilesSilver add new Tile(TileNameEnum.HORSE, new Position(7, 7))
-    tilesSilver add new Tile(TileNameEnum.RABBIT, new Position(8, 7))
+    val tilesSilver: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(3, 8)),
+      new Tile(TileNameEnum.DOG, new Position(4, 8)),
+      new Tile(TileNameEnum.DOG, new Position(5, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(6, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(7, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)),
+      new Tile(TileNameEnum.HORSE, new Position(2, 7)),
+      new Tile(TileNameEnum.CAT, new Position(3, 7)),
+      new Tile(TileNameEnum.ELEPHANT, new Position(4, 7)),
+      new Tile(TileNameEnum.CAMEL, new Position(5, 7)),
+      new Tile(TileNameEnum.CAT, new Position(6, 7)),
+      new Tile(TileNameEnum.HORSE, new Position(7, 7)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 7)))
 
     new Player(PlayerNameEnum.SILVER, tilesSilver)
-  }
-
-
-  override def getPlayerTiles(player: PlayerNameEnum): mutable.Set[Tile] = player match {
-    case PlayerNameEnum.GOLD =>
-      playerGold.getTiles
-    case PlayerNameEnum.SILVER =>
-      playerSilver.getTiles
   }
 
   override def toString: String = {

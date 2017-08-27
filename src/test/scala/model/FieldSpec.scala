@@ -4,56 +4,54 @@ import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 
-import scala.collection.mutable
-
 class FieldSpec extends FlatSpec with Matchers {
 
   "A Field" should "have a gold 99of9 start tiles position" in {
-    val tilesGoldShouldBe: mutable.Set[Tile] = new mutable.HashSet[Tile]
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(2, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(3, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.DOG, new Position(4, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.DOG, new Position(5, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(6, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(7, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 1))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.HORSE, new Position(2, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.CAT, new Position(3, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.CAMEL, new Position(4, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.ELEPHANT, new Position(5, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.CAT, new Position(6, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.HORSE, new Position(7, 2))
-    tilesGoldShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 2))
+    val tilesGoldShouldBe: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(3, 1)),
+      new Tile(TileNameEnum.DOG, new Position(4, 1)),
+      new Tile(TileNameEnum.DOG, new Position(5, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(6, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(7, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)),
+      new Tile(TileNameEnum.HORSE, new Position(2, 2)),
+      new Tile(TileNameEnum.CAT, new Position(3, 2)),
+      new Tile(TileNameEnum.CAMEL, new Position(4, 2)),
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 2)),
+      new Tile(TileNameEnum.CAT, new Position(6, 2)),
+      new Tile(TileNameEnum.HORSE, new Position(7, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
 
     val field: FieldTrait = new Field()
-    val tilesGold: mutable.Set[Tile] = field.getPlayerTiles(PlayerNameEnum.GOLD)
+    val tilesGold: Set[Tile] = field.getPlayerTiles(PlayerNameEnum.GOLD)
 
     tilesGold shouldEqual tilesGoldShouldBe
   }
 
   it should "have a silver 99of9 start tiles position" in {
-    val tilesSilverShouldBe: mutable.Set[Tile] = new mutable.HashSet[Tile]
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(2, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(3, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.DOG, new Position(4, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.DOG, new Position(5, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(6, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(7, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 8))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(1, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.HORSE, new Position(2, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.CAT, new Position(3, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.ELEPHANT, new Position(4, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.CAMEL, new Position(5, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.CAT, new Position(6, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.HORSE, new Position(7, 7))
-    tilesSilverShouldBe add new Tile(TileNameEnum.RABBIT, new Position(8, 7))
+    val tilesSilverShouldBe: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(3, 8)),
+      new Tile(TileNameEnum.DOG, new Position(4, 8)),
+      new Tile(TileNameEnum.DOG, new Position(5, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(6, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(7, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)),
+      new Tile(TileNameEnum.HORSE, new Position(2, 7)),
+      new Tile(TileNameEnum.CAT, new Position(3, 7)),
+      new Tile(TileNameEnum.ELEPHANT, new Position(4, 7)),
+      new Tile(TileNameEnum.CAMEL, new Position(5, 7)),
+      new Tile(TileNameEnum.CAT, new Position(6, 7)),
+      new Tile(TileNameEnum.HORSE, new Position(7, 7)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 7)))
 
     val field: FieldTrait = new Field()
-    val tilesSilver: mutable.Set[Tile] = field.getPlayerTiles(PlayerNameEnum.SILVER)
+    val tilesSilver: Set[Tile] = field.getPlayerTiles(PlayerNameEnum.SILVER)
     tilesSilver shouldEqual tilesSilverShouldBe
   }
 
