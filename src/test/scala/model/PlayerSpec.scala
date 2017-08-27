@@ -25,7 +25,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.getTiles should contain theSameElementsAs tiles
   }
 
-  it should "have the given string representation" in {
+  "toString" should "have given output" in {
     val playerString: String = "G:Set(R:{1,2})"
 
     val tiles: mutable.Set[Tile] = new mutable.HashSet()

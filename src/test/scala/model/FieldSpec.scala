@@ -64,7 +64,7 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
   }
 
-  it should "have a string representation of its field" in {
+  "toString" should "have given output" in {
     val field99of9String: String = "\n" +
       "  +-----------------+\n" +
       "8 | r r r d d r r r |\n" +

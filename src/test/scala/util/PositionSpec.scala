@@ -11,7 +11,7 @@ class PositionSpec extends FlatSpec with Matchers {
     pos.y should be(2)
   }
 
-  it should "have a string representation" in {
+  "toString" should "have given output" in {
     val pos = new Position(1, 2)
     val posString = "{1,2}"
 

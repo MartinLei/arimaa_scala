@@ -7,7 +7,14 @@ import util.Position
 
 class ControllerSpec extends FlatSpec with Matchers {
 
-  "A Controller" should "have a string representation of the field" in {
+
+  "A controller" should "give the tile on the given position" in {
+    val controller: ControllerTrait = new Controller()
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+  }
+
+  "toString" should "have given output" in {
     val field99of9String: String = "\n" +
       "  +-----------------+\n" +
       "8 | r r r d d r r r |\n" +
@@ -26,11 +33,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getFieldAsString should be(field99of9String)
   }
 
-  it should "give the tile on the given position" in {
-    val controller: ControllerTrait = new Controller()
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
-    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
-  }
+
   "move" should "move a tile on his given Position" in {
     val controller: ControllerTrait = new Controller()
 

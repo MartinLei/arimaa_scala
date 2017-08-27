@@ -15,7 +15,8 @@ class TileSpec extends FlatSpec with Matchers {
     tile.name should be(tileName)
     tile.pos should be(tilePos)
   }
-  it should "have a string representation" in {
+
+  "toString" should "have given output" in {
     val tileName = TileNameEnum.CAT
     val tilePos = new Position(1, 2)
     val tile: Tile = new Tile(tileName, tilePos)
