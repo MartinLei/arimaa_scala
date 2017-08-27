@@ -1,12 +1,9 @@
 package model.impl
 
-import com.typesafe.scalalogging.Logger
 import model.impl.TileNameEnum.TileNameEnum
 import util.Position
 
 class Tile(val name: TileNameEnum, val pos: Position) {
-  val logger = Logger(classOf[Tile])
-  //  logger.info("Hallo")
 
   override def equals(that: scala.Any): Boolean = that match {
     case that: Tile => that.isInstanceOf[Tile] && that.hashCode() == this.hashCode()
