@@ -2,7 +2,7 @@ package aview.tui
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import util.Position
+import util.{Coordinate, Position}
 
 class Tui(controller: ControllerTrait) {
   val logger: Logger = Logger[Tui]
@@ -21,8 +21,8 @@ class Tui(controller: ControllerTrait) {
       val patternCoordinate = "^[a-h][1-8] [a-h][1-8]$".r
       if ((patternCoordinate findFirstIn input).isDefined) {
         val coordinates = input.split(" ")
-        val posFrom: Position = coordinatesToPosition(coordinates(0))
-        val posTo: Position = coordinatesToPosition(coordinates(1))
+        val posFrom: Position = Coordinate.toPosition(coordinates(0))
+        val posTo: Position = Coordinate.toPosition(coordinates(1))
         val message = controller.moveTile(posFrom, posTo)
         logger.info(controller.getFieldAsString)
         logger.info(message.text)
@@ -33,12 +33,5 @@ class Tui(controller: ControllerTrait) {
       logger.info("Input::")
       true
   }
-
-  private def coordinatesToPosition(coordinates: String): Position = {
-    val x: Int = coordinates.charAt(0).toInt - 96
-    val y: Int = coordinates.charAt(1).asDigit
-    new Position(x, y)
-  }
-
 
 }
