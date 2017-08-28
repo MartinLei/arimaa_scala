@@ -1,5 +1,7 @@
 package controller.impl
 
+import controller.impl.messages.MessageTrade
+import controller.impl.messages.imp.WrongFromPosMessage
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{Player, PlayerNameEnum}
@@ -16,9 +18,9 @@ class RuleBook(val field: FieldTrait) {
     playerView = field.getPlayer(playerName)
   }
 
-  def precondition(posFrom: Position, posTo: Position): Boolean = {
+  def precondition(posFrom: Position, posTo: Position): MessageTrade = {
 
-    false
+    new WrongFromPosMessage()
   }
 
 }

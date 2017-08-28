@@ -1,6 +1,7 @@
 package controller
 
 import controller.impl.Controller
+import controller.impl.messages.imp.OKMessage
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
@@ -40,22 +41,10 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    controller.moveTile(new Position(1, 2), new Position(1, 3)) should be(true)
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should be(new OKMessage)
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
-  }
-
-  it should "only if the new position is free" in {
-    val controller: ControllerTrait = new Controller()
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
-
-    controller.moveTile(new Position(1, 2), new Position(2, 2)) should be(false)
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
   }
 
   "changePlayer" should "change the Player" in {

@@ -23,8 +23,9 @@ class Tui(controller: ControllerTrait) {
         val coordinates = input.split(" ")
         val posFrom: Position = coordinatesToPosition(coordinates(0))
         val posTo: Position = coordinatesToPosition(coordinates(1))
-        controller.moveTile(posFrom, posTo)
+        val message = controller.moveTile(posFrom, posTo)
         logger.info(controller.getFieldAsString)
+        logger.info(message.text)
       } else {
         logger.info("Wrong input, use h for help")
       }
