@@ -16,6 +16,10 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): Boolean = {
     val actPlayer: PlayerNameEnum = PlayerNameEnum.GOLD // TOOD
+
+    if (field.isOccupied(posTo))
+      return false
+
     field.moveTile(actPlayer, posFrom, posTo)
   }
 

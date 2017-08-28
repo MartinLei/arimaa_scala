@@ -6,6 +6,8 @@ import model.impl.TileNameEnum.TileNameEnum
 import util.Position
 
 trait FieldTrait {
+  def isOccupied(pos: Position): Boolean
+
   def moveTile(player: PlayerNameEnum, posOld: Position, posNew: Position): Boolean
 
   def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum

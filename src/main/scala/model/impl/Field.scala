@@ -124,4 +124,13 @@ class Field() extends FieldTrait {
     case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)
     case PlayerNameEnum.SILVER => playerSilver.moveTile(posFrom, posTo)
   }
+
+  override def isOccupied(pos: Position): Boolean = {
+    if (getTileName(PlayerNameEnum.GOLD, pos) != TileNameEnum.NONE)
+      return true
+    if (getTileName(PlayerNameEnum.SILVER, pos) != TileNameEnum.NONE)
+      return true
+
+    false
+  }
 }

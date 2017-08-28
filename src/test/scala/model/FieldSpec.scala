@@ -80,6 +80,15 @@ class FieldSpec extends FlatSpec with Matchers {
     field.toString should be(field99of9String)
   }
 
+  "isOccupied" should "tell if a cell is occupied" in {
+    val field: FieldTrait = new Field()
+    field.isOccupied(new Position(1, 2)) should be(true)
+    field.isOccupied(new Position(1, 3)) should be(false)
+
+    field.isOccupied(new Position(1, 7)) should be(true)
+    field.isOccupied(new Position(1, 6)) should be(false)
+  }
+
   "move" should "move a gold tile with given position" in {
     val field: FieldTrait = new Field()
 
