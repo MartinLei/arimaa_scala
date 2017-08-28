@@ -21,9 +21,11 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): Boolean = {
 
-    //TODO use rulebook
-    if (field.isOccupied(posTo))
+    if (!ruleBook.precondition(posFrom, posTo))
       return false
+
+    //if (field.isOccupied(posTo))
+    // return false
 
     field.changeTilePos(actPlayerName, posFrom, posTo)
   }
@@ -33,11 +35,11 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): Unit = {
-    //TODO update rulebook
     if (actPlayerName.equals(PlayerNameEnum.GOLD))
       actPlayerName = PlayerNameEnum.SILVER
     else
       actPlayerName = PlayerNameEnum.GOLD
 
+    ruleBook.setRuleView(actPlayerName)
   }
 }
