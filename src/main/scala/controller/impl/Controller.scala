@@ -9,21 +9,35 @@ import util.Position
 
 class Controller extends ControllerTrait {
   private val field: FieldTrait = new Field()
+  private val ruleBook: RuleBook = new RuleBook(field)
+
+  private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
+
+  override def getActPlayerName: PlayerNameEnum = actPlayerName
 
   override def getFieldAsString: String = {
     field.toString
   }
 
   override def moveTile(posFrom: Position, posTo: Position): Boolean = {
-    val actPlayer: PlayerNameEnum = PlayerNameEnum.GOLD // TOOD
 
+    //TODO use rulebook
     if (field.isOccupied(posTo))
       return false
 
-    field.moveTile(actPlayer, posFrom, posTo)
+    field.changeTilePos(actPlayerName, posFrom, posTo)
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
     field.getTileName(player, pos)
+  }
+
+  override def changePlayer(): Unit = {
+    //TODO update rulebook
+    if (actPlayerName.equals(PlayerNameEnum.GOLD))
+      actPlayerName = PlayerNameEnum.SILVER
+    else
+      actPlayerName = PlayerNameEnum.GOLD
+
   }
 }

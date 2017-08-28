@@ -1,6 +1,6 @@
 package model
 
-import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
+import model.impl._
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 
@@ -80,6 +80,16 @@ class FieldSpec extends FlatSpec with Matchers {
     field.toString should be(field99of9String)
   }
 
+  "getPlayer" should "give the wanted player" in {
+    val field: FieldTrait = new Field()
+    val playerGold: Player = field.getPlayer(PlayerNameEnum.GOLD)
+    playerGold.name should be(PlayerNameEnum.GOLD)
+
+    val playerSilver: Player = field.getPlayer(PlayerNameEnum.SILVER)
+    playerSilver.name should be(PlayerNameEnum.SILVER)
+
+  }
+
   "isOccupied" should "tell if a cell is occupied" in {
     val field: FieldTrait = new Field()
     field.isOccupied(new Position(1, 2)) should be(true)
@@ -89,24 +99,24 @@ class FieldSpec extends FlatSpec with Matchers {
     field.isOccupied(new Position(1, 6)) should be(false)
   }
 
-  "move" should "move a gold tile with given position" in {
+  "changeTilePos" should "change the position of a gold tile" in {
     val field: FieldTrait = new Field()
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    field.moveTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(true)
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(true)
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
   }
-  it should "move a silver tile with given position" in {
+  it should "change the position of a silver tile" in {
     val field: FieldTrait = new Field()
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
 
-    field.moveTile(PlayerNameEnum.SILVER, new Position(1, 7), new Position(1, 6)) should be(true)
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(1, 7), new Position(1, 6)) should be(true)
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.RABBIT)

@@ -50,4 +50,5 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     name.toString + ":" + tiles.toString()
   }
 
+
 }

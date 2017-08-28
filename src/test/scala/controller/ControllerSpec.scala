@@ -57,4 +57,13 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
   }
+
+  "changePlayer" should "change the Player" in {
+    val controller: ControllerTrait = new Controller()
+    controller.getActPlayerName should be(PlayerNameEnum.GOLD)
+    controller.changePlayer()
+    controller.getActPlayerName should be(PlayerNameEnum.SILVER)
+    controller.changePlayer()
+    controller.getActPlayerName should be(PlayerNameEnum.GOLD)
+  }
 }
