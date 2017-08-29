@@ -1,7 +1,7 @@
 package controller.impl
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.{MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
+import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage, WrongRabbitMoveMessage, WrongToPosMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{Player, PlayerNameEnum, TileNameEnum}
@@ -18,6 +18,9 @@ class RuleBook(val field: FieldTrait) {
   }
 
   def precondition(posFrom: Position, posTo: Position): MessageTrade = {
+    if (isFromPosNotOwn(posFrom, posTo))
+      return new WrongFromPosMessage
+
     if (isToPosNotFree(posFrom, posTo))
       return new WrongToPosMessage
 
@@ -25,6 +28,11 @@ class RuleBook(val field: FieldTrait) {
       return new WrongRabbitMoveMessage
 
     new MoveMessage(posFrom, posTo)
+  }
+
+  private def isFromPosNotOwn(posFrom: Position, posTo: Position): Boolean = {
+    field.getTileName(actPlayer.name, posFrom).equals(TileNameEnum.NONE) &&
+      !field.getTileName(pasPlayer.name, posFrom).equals(TileNameEnum.NONE)
   }
 
   private def isToPosNotFree(posFrom: Position, posTo: Position): Boolean = {
