@@ -1,7 +1,7 @@
 package controller
 
 import controller.impl.RuleBook
-import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage, WrongRabbitMoveMessage}
+import controller.impl.messages.imp.{MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
@@ -16,10 +16,10 @@ class RuleBookSpec extends FlatSpec with Matchers {
   }
 
 
-  it should "check, if posFrom is not None" in {
+  it should "return WrongToPosMessage, if posTo is not free" in {
     val ruleBook = new RuleBook(new Field())
 
-    ruleBook.precondition(new Position(1, 3), new Position(1, 4)) should be(new WrongFromPosMessage)
+    ruleBook.precondition(new Position(1, 1), new Position(1, 2)) should be(new WrongToPosMessage)
   }
 
   it should "return WrongRabbitMoveMessage if a Rabbit gets moved back" in {

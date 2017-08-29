@@ -38,11 +38,8 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): Unit = {
-    if (actPlayerName.equals(PlayerNameEnum.GOLD))
-      actPlayerName = PlayerNameEnum.SILVER
-    else
-      actPlayerName = PlayerNameEnum.GOLD
-
-    ruleBook.setRuleView(actPlayerName)
+    actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
+    ruleBook.setActPlayer(actPlayerName)
   }
+
 }
