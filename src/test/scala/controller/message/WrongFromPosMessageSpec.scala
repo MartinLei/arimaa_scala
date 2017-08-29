@@ -5,7 +5,7 @@ import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 
-class WrongFromPosSpec extends FlatSpec with Matchers {
+class WrongFromPosMessageSpec extends FlatSpec with Matchers {
 
   "id" should "be" in {
     val message = new WrongFromPosMessage()

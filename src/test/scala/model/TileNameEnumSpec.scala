@@ -25,8 +25,6 @@ class TileNameEnumSpec extends FlatSpec with Matchers {
     TileNameEnum.HORSE.id should be(4)
     TileNameEnum.CAMEL.id should be(5)
     TileNameEnum.ELEPHANT.id should be(6)
-
-    println(TileNameEnum.RABBIT.compare(TileNameEnum.ELEPHANT))
   }
 
 }

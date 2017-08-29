@@ -1,8 +1,8 @@
 package controller
 
 import controller.impl.RuleBook
-import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage}
-import model.impl.Field
+import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage, WrongRabbitMoveMessage}
+import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
 
@@ -20,5 +20,16 @@ class RuleBookSpec extends FlatSpec with Matchers {
     val ruleBook = new RuleBook(new Field())
 
     ruleBook.precondition(new Position(1, 3), new Position(1, 4)) should be(new WrongFromPosMessage)
+  }
+
+  it should "return WrongRabbitMoveMessage if a Rabbit gets moved back" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
+    ruleBook.precondition(new Position(1, 3), new Position(1, 2)) should be(new WrongRabbitMoveMessage)
   }
 }
