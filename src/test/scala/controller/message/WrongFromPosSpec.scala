@@ -1,4 +1,4 @@
-package controller.Message
+package controller.message
 
 import controller.impl.messages.imp.WrongFromPosMessage
 import org.scalatest.{FlatSpec, Matchers}

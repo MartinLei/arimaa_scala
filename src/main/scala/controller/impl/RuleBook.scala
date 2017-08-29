@@ -10,10 +10,6 @@ import util.Position
 class RuleBook(val field: FieldTrait) {
   private var playerView: Player = field.getPlayer(PlayerNameEnum.GOLD)
 
-  def getActPlayerName: PlayerNameEnum = {
-    playerView.name
-  }
-
   def setRuleView(playerName: PlayerNameEnum): Unit = {
     playerView = field.getPlayer(playerName)
   }
