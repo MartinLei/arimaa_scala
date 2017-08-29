@@ -4,7 +4,7 @@ import controller.impl.messages.MessageTrade
 import controller.impl.messages.imp.{MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{Player, PlayerNameEnum}
+import model.impl.{Player, PlayerNameEnum, TileNameEnum}
 import util.{DirectionEnum, Position}
 
 class RuleBook(val field: FieldTrait) {
@@ -32,7 +32,8 @@ class RuleBook(val field: FieldTrait) {
   }
 
   private def isWrongRabbitMove(posFrom: Position, posTo: Position): Boolean = {
-    //TODO check if its a rabbit
+    if (!field.getTileName(actPlayer.name, posFrom).equals(TileNameEnum.RABBIT))
+      return false
 
     val direction = DirectionEnum.getDirection(posFrom, posTo)
     if (actPlayer.name.equals(PlayerNameEnum.GOLD) && direction.equals(DirectionEnum.SOUTH) ||

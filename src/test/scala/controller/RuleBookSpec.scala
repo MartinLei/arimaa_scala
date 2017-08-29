@@ -22,7 +22,7 @@ class RuleBookSpec extends FlatSpec with Matchers {
     ruleBook.precondition(new Position(1, 1), new Position(1, 2)) should be(new WrongToPosMessage)
   }
 
-  it should "return WrongRabbitMoveMessage if a Rabbit gets moved back" in {
+  "isWrongRabbitMove" should "return true if a rabbit gets moved back -> WrongRabbitMoveMessage " in {
     val field = new Field()
     val ruleBook = new RuleBook(field)
 
@@ -31,5 +31,16 @@ class RuleBookSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
     ruleBook.precondition(new Position(1, 3), new Position(1, 2)) should be(new WrongRabbitMoveMessage)
+  }
+  it should "return false, if the tile is not a rabbit tile -> MoveMessage" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+
+    ruleBook.precondition(new Position(2, 3), new Position(2, 2)) should
+      be(new MoveMessage(new Position(2, 3), new Position(2, 2)))
   }
 }
