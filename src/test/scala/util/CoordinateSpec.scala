@@ -13,4 +13,13 @@ class CoordinateSpec extends FlatSpec with Matchers {
     Coordinate.posToCoordinate(new Position(1, 2)) should be("a2")
     Coordinate.posToCoordinate(new Position(8, 8)) should be("h8")
   }
+
+  "moveToCoordinate" should "convert from and to pos to coordinate" in {
+    Coordinate.moveToCoordinate(new Position(4, 4), new Position(4, 5)) should be("d4n")
+    Coordinate.moveToCoordinate(new Position(4, 4), new Position(5, 4)) should be("d4e")
+    Coordinate.moveToCoordinate(new Position(4, 4), new Position(4, 3)) should be("d4s")
+    Coordinate.moveToCoordinate(new Position(4, 4), new Position(3, 4)) should be("d4w")
+
+    Coordinate.moveToCoordinate(new Position(4, 4), new Position(1, 4)) should be("d4NONE")
+  }
 }

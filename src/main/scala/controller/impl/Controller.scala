@@ -3,7 +3,6 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.OKMessage
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -29,13 +28,9 @@ class Controller extends ControllerTrait {
     if (!preMessage.valid)
       return preMessage
 
-
-    //if (field.isOccupied(posTo))
-    // return false
-
     field.changeTilePos(actPlayerName, posFrom, posTo)
 
-    new OKMessage
+    preMessage
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {

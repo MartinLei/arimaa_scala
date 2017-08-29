@@ -1,10 +1,10 @@
 package controller.impl
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.WrongFromPosMessage
+import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{Player, PlayerNameEnum}
+import model.impl.{Player, PlayerNameEnum, TileNameEnum}
 import util.Position
 
 class RuleBook(val field: FieldTrait) {
@@ -19,8 +19,11 @@ class RuleBook(val field: FieldTrait) {
   }
 
   def precondition(posFrom: Position, posTo: Position): MessageTrade = {
+    if (playerView.getTileName(posFrom).equals(TileNameEnum.NONE))
+      return new WrongFromPosMessage
 
-    new WrongFromPosMessage()
+
+    new MoveMessage(posFrom, posTo)
   }
 
 }

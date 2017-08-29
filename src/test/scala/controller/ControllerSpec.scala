@@ -1,7 +1,7 @@
 package controller
 
 import controller.impl.Controller
-import controller.impl.messages.imp.OKMessage
+import controller.impl.messages.imp.MoveMessage
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
@@ -41,7 +41,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    controller.moveTile(new Position(1, 2), new Position(1, 3)) should be(new OKMessage)
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
