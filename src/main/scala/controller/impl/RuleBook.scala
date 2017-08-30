@@ -10,9 +10,9 @@ import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
   def precondition(player: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
-
-    if (isFromPosNotOwn(player, posFrom, posTo))
-      return new WrongFromPosMessage
+    val messageIsFromPosNotOwn = isFromPosNotOwn(player, posFrom)
+    if (messageIsFromPosNotOwn.isDefined)
+      return messageIsFromPosNotOwn.get
 
     val messageIsToPosNotFree = isToPosNotFree(player, posTo)
     if (messageIsToPosNotFree.isDefined)
@@ -29,10 +29,13 @@ class RuleBook(val field: FieldTrait) {
     new MoveMessage(posFrom, posTo)
   }
 
-  private def isFromPosNotOwn(actPlayerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+  def isFromPosNotOwn(actPlayerName: PlayerNameEnum, posFrom: Position): Option[WrongFromPosMessage] = {
     val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
-    field.getTileName(actPlayerName, posFrom).equals(TileNameEnum.NONE) &&
-      !field.getTileName(pasPlayerName, posFrom).equals(TileNameEnum.NONE)
+    if (field.getTileName(actPlayerName, posFrom).equals(TileNameEnum.NONE) &&
+      !field.getTileName(pasPlayerName, posFrom).equals(TileNameEnum.NONE))
+      return Option(new WrongFromPosMessage(posFrom))
+
+    Option(null)
   }
 
   def isToPosNotFree(actPlayerName: PlayerNameEnum, posTo: Position): Option[WrongToPosMessage] = {

@@ -15,10 +15,27 @@ class RuleBookSpec extends FlatSpec with Matchers {
       be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
   }
 
-  "isFromPosNotOwn" should "return true, if tile on posFrom is not own -> WrongFromPosMessage" in {
-    val ruleBook = new RuleBook(new Field())
+  "isFromPosNotOwn" should "return WrongFromPosMessage, if tile on posFrom is not own" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
 
-    ruleBook.precondition(PlayerNameEnum.GOLD, new Position(1, 7), new Position(1, 8)) should be(new WrongFromPosMessage)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+
+    ruleBook.isFromPosNotOwn(PlayerNameEnum.GOLD, new Position(1, 7)) should
+      be(Some(new WrongFromPosMessage(new Position(1, 7))))
+
+    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+  }
+  it should "be null if not" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    ruleBook.isFromPosNotOwn(PlayerNameEnum.GOLD, new Position(1, 2)) should
+      be(Option(null))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
 
   "isToPosNotFree" should "return WrongToPosMessage, if posTo is not free" in {

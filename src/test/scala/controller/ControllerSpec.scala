@@ -1,7 +1,7 @@
 package controller
 
 import controller.impl.Controller
-import controller.impl.messages.imp.{FixTileMessage, MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
+import controller.impl.messages.imp._
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -48,6 +48,18 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
   }
 
+  it should "not move a tile if fromPos is not own tile" in {
+    val controller: ControllerTrait = new Controller()
+
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
+
+    controller.moveTile(new Position(1, 7), new Position(1, 6)) should
+      be(new WrongFromPosMessage(new Position(1, 7)))
+
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
+  }
   it should "not move a tile if toPos is notFree" in {
     val controller: ControllerTrait = new Controller()
 

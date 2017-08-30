@@ -1,8 +1,10 @@
 package controller.impl.messages.imp
 
 import controller.impl.messages.MessageTrade
+import util.Coordinate
+import util.position.Position
 
-class WrongFromPosMessage extends MessageTrade {
+class WrongFromPosMessage(pos: Position) extends MessageTrade {
   override val valid = false
-  override val text = "This is not your tile"
+  override val text: String = Coordinate.posToCoordinate(pos) + " is not your tile"
 }
