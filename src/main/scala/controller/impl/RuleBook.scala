@@ -4,23 +4,14 @@ import controller.impl.messages.MessageTrade
 import controller.impl.messages.imp._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{Player, PlayerNameEnum, TileNameEnum}
+import model.impl.{PlayerNameEnum, TileNameEnum}
 import util.DirectionEnum
 import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
-  private var actPlayer: Player = field.getPlayer(PlayerNameEnum.GOLD)
-  private var pasPlayer: Player = field.getPlayer(PlayerNameEnum.SILVER)
-
-  def setActPlayer(actPlayerName: PlayerNameEnum): Unit = {
-    actPlayer = field.getPlayer(actPlayerName)
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
-    pasPlayer = field.getPlayer(pasPlayerName)
-  }
-
   def precondition(player: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
 
-    if (isFromPosNotOwn(posFrom, posTo))
+    if (isFromPosNotOwn(player, posFrom, posTo))
       return new WrongFromPosMessage
 
     if (isToPosNotFree(posFrom, posTo))
@@ -37,9 +28,10 @@ class RuleBook(val field: FieldTrait) {
     new MoveMessage(posFrom, posTo)
   }
 
-  private def isFromPosNotOwn(posFrom: Position, posTo: Position): Boolean = {
-    field.getTileName(actPlayer.name, posFrom).equals(TileNameEnum.NONE) &&
-      !field.getTileName(pasPlayer.name, posFrom).equals(TileNameEnum.NONE)
+  private def isFromPosNotOwn(actPlayerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+    val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
+    field.getTileName(actPlayerName, posFrom).equals(TileNameEnum.NONE) &&
+      !field.getTileName(pasPlayerName, posFrom).equals(TileNameEnum.NONE)
   }
 
   private def isToPosNotFree(posFrom: Position, posTo: Position): Boolean = {

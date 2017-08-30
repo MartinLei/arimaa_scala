@@ -39,7 +39,6 @@ class Controller extends ControllerTrait {
 
   override def changePlayer(): Unit = {
     actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
-    ruleBook.setActPlayer(actPlayerName)
   }
 
 }
