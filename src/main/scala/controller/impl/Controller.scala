@@ -24,7 +24,7 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): MessageTrade = {
 
-    val preMessage: MessageTrade = ruleBook.precondition(posFrom, posTo)
+    val preMessage: MessageTrade = ruleBook.precondition(actPlayerName, posFrom, posTo)
     if (!preMessage.valid)
       return preMessage
 

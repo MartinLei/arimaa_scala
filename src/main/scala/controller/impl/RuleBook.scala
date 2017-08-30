@@ -1,7 +1,7 @@
 package controller.impl
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.{MoveMessage, WrongFromPosMessage, WrongRabbitMoveMessage, WrongToPosMessage}
+import controller.impl.messages.imp._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{Player, PlayerNameEnum, TileNameEnum}
@@ -17,7 +17,8 @@ class RuleBook(val field: FieldTrait) {
     pasPlayer = field.getPlayer(pasPlayerName)
   }
 
-  def precondition(posFrom: Position, posTo: Position): MessageTrade = {
+  def precondition(player: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
+
     if (isFromPosNotOwn(posFrom, posTo))
       return new WrongFromPosMessage
 
@@ -26,6 +27,11 @@ class RuleBook(val field: FieldTrait) {
 
     if (isWrongRabbitMove(posFrom, posTo))
       return new WrongRabbitMoveMessage
+
+
+    val messageIsFix = isTailFixed(player, posFrom)
+    if (messageIsFix.isDefined)
+      return messageIsFix.get
 
     new MoveMessage(posFrom, posTo)
   }
@@ -48,5 +54,13 @@ class RuleBook(val field: FieldTrait) {
       actPlayer.name.equals(PlayerNameEnum.SILVER) && direction.equals(DirectionEnum.NORTH))
       return true
     false
+  }
+
+  def isTailFixed(player: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
+    val fixedTilePos = field.getFixedTilePos(player, pos)
+    if (fixedTilePos.isDefined)
+      return Option(new FixTileMessage(fixedTilePos.get))
+
+    Option(null)
   }
 }

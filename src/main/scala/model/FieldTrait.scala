@@ -15,4 +15,6 @@ trait FieldTrait {
   def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum
 
   def getPlayerTiles(player: PlayerNameEnum): Set[Tile]
+
+  def getFixedTilePos(player: PlayerNameEnum, pos: Position): Option[Position]
 }

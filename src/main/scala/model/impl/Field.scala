@@ -138,4 +138,17 @@ class Field() extends FieldTrait {
     case PlayerNameEnum.GOLD => playerGold
     case PlayerNameEnum.SILVER => playerSilver
   }
+
+  override def getFixedTilePos(player: PlayerNameEnum, pos: Position): Option[Position] = {
+    val surround = Position.getSurround(pos)
+    val posTileName = getTileName(player, pos)
+    val pasPlayer = PlayerNameEnum.getInvertPlayer(player)
+
+    surround.foreach(surPos => {
+      val surPosTileName = getTileName(pasPlayer, surPos)
+      if (surPosTileName.compare(posTileName) > 0)
+        return Option(surPos)
+    })
+    Option(null)
+  }
 }
