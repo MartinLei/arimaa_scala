@@ -2,7 +2,7 @@ package model
 
 import model.impl.{Tile, TileNameEnum}
 import org.scalatest._
-import util.Position
+import util.position.Position
 
 
 class TileSpec extends FlatSpec with Matchers {

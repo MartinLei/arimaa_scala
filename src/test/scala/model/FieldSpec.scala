@@ -2,7 +2,7 @@ package model
 
 import model.impl._
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class FieldSpec extends FlatSpec with Matchers {
 

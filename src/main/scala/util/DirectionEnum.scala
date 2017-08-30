@@ -1,5 +1,7 @@
 package util
 
+import util.position.Position
+
 object DirectionEnum extends Enumeration {
   type DirectionEnum = Value
   val NONE: Value = Value("NONE")

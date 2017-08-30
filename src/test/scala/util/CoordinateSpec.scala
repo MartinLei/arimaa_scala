@@ -1,6 +1,7 @@
 package util
 
 import org.scalatest.{FlatSpec, Matchers}
+import util.position.Position
 
 class CoordinateSpec extends FlatSpec with Matchers {
 

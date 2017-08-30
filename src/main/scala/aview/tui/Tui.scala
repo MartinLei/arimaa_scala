@@ -2,7 +2,8 @@ package aview.tui
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import util.{Coordinate, Position}
+import util.Coordinate
+import util.position.Position
 
 class Tui(controller: ControllerTrait) {
   val logger: Logger = Logger[Tui]

@@ -2,7 +2,7 @@ package model.impl
 
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import util.Position
+import util.position.Position
 
 
 class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {

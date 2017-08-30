@@ -2,7 +2,7 @@ package model
 
 import model.impl.{Player, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class PlayerSpec extends FlatSpec with Matchers {
 

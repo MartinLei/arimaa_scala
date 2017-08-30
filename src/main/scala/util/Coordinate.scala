@@ -1,5 +1,7 @@
 package util
 
+import util.position.Position
+
 object Coordinate {
   def moveToCoordinate(posFrom: Position, posTo: Position): String = {
     val sb = new StringBuilder

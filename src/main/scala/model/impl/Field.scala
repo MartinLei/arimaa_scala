@@ -3,7 +3,7 @@ package model.impl
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import util.Position
+import util.position.Position
 
 
 class Field() extends FieldTrait {
@@ -76,7 +76,7 @@ class Field() extends FieldTrait {
     for (y <- 8 to 1 by -1) {
       sb.append(y + " | ")
       for (x <- 1 until 9) {
-        val pos: Position = new util.Position(x, y)
+        val pos: Position = new Position(x, y)
         sb.append(cellAsString(pos))
       }
       sb.append("|\n")

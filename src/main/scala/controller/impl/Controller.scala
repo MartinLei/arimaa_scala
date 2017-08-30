@@ -7,7 +7,7 @@ import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Field, PlayerNameEnum}
-import util.Position
+import util.position.Position
 
 class Controller extends ControllerTrait {
   private val logger = Logger[Controller]

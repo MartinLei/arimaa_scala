@@ -4,7 +4,7 @@ import controller.impl.Controller
 import controller.impl.messages.imp.{FixTileMessage, MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class ControllerSpec extends FlatSpec with Matchers {
 

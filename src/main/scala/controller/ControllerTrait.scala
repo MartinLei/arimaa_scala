@@ -3,7 +3,7 @@ package controller
 import controller.impl.messages.MessageTrade
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import util.Position
+import util.position.Position
 
 trait ControllerTrait {
   def changePlayer(): Unit

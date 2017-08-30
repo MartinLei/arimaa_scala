@@ -3,7 +3,7 @@ package model
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Player, Tile}
-import util.Position
+import util.position.Position
 
 trait FieldTrait {
   def getPlayer(player: PlayerNameEnum): Player

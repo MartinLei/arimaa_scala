@@ -2,7 +2,7 @@ package controller.message
 
 import controller.impl.messages.imp.MoveMessage
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class MoveMessageSpec extends FlatSpec with Matchers {
 

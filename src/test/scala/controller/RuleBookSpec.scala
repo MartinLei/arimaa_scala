@@ -4,7 +4,7 @@ import controller.impl.RuleBook
 import controller.impl.messages.imp._
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class RuleBookSpec extends FlatSpec with Matchers {
 

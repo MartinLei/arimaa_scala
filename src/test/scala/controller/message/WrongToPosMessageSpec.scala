@@ -3,7 +3,7 @@ package controller.message
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.imp.{MoveMessage, WrongToPosMessage}
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class WrongToPosMessageSpec extends FlatSpec with Matchers {
 

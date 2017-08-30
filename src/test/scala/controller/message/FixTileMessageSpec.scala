@@ -2,7 +2,7 @@ package controller.message
 
 import controller.impl.messages.imp.FixTileMessage
 import org.scalatest.{FlatSpec, Matchers}
-import util.Position
+import util.position.Position
 
 class FixTileMessageSpec extends FlatSpec with Matchers {
 

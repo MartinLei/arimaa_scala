@@ -5,7 +5,8 @@ import controller.impl.messages.imp._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{Player, PlayerNameEnum, TileNameEnum}
-import util.{DirectionEnum, Position}
+import util.DirectionEnum
+import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
   private var actPlayer: Player = field.getPlayer(PlayerNameEnum.GOLD)

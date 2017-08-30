@@ -1,7 +1,8 @@
 package controller.impl.messages.imp
 
 import controller.impl.messages.MessageTrade
-import util.{Coordinate, Position}
+import util.Coordinate
+import util.position.Position
 
 class FixTileMessage(pos: Position) extends MessageTrade {
   override val id = 5

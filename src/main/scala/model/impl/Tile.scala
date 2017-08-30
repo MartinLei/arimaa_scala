@@ -1,7 +1,7 @@
 package model.impl
 
 import model.impl.TileNameEnum.TileNameEnum
-import util.Position
+import util.position.Position
 
 class Tile(val name: TileNameEnum, val pos: Position) {
 
