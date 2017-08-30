@@ -5,11 +5,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class WrongFromPosMessageSpec extends FlatSpec with Matchers {
 
-  "id" should "be" in {
-    val message = new WrongFromPosMessage()
-    message.id should be(4)
-  }
-
   "valid" should "be" in {
     val message = new WrongFromPosMessage()
     message.valid should be(false)

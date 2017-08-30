@@ -21,10 +21,28 @@ class RuleBookSpec extends FlatSpec with Matchers {
     ruleBook.precondition(PlayerNameEnum.GOLD, new Position(1, 7), new Position(1, 8)) should be(new WrongFromPosMessage)
   }
 
-  "isToPosNotFree" should "return true, if posTo is not free ->WrongToPosMessage" in {
-    val ruleBook = new RuleBook(new Field())
+  "isToPosNotFree" should "return WrongToPosMessage, if posTo is not free" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
 
-    ruleBook.precondition(PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)) should be(new WrongToPosMessage)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    ruleBook.isToPosNotFree(PlayerNameEnum.GOLD, new Position(1, 2)) should
+      be(Some(new WrongToPosMessage(new Position(1, 2))))
+
+    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 8)) should be(TileNameEnum.RABBIT)
+
+    ruleBook.isToPosNotFree(PlayerNameEnum.GOLD, new Position(1, 8)) should
+      be(Some(new WrongToPosMessage(new Position(1, 8))))
+  }
+  it should "be null if not" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+    ruleBook.isToPosNotFree(PlayerNameEnum.GOLD, new Position(1, 3)) should
+      be(Option(null))
   }
 
   "isWrongRabbitMove" should "return WrongRabbitMove, if a rabbit gets moved back" in {

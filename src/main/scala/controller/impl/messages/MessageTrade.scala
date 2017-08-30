@@ -1,7 +1,6 @@
 package controller.impl.messages
 
 trait MessageTrade {
-  val id: Int
   val valid: Boolean
   val text: String
 
@@ -10,6 +9,8 @@ trait MessageTrade {
     case _ => false
   }
 
-  override def hashCode(): Int = id.hashCode
+  override def toString: String = "{" + this.getClass + ", text: " + text + ", valid: " + valid + "}"
+
+  override def hashCode(): Int = toString.hashCode
 
 }

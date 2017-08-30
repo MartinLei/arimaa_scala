@@ -55,7 +55,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
 
     controller.moveTile(new Position(1, 2), new Position(2, 2)) should
-      be(new WrongToPosMessage)
+      be(new WrongToPosMessage(new Position(2, 2)))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)

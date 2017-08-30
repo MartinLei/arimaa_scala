@@ -14,8 +14,9 @@ class RuleBook(val field: FieldTrait) {
     if (isFromPosNotOwn(player, posFrom, posTo))
       return new WrongFromPosMessage
 
-    if (isToPosNotFree(posFrom, posTo))
-      return new WrongToPosMessage
+    val messageIsToPosNotFree = isToPosNotFree(player, posTo)
+    if (messageIsToPosNotFree.isDefined)
+      return messageIsToPosNotFree.get
 
     val messageWrongRabbitMove = isWrongRabbitMove(player, posFrom, posTo)
     if (messageWrongRabbitMove.isDefined)
@@ -34,8 +35,10 @@ class RuleBook(val field: FieldTrait) {
       !field.getTileName(pasPlayerName, posFrom).equals(TileNameEnum.NONE)
   }
 
-  private def isToPosNotFree(posFrom: Position, posTo: Position): Boolean = {
-    field.isOccupied(posTo)
+  def isToPosNotFree(actPlayerName: PlayerNameEnum, posTo: Position): Option[WrongToPosMessage] = {
+    if (field.isOccupied(posTo))
+      return Option(new WrongToPosMessage(posTo))
+    Option(null)
   }
 
   def isWrongRabbitMove(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[WrongRabbitMoveMessage] = {

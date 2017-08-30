@@ -1,9 +1,10 @@
 package controller.impl.messages.imp
 
 import controller.impl.messages.MessageTrade
+import util.Coordinate
+import util.position.Position
 
-class WrongToPosMessage extends MessageTrade {
-  override val id = 1
+class WrongToPosMessage(pos: Position) extends MessageTrade {
   override val valid = false
-  override val text = "Your second coordinate ist wrong"
+  override val text: String = Coordinate.posToCoordinate(pos) + " is occupied"
 }
