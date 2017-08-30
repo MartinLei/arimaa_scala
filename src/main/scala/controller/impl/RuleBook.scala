@@ -25,7 +25,7 @@ class RuleBook(val field: FieldTrait) {
     if (isToPosNotFree(posFrom, posTo))
       return new WrongToPosMessage
 
-    if (isWrongRabbitMove(posFrom, posTo))
+    if (isWrongRabbitMove(player, posFrom, posTo))
       return new WrongRabbitMoveMessage
 
 
@@ -45,19 +45,19 @@ class RuleBook(val field: FieldTrait) {
     field.isOccupied(posTo)
   }
 
-  private def isWrongRabbitMove(posFrom: Position, posTo: Position): Boolean = {
-    if (!field.getTileName(actPlayer.name, posFrom).equals(TileNameEnum.RABBIT))
+  private def isWrongRabbitMove(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+    if (!field.getTileName(playerName, posFrom).equals(TileNameEnum.RABBIT))
       return false
 
     val direction = DirectionEnum.getDirection(posFrom, posTo)
-    if (actPlayer.name.equals(PlayerNameEnum.GOLD) && direction.equals(DirectionEnum.SOUTH) ||
-      actPlayer.name.equals(PlayerNameEnum.SILVER) && direction.equals(DirectionEnum.NORTH))
+    if (playerName.equals(PlayerNameEnum.GOLD) && direction.equals(DirectionEnum.SOUTH) ||
+      playerName.equals(PlayerNameEnum.SILVER) && direction.equals(DirectionEnum.NORTH))
       return true
     false
   }
 
-  def isTailFixed(player: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
-    val fixedTilePos = field.getFixedTilePos(player, pos)
+  def isTailFixed(playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
+    val fixedTilePos = field.getFixedTilePos(playerName, pos)
     if (fixedTilePos.isDefined)
       return Option(new FixTileMessage(fixedTilePos.get))
 
