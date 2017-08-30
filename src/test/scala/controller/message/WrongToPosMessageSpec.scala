@@ -25,6 +25,13 @@ class WrongToPosMessageSpec extends FlatSpec with Matchers {
     wrongFromPos1 should be(wrongFromPos2)
   }
 
+  it should "not be if its not the same text" in {
+    val wrongFromPos1: MessageTrade = new WrongToPosMessage(new Position(1, 1))
+    val wrongFromPos2: MessageTrade = new WrongToPosMessage(new Position(1, 2))
+
+    wrongFromPos1 should not be wrongFromPos2
+  }
+
   it should "not be if its not same class" in {
     val wrongFromPos1: MessageTrade = new WrongToPosMessage(new Position(1, 1))
     val moveMessage: MessageTrade = new MoveMessage(new Position(1, 1), new Position(1, 2))
