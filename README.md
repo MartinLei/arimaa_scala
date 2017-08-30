@@ -10,3 +10,15 @@ I used it as a playground to get in touch with scala.
 # License
 This code project is under MIT License.\
 For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
+
+
+# TODO
+## inf
+- gui (observer)
+- undo (push pull)
+## rules
+- push
+- pull
+- trap
+- victory
+- 4 moves
