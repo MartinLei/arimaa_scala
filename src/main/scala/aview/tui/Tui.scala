@@ -12,11 +12,13 @@ class Tui(controller: ControllerTrait) {
       logger.info("Help::")
       logger.info("h : help")
       logger.info("q : quit")
+      logger.info("c : change Player")
       logger.info("Input::")
       true
-    case "q" =>
-      logger.info("Bye")
-      false
+    case "c" =>
+      controller.changePlayer()
+      logger.info("Change Player " + controller.getActPlayerName)
+      true
     case _ =>
       val patternCoordinate = "^[a-h][1-8] [a-h][1-8]$".r
       if ((patternCoordinate findFirstIn input).isDefined) {

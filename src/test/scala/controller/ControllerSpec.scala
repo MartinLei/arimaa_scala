@@ -1,7 +1,7 @@
 package controller
 
 import controller.impl.Controller
-import controller.impl.messages.imp.{MoveMessage, WrongToPosMessage}
+import controller.impl.messages.imp.{FixTileMessage, MoveMessage, WrongRabbitMoveMessage, WrongToPosMessage}
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.Position
@@ -59,6 +59,46 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
+  }
+
+  it should "not move a tile if a rabbit moves backward" in {
+    val controller: ControllerTrait = new Controller()
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should
+      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
+    controller.moveTile(new Position(1, 3), new Position(1, 2)) should
+      be(new WrongRabbitMoveMessage)
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+  }
+
+
+  it should "not move a tile if the tile is fixed by other player stronger tile" in {
+    val controller: ControllerTrait = new Controller()
+
+    controller.moveTile(new Position(4, 2), new Position(4, 3)) should
+      be(new MoveMessage(new Position(4, 2), new Position(4, 3)))
+    controller.moveTile(new Position(4, 3), new Position(4, 4)) should
+      be(new MoveMessage(new Position(4, 3), new Position(4, 4)))
+    controller.changePlayer()
+    controller.moveTile(new Position(4, 7), new Position(4, 6)) should
+      be(new MoveMessage(new Position(4, 7), new Position(4, 6)))
+    controller.moveTile(new Position(4, 6), new Position(4, 5)) should
+      be(new MoveMessage(new Position(4, 6), new Position(4, 5)))
+    controller.changePlayer()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
+
+    controller.moveTile(new Position(4, 4), new Position(5, 4)) should
+      be(new FixTileMessage(new Position(4, 5)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
   }
 
   "changePlayer" should "change the Player" in {
