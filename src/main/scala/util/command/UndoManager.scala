@@ -1,4 +1,4 @@
-package controller.impl.command
+package util.command
 
 class UndoManager {
   var commandStack: List[CommandTrait] = List()

@@ -1,7 +1,4 @@
-package controller.command
-
-
-import controller.impl.command.CommandTrait
+package util.command
 
 class TestDoUndoCommand(testReceiver: TestReceiver) extends CommandTrait {
 

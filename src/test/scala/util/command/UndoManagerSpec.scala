@@ -1,6 +1,5 @@
-package controller.command
+package util.command
 
-import controller.impl.command.UndoManager
 import org.scalatest.{FlatSpec, Matchers}
 
 class UndoManagerSpec extends FlatSpec with Matchers {
