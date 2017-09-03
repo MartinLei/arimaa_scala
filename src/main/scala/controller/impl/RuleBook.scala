@@ -63,4 +63,8 @@ class RuleBook(val field: FieldTrait) {
 
     Option(null)
   }
+
+  def isTileTrapped(playerNameEnum: PlayerNameEnum, pos: Position): Option[TileTrappedMessage] = {
+    Option(null)
+  }
 }

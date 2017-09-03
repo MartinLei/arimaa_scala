@@ -110,4 +110,25 @@ class RuleBookSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
+  "isTileTrapped" should "give TileTrappedMessage, if the tail is trapped" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+
+    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(3, 3)) should
+      be(Some(new TileTrappedMessage(new Position(3, 3))))
+  }
+
+  it should "be null if not" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+
+    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should
+      be(Option(null))
+  }
 }
