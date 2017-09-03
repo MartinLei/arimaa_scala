@@ -86,11 +86,8 @@ class Field() extends FieldTrait {
 
   private def cellAsString(pos: Position): String = {
     val sb: StringBuilder = new StringBuilder()
-    val traps: Set[Position] =
-      Set(new Position(3, 3), new Position(6, 3),
-        new Position(3, 6), new Position(6, 6))
 
-    if (traps.exists((trap: Position) => trap.equals(pos)))
+    if (Position.isPosATrap(pos))
       sb.append("X")
     else
       sb.append(cellTileAsString(pos))

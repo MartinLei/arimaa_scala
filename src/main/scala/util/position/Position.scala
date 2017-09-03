@@ -7,6 +7,7 @@ class Position(x: Int, y: Int) extends PositionRaw(x, y) {
 
 object Position {
   private val surroundTemplate = Set(new PositionRaw(0, 1), new PositionRaw(1, 0), new PositionRaw(0, -1), new PositionRaw(-1, 0))
+  private val traps: Set[Position] = Set(new Position(3, 3), new Position(6, 3), new Position(3, 6), new Position(6, 6))
 
   def getSurround(pos: Position): Set[Position] = {
     var surround: Set[Position] = Set()
@@ -19,5 +20,11 @@ object Position {
       }
     })
     surround
+  }
+
+  def isPosATrap(pos: Position): Boolean = {
+    if (traps.exists((trap: Position) => trap.equals(pos)))
+      return true
+    false
   }
 }

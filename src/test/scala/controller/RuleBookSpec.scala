@@ -121,7 +121,7 @@ class RuleBookSpec extends FlatSpec with Matchers {
       be(Some(new TileTrappedMessage(new Position(3, 3))))
   }
 
-  it should "be null if not" in {
+  it should "be null if pos is not a trap position" in {
     val field = new Field()
     val ruleBook = new RuleBook(field)
 
@@ -131,4 +131,18 @@ class RuleBookSpec extends FlatSpec with Matchers {
     ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should
       be(Option(null))
   }
+
+  it should "be null if pos is surround by one own tile" in {
+    val field = new Field()
+    val ruleBook = new RuleBook(field)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+
+    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(3, 3)) should
+      be(Option(null))
+  }
+
 }

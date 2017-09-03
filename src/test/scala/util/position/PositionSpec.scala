@@ -31,4 +31,14 @@ class PositionSpec extends FlatSpec with Matchers {
 
     Position.getSurround(pos1_3) should be(surround1_3Should)
   }
+
+  "isPosATrap" should "be true if a position is on {3,3},{3,6},{6,3},{6,6}" in {
+    Position.isPosATrap(new Position(3, 3)) should be(true)
+    Position.isPosATrap(new Position(3, 6)) should be(true)
+    Position.isPosATrap(new Position(6, 3)) should be(true)
+    Position.isPosATrap(new Position(6, 6)) should be(true)
+  }
+  it should "false if not" in {
+    Position.isPosATrap(new Position(1, 1)) should be(false)
+  }
 }
