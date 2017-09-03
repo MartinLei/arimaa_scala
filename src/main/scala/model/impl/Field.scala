@@ -11,10 +11,9 @@ class Field() extends FieldTrait {
   private val playerSilver: Player = getInitSilverPlayer
 
   override def getPlayerTiles(player: PlayerNameEnum): Set[Tile] = player match {
-    case PlayerNameEnum.GOLD =>
-      playerGold.getTiles
-    case PlayerNameEnum.SILVER =>
-      playerSilver.getTiles
+    case PlayerNameEnum.GOLD => playerGold.getTiles
+    case PlayerNameEnum.SILVER => playerSilver.getTiles
+    case PlayerNameEnum.NONE => Set()
   }
 
   private def getInitGoldPlayer: Player = {

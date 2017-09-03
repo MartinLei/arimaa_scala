@@ -55,12 +55,18 @@ class FieldSpec extends FlatSpec with Matchers {
     tilesSilver shouldEqual tilesSilverShouldBe
   }
 
-  it should "give to a player and position the tale, if their is one" in {
+  it should "give a empty set if player is NONE" in {
+    val field: FieldTrait = new Field()
+    field.getPlayerTiles(PlayerNameEnum.NONE) should be(Set())
+  }
+
+  "getTileName" should "give to a player and position the tale, if their is one" in {
     val field: FieldTrait = new Field()
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
   }
+
 
   "toString" should "have given output" in {
     val field99of9String: String = "\n" +
