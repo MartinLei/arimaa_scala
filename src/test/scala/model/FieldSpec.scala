@@ -122,6 +122,17 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.RABBIT)
   }
+  it should "be false if player is NONE" in {
+    val field: FieldTrait = new Field()
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+    field.changeTilePos(PlayerNameEnum.NONE, new Position(1, 2), new Position(1, 3)) should be(false)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+  }
 
   "getStrongerOtherTilesWhoAround" should "get the pos of the stronger other player tile who fix the tile" in {
     val field = new Field()
