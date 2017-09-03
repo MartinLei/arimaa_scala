@@ -116,8 +116,12 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
       be(new TileTrappedMessage(new Position(3, 3)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
   }
 
