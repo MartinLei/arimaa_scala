@@ -153,6 +153,13 @@ class FieldSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
+  it should "be empty if player is NONE" in {
+    val field = new Field()
+
+    field.getStrongerOtherTilesWhoAround(PlayerNameEnum.NONE, new Position(4, 2)) should
+      be(Option(null))
+  }
+
   "isHoledByOwnTile" should "be true if a own tile is around" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
