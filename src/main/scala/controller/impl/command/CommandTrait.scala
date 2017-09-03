@@ -1,5 +1,4 @@
-package util.command
-
+package controller.impl.command
 
 trait CommandTrait {
   def doCommand(): Unit

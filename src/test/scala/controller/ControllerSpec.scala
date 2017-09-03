@@ -121,4 +121,41 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.changePlayer()
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
+
+  /*
+  "redo" should "redo last move" in{
+    val controller: ControllerTrait = new Controller()
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should
+      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
+    controller.unDo()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+    controller.reDo()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+  }
+*/
+  "unDo" should "undo last move" in {
+    val controller: ControllerTrait = new Controller()
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3)) should
+      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
+    controller.moveTileUndo()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+
+  }
 }

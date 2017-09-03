@@ -14,11 +14,18 @@ class Tui(controller: ControllerTrait) {
       logger.info("h : help")
       logger.info("q : quit")
       logger.info("c : change Player")
+      logger.info("u : undo last move")
       logger.info("Input::")
       true
     case "c" =>
       controller.changePlayer()
       logger.info("Change Player " + controller.getActPlayerName)
+      true
+    case "u" =>
+      controller.moveTileUndo()
+      logger.info(controller.getFieldAsString)
+      logger.info("undo last move")
+      logger.info("Input::")
       true
     case _ =>
       val patternCoordinate = "^[a-h][1-8] [a-h][1-8]$".r

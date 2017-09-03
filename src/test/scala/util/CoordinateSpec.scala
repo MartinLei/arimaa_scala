@@ -23,4 +23,5 @@ class CoordinateSpec extends FlatSpec with Matchers {
 
     Coordinate.moveToCoordinate(new Position(4, 4), new Position(1, 4)) should be("d4NONE")
   }
+
 }

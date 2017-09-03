@@ -2,6 +2,8 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
+import controller.impl.command.UndoManager
+import controller.impl.command.impl.MoveCommand
 import controller.impl.messages.MessageTrade
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -15,6 +17,7 @@ class Controller extends ControllerTrait {
   private val ruleBook: RuleBook = new RuleBook(field)
 
   private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
+  private val undoManager = new UndoManager
 
   override def getActPlayerName: PlayerNameEnum = actPlayerName
 
@@ -28,7 +31,8 @@ class Controller extends ControllerTrait {
     if (!preMessage.valid)
       return preMessage
 
-    field.changeTilePos(actPlayerName, posFrom, posTo)
+    val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
+    undoManager.doCommand(moveCommand)
 
     preMessage
   }
@@ -41,4 +45,7 @@ class Controller extends ControllerTrait {
     actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
   }
 
+  override def moveTileUndo(): Unit = {
+    undoManager.undoCommand()
+  }
 }
