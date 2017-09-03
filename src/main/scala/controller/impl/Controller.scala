@@ -3,9 +3,9 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.UndoManager
-import controller.impl.command.imp.MoveCommand
+import controller.impl.command.imp.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.MoveMessage
+import controller.impl.messages.imp.{MoveMessage, TileTrappedMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -31,11 +31,15 @@ class Controller extends ControllerTrait {
     if (!preMessage.valid)
       return preMessage
 
-    if (preMessage.isInstanceOf[MoveMessage]) {
-      val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
-      undoManager.doCommand(moveCommand)
-    } else {
-      logger.info("NO MOVE COMMAND BUT VALID MOVE")
+    preMessage match {
+      case preMessage: MoveMessage =>
+        val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
+        undoManager.doCommand(moveCommand)
+
+      case preMessage: TileTrappedMessage =>
+        val removeCommand = new RemoveCommand(field, actPlayerName, posFrom, posTo)
+        undoManager.doCommand(removeCommand)
+
     }
 
     preMessage

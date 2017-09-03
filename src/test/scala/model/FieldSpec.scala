@@ -187,5 +187,19 @@ class FieldSpec extends FlatSpec with Matchers {
     val field = new Field()
     field.getPlayerName(new Position(1, 5)) should be(PlayerNameEnum.NONE)
   }
+
+  "removeTile" should "remove the tile from player on this position" in {
+    val field = new Field()
+    field.getPlayerName(new Position(1, 1)) should be(PlayerNameEnum.GOLD)
+    field.removeTile(new Position(1, 1))
+    field.getPlayerName(new Position(1, 1)) should be(PlayerNameEnum.NONE)
+  }
+
+  it should "do nothing if the player is NONE" in {
+    val field = new Field()
+    field.getPlayerName(new Position(1, 3)) should be(PlayerNameEnum.NONE)
+    field.removeTile(new Position(1, 3))
+    field.getPlayerName(new Position(1, 3)) should be(PlayerNameEnum.NONE)
+  }
 }
 

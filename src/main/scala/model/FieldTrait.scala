@@ -20,4 +20,8 @@ trait FieldTrait {
   def isHoledByOwnTile(pos: Position): Boolean
 
   def getPlayerName(pos: Position): PlayerNameEnum
+
+  def removeTile(pos: Position): Unit
+
+  def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Unit
 }

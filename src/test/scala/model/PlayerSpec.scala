@@ -113,4 +113,22 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
     player.getTileName(new Position(1, 2)) should be(TileNameEnum.NONE)
   }
+
+  "remove" should "remove tile on given position" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+    player.remove(new Position(1, 1))
+    player.getTileName(new Position(1, 1)) should be(TileNameEnum.NONE)
+  }
+
+  it should "do nothing if tile pos not in set" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+    player.remove(new Position(2, 2))
+    player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
+  }
 }
