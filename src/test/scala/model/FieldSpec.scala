@@ -122,7 +122,7 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.RABBIT)
   }
 
-  "getFixedTilePos" should "get the pos of the stronger other player tile who fix the tile" in {
+  "getStrongerOtherTilesWhoAround" should "get the pos of the stronger other player tile who fix the tile" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
@@ -131,14 +131,38 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
 
-    field.getFixedTilePos(PlayerNameEnum.GOLD, new Position(4, 4)) should
+    field.getStrongerOtherTilesWhoAround(PlayerNameEnum.GOLD, new Position(4, 4)) should
       be(Some(new Position(4, 5)))
   }
   it should "be null if it not fixed" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
-    field.getFixedTilePos(PlayerNameEnum.GOLD, new Position(4, 2)) should
+    field.getStrongerOtherTilesWhoAround(PlayerNameEnum.GOLD, new Position(4, 2)) should
       be(Option(null))
+  }
+
+  "isHoledByOwnTile" should "be true if a own tile is arround" in {
+    val field = new Field()
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    field.isHoledByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2)) should be(true)
+  }
+
+  it should "be false if not" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 5))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 5)) should be(TileNameEnum.RABBIT)
+
+    field.isHoledByOwnTile(PlayerNameEnum.GOLD, new Position(1, 5)) should be(false)
+  }
+
+  "getPlayerName" should "give the player name of the tile if there is one" in {
+    val field = new Field()
+    field.getPlayerName(new Position(1, 1)) should be(PlayerNameEnum.GOLD)
+    field.getPlayerName(new Position(1, 8)) should be(PlayerNameEnum.SILVER)
+  }
+  it should "be NONE if there is no tile" in {
+    val field = new Field()
+    field.getPlayerName(new Position(1, 5)) should be(PlayerNameEnum.NONE)
   }
 }
 

@@ -136,7 +136,7 @@ class Field() extends FieldTrait {
     case PlayerNameEnum.SILVER => playerSilver
   }
 
-  override def getFixedTilePos(player: PlayerNameEnum, pos: Position): Option[Position] = {
+  override def getStrongerOtherTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position] = {
     val surround = Position.getSurround(pos)
     val posTileName = getTileName(player, pos)
     val pasPlayer = PlayerNameEnum.getInvertPlayer(player)
@@ -147,5 +147,30 @@ class Field() extends FieldTrait {
         return Option(surPos)
     })
     Option(null)
+  }
+
+  override def isHoledByOwnTile(player: PlayerNameEnum, pos: Position): Boolean = {
+    if (getTileName(player, pos).equals(TileNameEnum.NONE))
+      return false
+
+    val playerName = getPlayerName(pos)
+    val surround = Position.getSurround(pos)
+    surround.foreach(surPos => {
+      val surPlayerName = getPlayerName(surPos)
+      if (surPlayerName.equals(playerName))
+        return true
+    })
+
+
+    false
+  }
+
+  override def getPlayerName(pos: Position): PlayerNameEnum = {
+    if (!playerGold.getTileName(pos).equals(TileNameEnum.NONE))
+      return PlayerNameEnum.GOLD
+    else if (!playerSilver.getTileName(pos).equals(TileNameEnum.NONE))
+      return PlayerNameEnum.SILVER
+
+    PlayerNameEnum.NONE
   }
 }

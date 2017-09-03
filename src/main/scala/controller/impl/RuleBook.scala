@@ -29,6 +29,7 @@ class RuleBook(val field: FieldTrait) {
     new MoveMessage(posFrom, posTo)
   }
 
+  //TODO ref
   def isFromPosNotOwn(actPlayerName: PlayerNameEnum, posFrom: Position): Option[WrongFromPosMessage] = {
     val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
     if (field.getTileName(actPlayerName, posFrom).equals(TileNameEnum.NONE) &&
@@ -57,7 +58,7 @@ class RuleBook(val field: FieldTrait) {
   }
 
   def isTailFixed(playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
-    val fixedTilePos = field.getFixedTilePos(playerName, pos)
+    val fixedTilePos = field.getStrongerOtherTilesWhoAround(playerName, pos)
     if (fixedTilePos.isDefined)
       return Option(new FixTileMessage(fixedTilePos.get))
 
