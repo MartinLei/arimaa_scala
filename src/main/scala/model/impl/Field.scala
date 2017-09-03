@@ -98,13 +98,12 @@ class Field() extends FieldTrait {
   private def cellTileAsString(pos: Position): String = {
     val sb: StringBuilder = new StringBuilder()
 
-    val tileNameGold: TileNameEnum = getTileName(PlayerNameEnum.GOLD, pos)
-    val tileNameSilver: TileNameEnum = getTileName(PlayerNameEnum.SILVER, pos)
+    val tilePlayer = getPlayerName(pos)
 
-    if (!tileNameGold.equals(TileNameEnum.NONE))
-      sb.append(tileNameGold.toString)
-    else if (!tileNameSilver.equals(TileNameEnum.NONE))
-      sb.append(tileNameSilver.toString.toLowerCase)
+    if (tilePlayer.equals(PlayerNameEnum.GOLD))
+      sb.append(getTileName(PlayerNameEnum.GOLD, pos).toString)
+    else if (tilePlayer.equals(PlayerNameEnum.SILVER))
+      sb.append(getTileName(PlayerNameEnum.SILVER, pos).toString.toLowerCase)
     else
       sb.append(" ")
 
