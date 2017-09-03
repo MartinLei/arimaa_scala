@@ -33,11 +33,10 @@ class RuleBook(val field: FieldTrait) {
     new MoveMessage(posFrom, posTo)
   }
 
-  //TODO ref
   def isFromPosNotOwn(actPlayerName: PlayerNameEnum, posFrom: Position): Option[WrongFromPosMessage] = {
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
-    if (field.getTileName(actPlayerName, posFrom).equals(TileNameEnum.NONE) &&
-      !field.getTileName(pasPlayerName, posFrom).equals(TileNameEnum.NONE))
+    val playerName = field.getPlayerName(posFrom)
+
+    if (!actPlayerName.equals(playerName))
       return Option(new WrongFromPosMessage(posFrom))
 
     Option(null)
