@@ -18,7 +18,7 @@ trait FieldTrait {
 
   def getStrongerOtherTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position]
 
-  def isHoledByOwnTile(player: PlayerNameEnum, pos: Position): Boolean
+  def isHoledByOwnTile(pos: Position): Boolean
 
   def getPlayerName(pos: Position): PlayerNameEnum
 }

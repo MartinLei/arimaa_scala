@@ -141,10 +141,10 @@ class FieldSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
-  "isHoledByOwnTile" should "be true if a own tile is arround" in {
+  "isHoledByOwnTile" should "be true if a own tile is around" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    field.isHoledByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2)) should be(true)
+    field.isHoledByOwnTile(new Position(1, 2)) should be(true)
   }
 
   it should "be false if not" in {
@@ -152,7 +152,7 @@ class FieldSpec extends FlatSpec with Matchers {
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 5))
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 5)) should be(TileNameEnum.RABBIT)
 
-    field.isHoledByOwnTile(PlayerNameEnum.GOLD, new Position(1, 5)) should be(false)
+    field.isHoledByOwnTile(new Position(1, 5)) should be(false)
   }
 
   "getPlayerName" should "give the player name of the tile if there is one" in {

@@ -117,7 +117,7 @@ class RuleBookSpec extends FlatSpec with Matchers {
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
 
-    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(3, 3)) should
+    ruleBook.isTileTrapped(new Position(3, 3)) should
       be(Some(new TileTrappedMessage(new Position(3, 3))))
   }
 
@@ -128,7 +128,7 @@ class RuleBookSpec extends FlatSpec with Matchers {
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
-    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should
+    ruleBook.isTileTrapped(new Position(2, 3)) should
       be(Option(null))
   }
 
@@ -141,7 +141,7 @@ class RuleBookSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
 
-    ruleBook.isTileTrapped(PlayerNameEnum.GOLD, new Position(3, 3)) should
+    ruleBook.isTileTrapped(new Position(3, 3)) should
       be(Option(null))
   }
 
