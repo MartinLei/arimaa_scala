@@ -80,16 +80,6 @@ class FieldSpec extends FlatSpec with Matchers {
     field.toString should be(field99of9String)
   }
 
-  "getPlayer" should "give the wanted player" in {
-    val field: FieldTrait = new Field()
-    val playerGold: Player = field.getPlayer(PlayerNameEnum.GOLD)
-    playerGold.name should be(PlayerNameEnum.GOLD)
-
-    val playerSilver: Player = field.getPlayer(PlayerNameEnum.SILVER)
-    playerSilver.name should be(PlayerNameEnum.SILVER)
-
-  }
-
   "isOccupied" should "tell if a cell is occupied" in {
     val field: FieldTrait = new Field()
     field.isOccupied(new Position(1, 2)) should be(true)

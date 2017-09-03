@@ -131,11 +131,6 @@ class Field() extends FieldTrait {
     false
   }
 
-  override def getPlayer(player: PlayerNameEnum): Player = player match {
-    case PlayerNameEnum.GOLD => playerGold
-    case PlayerNameEnum.SILVER => playerSilver
-  }
-
   override def getStrongerOtherTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position] = {
     val surround = Position.getSurround(pos)
     val posTileName = getTileName(player, pos)
