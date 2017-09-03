@@ -26,6 +26,10 @@ class RuleBook(val field: FieldTrait) {
     if (messageIsFix.isDefined)
       return messageIsFix.get
 
+    val messageIsTrapped = isTileTrapped(posTo)
+    if (messageIsTrapped.isDefined)
+      return messageIsTrapped.get
+
     new MoveMessage(posFrom, posTo)
   }
 

@@ -173,6 +173,10 @@ class FieldSpec extends FlatSpec with Matchers {
 
     field.isHoledByOwnTile(new Position(1, 5)) should be(false)
   }
+  it should "be false if position is NONE" in {
+    val field = new Field()
+    field.isHoledByOwnTile(new Position(1, 5)) should be(false)
+  }
 
   "getPlayerName" should "give the player name of the tile if there is one" in {
     val field = new Field()

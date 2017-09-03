@@ -36,7 +36,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
 
   "move" should "move a tile on his given Position" in {
-    val controller: ControllerTrait = new Controller()
+    val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
@@ -49,7 +49,7 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
 
   it should "not move a tile if fromPos is not own tile" in {
-    val controller: ControllerTrait = new Controller()
+    val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
@@ -61,7 +61,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
   }
   it should "not move a tile if toPos is notFree" in {
-    val controller: ControllerTrait = new Controller()
+    val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
@@ -74,7 +74,7 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
 
   it should "not move a tile if a rabbit moves backward" in {
-    val controller: ControllerTrait = new Controller()
+    val controller = new Controller()
 
     controller.moveTile(new Position(1, 2), new Position(1, 3)) should
       be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
@@ -90,7 +90,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
 
   it should "not move a tile if the tile is fixed by other player stronger tile" in {
-    val controller: ControllerTrait = new Controller()
+    val controller = new Controller()
 
     controller.moveTile(new Position(4, 2), new Position(4, 3)) should
       be(new MoveMessage(new Position(4, 2), new Position(4, 3)))
@@ -112,6 +112,15 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
   }
+  it should "remove tile if it is trapped" in {
+    val controller = new Controller()
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
+    controller.moveTile(new Position(3, 2), new Position(3, 3)) should
+      be(new TileTrappedMessage(new Position(3, 3)))
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+  }
+
 
   "changePlayer" should "change the Player" in {
     val controller: ControllerTrait = new Controller()

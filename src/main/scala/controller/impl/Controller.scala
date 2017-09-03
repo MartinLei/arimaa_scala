@@ -5,6 +5,7 @@ import controller.ControllerTrait
 import controller.impl.command.UndoManager
 import controller.impl.command.imp.MoveCommand
 import controller.impl.messages.MessageTrade
+import controller.impl.messages.imp.MoveMessage
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -26,13 +27,16 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): MessageTrade = {
-
     val preMessage: MessageTrade = ruleBook.precondition(actPlayerName, posFrom, posTo)
     if (!preMessage.valid)
       return preMessage
 
-    val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
-    undoManager.doCommand(moveCommand)
+    if (preMessage.isInstanceOf[MoveMessage]) {
+      val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
+      undoManager.doCommand(moveCommand)
+    } else {
+      logger.info("NO MOVE COMMAND BUT VALID MOVE")
+    }
 
     preMessage
   }

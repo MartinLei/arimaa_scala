@@ -95,19 +95,19 @@ class Field() extends FieldTrait {
     sb.toString()
   }
 
-  private def cellTileAsString(pos: Position): String = {
-    val sb: StringBuilder = new StringBuilder()
+  override def isHoledByOwnTile(pos: Position): Boolean = {
+    val playerName = getPlayerName(pos)
+    if (playerName.equals(PlayerNameEnum.NONE))
+      return false
 
-    val tilePlayer = getPlayerName(pos)
+    val surround = Position.getSurround(pos)
+    surround.foreach(surPos => {
+      val surPlayerName = getPlayerName(surPos)
+      if (surPlayerName.equals(playerName))
+        return true
+    })
 
-    if (tilePlayer.equals(PlayerNameEnum.GOLD))
-      sb.append(getTileName(PlayerNameEnum.GOLD, pos).toString)
-    else if (tilePlayer.equals(PlayerNameEnum.SILVER))
-      sb.append(getTileName(PlayerNameEnum.SILVER, pos).toString.toLowerCase)
-    else
-      sb.append(" ")
-
-    sb.toString()
+    false
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = player match {
@@ -144,19 +144,19 @@ class Field() extends FieldTrait {
     Option(null)
   }
 
-  override def isHoledByOwnTile(pos: Position): Boolean = {
-    val playerName = getPlayerName(pos)
-    if (playerName.equals(TileNameEnum.NONE))
-      return false
+  private def cellTileAsString(pos: Position): String = {
+    val sb: StringBuilder = new StringBuilder()
 
-    val surround = Position.getSurround(pos)
-    surround.foreach(surPos => {
-      val surPlayerName = getPlayerName(surPos)
-      if (surPlayerName.equals(playerName))
-        return true
-    })
+    val tilePlayer = getPlayerName(pos)
 
-    false
+    if (tilePlayer.equals(PlayerNameEnum.GOLD))
+      sb.append(getTileName(PlayerNameEnum.GOLD, pos).toString)
+    else if (tilePlayer.equals(PlayerNameEnum.SILVER))
+      sb.append(getTileName(PlayerNameEnum.SILVER, pos).toString.toLowerCase)
+    else
+      sb.append(" ")
+
+    sb.toString()
   }
 
   override def getPlayerName(pos: Position): PlayerNameEnum = {
