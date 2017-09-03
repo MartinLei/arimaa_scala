@@ -67,6 +67,11 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
   }
 
+  it should "give NONE if player is NONE" in {
+    val field: FieldTrait = new Field()
+    field.getTileName(PlayerNameEnum.NONE, new Position(1, 1)) should be(TileNameEnum.NONE)
+  }
+
 
   "toString" should "have given output" in {
     val field99of9String: String = "\n" +
