@@ -2,7 +2,7 @@ package controller.command
 
 import controller.impl.command.CommandTrait
 
-class TestDoUndoCommand(testReceiver: TestReceiver) extends CommandTrait {
+class MocDoUndoCommand(testReceiver: MocReceiver) extends CommandTrait {
 
   override def doCommand(): Unit = {
     testReceiver.add(1)
