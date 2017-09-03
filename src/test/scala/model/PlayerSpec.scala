@@ -131,4 +131,24 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.remove(new Position(2, 2))
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
   }
+
+  "add" should "add the given tile on the position" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+    player.add(TileNameEnum.RABBIT, new Position(1, 3))
+
+    player.getTileName(new Position(1, 3)) should be(TileNameEnum.RABBIT)
+  }
+  it should "do nothing if the position is already occupied" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+    player.add(TileNameEnum.RABBIT, new Position(1, 1))
+
+    player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    player.getTiles should contain theSameElementsAs tiles
+  }
 }

@@ -26,7 +26,7 @@ class RemoveCommandSpec extends FlatSpec with Matchers {
 
     removeCommand.undoCommand() should be(new UndoRemoveMessage(new Position(3, 3), new Position(3, 2)))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
   }
 }

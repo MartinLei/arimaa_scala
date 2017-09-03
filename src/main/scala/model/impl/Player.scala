@@ -57,4 +57,10 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     tiles = tiles.filter(tile => !tile.pos.equals(pos))
   }
 
+  def add(tileName: TileNameEnum, pos: Position): Unit = {
+    if (isATileThere(pos))
+      return
+    val tile = new Tile(tileName, pos)
+    tiles = tiles.+(tile)
+  }
 }
