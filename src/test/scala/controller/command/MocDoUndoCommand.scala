@@ -1,6 +1,8 @@
 package controller.command
 
 import controller.impl.command.CommandTrait
+import controller.impl.messages.imp.UndoMoveMessage
+import util.position.Position
 
 class MocDoUndoCommand(testReceiver: MocReceiver) extends CommandTrait {
 
@@ -8,7 +10,8 @@ class MocDoUndoCommand(testReceiver: MocReceiver) extends CommandTrait {
     testReceiver.add(1)
   }
 
-  override def undoCommand(): Unit = {
+  override def undoCommand(): UndoMoveMessage = {
     testReceiver.add(-1)
+    new UndoMoveMessage(new Position(1, 1), new Position(1, 1))
   }
 }

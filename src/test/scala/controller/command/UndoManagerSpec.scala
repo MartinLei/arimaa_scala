@@ -1,6 +1,7 @@
 package controller.command
 
 import controller.impl.command.UndoManager
+import controller.impl.messages.imp.{EmptyUndoStackMessage, UndoMoveMessage}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -15,10 +16,11 @@ class UndoManagerSpec extends FlatSpec with Matchers {
   }
 
   "unDoCommand" should "do the command" in {
-    undoManager.undoCommand()
+    undoManager.undoCommand() should be(new UndoMoveMessage(new Position(1, 1), new Position(1, 1)))
     mocReciever.pos should be(new Position(5, 5))
 
-    undoManager.undoCommand()
+    undoManager.undoCommand() should be(new EmptyUndoStackMessage)
+
     mocReciever.pos should be(new Position(5, 5))
   }
 

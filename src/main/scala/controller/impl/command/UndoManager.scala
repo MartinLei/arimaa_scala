@@ -1,5 +1,8 @@
 package controller.impl.command
 
+import controller.impl.messages.MessageTrade
+import controller.impl.messages.imp.EmptyUndoStackMessage
+
 class UndoManager {
   var commandStack: List[CommandTrait] = List()
 
@@ -8,9 +11,9 @@ class UndoManager {
     commandStack = commandStack.::(command)
   }
 
-  def undoCommand(): Any = {
+  def undoCommand(): MessageTrade = {
     if (commandStack.isEmpty)
-      return
+      return new EmptyUndoStackMessage
 
     val command: CommandTrait = commandStack.last
     commandStack = commandStack.tail

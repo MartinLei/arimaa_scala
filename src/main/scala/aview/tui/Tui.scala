@@ -22,9 +22,9 @@ class Tui(controller: ControllerTrait) {
       logger.info("Change Player " + controller.getActPlayerName)
       true
     case "u" =>
-      controller.moveTileUndo()
+      val message = controller.moveTileUndo()
       logger.info(controller.getFieldAsString)
-      logger.info("undo last move")
+      logger.info(message.text)
       logger.info("Input::")
       true
     case _ =>

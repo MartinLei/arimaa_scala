@@ -1,6 +1,7 @@
-package controller.command
+package controller.command.imp
 
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.imp.MoveCommand
+import controller.impl.messages.imp.UndoMoveMessage
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -23,7 +24,7 @@ class MoveCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
-    moveCommand.undoCommand()
+    moveCommand.undoCommand() should be(new UndoMoveMessage(new Position(1, 3), new Position(1, 2)))
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)

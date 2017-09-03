@@ -3,7 +3,7 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.UndoManager
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.imp.MoveCommand
 import controller.impl.messages.MessageTrade
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -45,7 +45,7 @@ class Controller extends ControllerTrait {
     actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
   }
 
-  override def moveTileUndo(): Unit = {
+  override def moveTileUndo(): MessageTrade = {
     undoManager.undoCommand()
   }
 }
