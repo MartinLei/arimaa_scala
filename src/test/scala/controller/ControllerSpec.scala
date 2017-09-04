@@ -129,16 +129,18 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.moveTile(new Position(2, 2), new Position(2, 3)) should
       be(new MoveMessage(new Position(2, 2), new Position(2, 3)))
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
       be(new MoveMessage(new Position(3, 2), new Position(3, 3)))
 
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+
   }
 
   "changePlayer" should "change the Player" in {

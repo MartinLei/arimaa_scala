@@ -160,23 +160,28 @@ class FieldSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
-  "isHoledByOwnTile" should "be true if a own tile is around" in {
+  "isSurroundByOwnTile" should "be true if a own tile is around" in {
     val field = new Field()
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    field.isHoledByOwnTile(new Position(1, 2)) should be(true)
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    field.isSurroundByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(true)
+  }
+  it should "be false if not surround by own tile" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    field.isSurroundByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(false)
+  }
+  it should "be false if posFrom is the only surround posTo" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+
+    field.isSurroundByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(false)
   }
 
-  it should "be false if not" in {
-    val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 5))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 5)) should be(TileNameEnum.RABBIT)
-
-    field.isHoledByOwnTile(new Position(1, 5)) should be(false)
-  }
-  it should "be false if position is NONE" in {
-    val field = new Field()
-    field.isHoledByOwnTile(new Position(1, 5)) should be(false)
-  }
 
   "getPlayerName" should "give the player name of the tile if there is one" in {
     val field = new Field()

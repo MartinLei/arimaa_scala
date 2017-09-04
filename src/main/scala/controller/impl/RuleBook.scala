@@ -26,7 +26,7 @@ class RuleBook(val field: FieldTrait) {
     if (messageIsFix.isDefined)
       return messageIsFix.get
 
-    val messageIsTrapped = isTileTrapped(posTo)
+    val messageIsTrapped = isTileTrapped(player, posFrom, posTo)
     if (messageIsTrapped.isDefined)
       return messageIsTrapped.get
 
@@ -68,13 +68,13 @@ class RuleBook(val field: FieldTrait) {
     Option(null)
   }
 
-  def isTileTrapped(pos: Position): Option[TileTrappedMessage] = {
-    if (!Position.isPosATrap(pos))
+  def isTileTrapped(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[TileTrappedMessage] = {
+    if (!Position.isPosATrap(posTo))
       return Option(null)
 
-    if (field.isHoledByOwnTile(pos))
+    if (field.isSurroundByOwnTile(playerName, posFrom, posTo))
       return Option(null)
 
-    Option(new TileTrappedMessage(pos))
+    Option(new TileTrappedMessage(posTo))
   }
 }
