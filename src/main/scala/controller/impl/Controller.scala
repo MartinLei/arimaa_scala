@@ -45,6 +45,10 @@ class Controller extends ControllerTrait {
     preMessage
   }
 
+  override def moveTileUndo(): MessageTrade = {
+    undoManager.undoCommand()
+  }
+
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
     field.getTileName(player, pos)
   }
@@ -53,7 +57,4 @@ class Controller extends ControllerTrait {
     actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
   }
 
-  override def moveTileUndo(): MessageTrade = {
-    undoManager.undoCommand()
-  }
 }

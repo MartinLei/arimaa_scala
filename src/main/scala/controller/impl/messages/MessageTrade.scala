@@ -9,7 +9,7 @@ trait MessageTrade {
     case _ => false
   }
 
-  override def toString: String = "{" + this.getClass + ", text: " + text + ", valid: " + valid + "}"
+  override def toString: String = "{" + this.getClass.getSimpleName + ", text: " + text + ", valid: " + valid + "}"
 
   override def hashCode(): Int = toString.hashCode
 
