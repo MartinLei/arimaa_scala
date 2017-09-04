@@ -161,6 +161,17 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
+    controller.moveTile(new Position(1, 3), new Position(1, 4)) should
+      be(new MoveMessage(new Position(1, 3), new Position(1, 4)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.RABBIT)
+
+    controller.moveTileUndo() should be(new UndoMoveMessage(new Position(1, 4), new Position(1, 3)))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.NONE)
+
     controller.moveTileUndo() should be(new UndoMoveMessage(new Position(1, 3), new Position(1, 2)))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)

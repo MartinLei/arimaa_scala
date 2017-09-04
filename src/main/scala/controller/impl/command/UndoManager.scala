@@ -8,6 +8,7 @@ class UndoManager {
 
   def doCommand(command: CommandTrait): Any = {
     command.doCommand()
+
     commandStack = commandStack.::(command)
   }
 
@@ -15,7 +16,7 @@ class UndoManager {
     if (commandStack.isEmpty)
       return new EmptyUndoStackMessage
 
-    val command: CommandTrait = commandStack.last
+    val command: CommandTrait = commandStack.head
     commandStack = commandStack.tail
 
     command.undoCommand()
