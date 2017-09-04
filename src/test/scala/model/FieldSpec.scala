@@ -87,8 +87,27 @@ class FieldSpec extends FlatSpec with Matchers {
       "  +-----------------+\n" +
       "    a b c d e f g h  \n"
 
-    val field: FieldTrait = new Field
+    val field = new Field
     field.toString should be(field99of9String)
+  }
+  it should "show tile on trap if its hold" in {
+    val fieldString: String = "\n" +
+      "  +-----------------+\n" +
+      "8 | r r r d d r r r |\n" +
+      "7 | r h c e m c h r |\n" +
+      "6 |     X     X     |\n" +
+      "5 |                 |\n" +
+      "4 |                 |\n" +
+      "3 |   H C     X     |\n" +
+      "2 | R     M E C H R |\n" +
+      "1 | R R R D D R R R |\n" +
+      "  +-----------------+\n" +
+      "    a b c d e f g h  \n"
+
+    val field = new Field
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
+    field.toString should be(fieldString)
   }
 
   "isOccupied" should "tell if a cell is occupied" in {
