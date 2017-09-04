@@ -1,6 +1,6 @@
 package controller.message
 
-import controller.impl.messages.imp.WrongRabbitMoveMessage
+import controller.impl.messages.impl.WrongRabbitMoveMessage
 import org.scalatest.{FlatSpec, Matchers}
 
 class WrongRabbitMoveMessageSpec extends FlatSpec with Matchers {

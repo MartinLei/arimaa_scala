@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.EmptyUndoStackMessage
+import controller.impl.messages.impl.EmptyUndoStackMessage
 
 class UndoManager {
   var commandStack: List[CommandTrait] = List()

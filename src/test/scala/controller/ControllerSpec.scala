@@ -1,7 +1,7 @@
 package controller
 
 import controller.impl.Controller
-import controller.impl.messages.imp._
+import controller.impl.messages.impl._
 import model.impl.{PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position

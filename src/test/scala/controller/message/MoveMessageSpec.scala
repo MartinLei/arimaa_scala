@@ -1,6 +1,6 @@
 package controller.message
 
-import controller.impl.messages.imp.MoveMessage
+import controller.impl.messages.impl.MoveMessage
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 

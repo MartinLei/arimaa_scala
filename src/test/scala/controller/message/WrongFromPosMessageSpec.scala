@@ -1,6 +1,6 @@
 package controller.message
 
-import controller.impl.messages.imp.WrongFromPosMessage
+import controller.impl.messages.impl.WrongFromPosMessage
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 

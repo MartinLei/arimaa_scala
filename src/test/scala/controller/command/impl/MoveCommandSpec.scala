@@ -1,7 +1,7 @@
-package controller.command.imp
+package controller.command.impl
 
-import controller.impl.command.imp.MoveCommand
-import controller.impl.messages.imp.UndoMoveMessage
+import controller.impl.command.impl.MoveCommand
+import controller.impl.messages.impl.UndoMoveMessage
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position

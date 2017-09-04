@@ -1,7 +1,7 @@
 package controller.command
 
 import controller.impl.command.UndoManager
-import controller.impl.messages.imp.{EmptyUndoStackMessage, UndoMoveMessage}
+import controller.impl.messages.impl.{EmptyUndoStackMessage, UndoMoveMessage}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 

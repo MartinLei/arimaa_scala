@@ -1,7 +1,7 @@
 package controller.command
 
 import controller.impl.command.CommandTrait
-import controller.impl.messages.imp.UndoMoveMessage
+import controller.impl.messages.impl.UndoMoveMessage
 import util.position.Position
 
 class MocDoUndoCommand(testReceiver: MocReceiver) extends CommandTrait {

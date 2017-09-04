@@ -3,9 +3,9 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.UndoManager
-import controller.impl.command.imp.{MoveCommand, RemoveCommand}
+import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.{MoveMessage, TileTrappedMessage}
+import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum

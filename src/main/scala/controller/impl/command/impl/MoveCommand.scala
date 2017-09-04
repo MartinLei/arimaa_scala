@@ -1,8 +1,8 @@
-package controller.impl.command.imp
+package controller.impl.command.impl
 
 import controller.impl.command.CommandTrait
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp.UndoMoveMessage
+import controller.impl.messages.impl.UndoMoveMessage
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position

@@ -1,6 +1,6 @@
 package controller.message
 
-import controller.impl.messages.imp.TileTrappedMessage
+import controller.impl.messages.impl.TileTrappedMessage
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 

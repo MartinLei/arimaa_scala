@@ -1,6 +1,6 @@
 package controller.message
 
-import controller.impl.messages.imp.EmptyUndoStackMessage
+import controller.impl.messages.impl.EmptyUndoStackMessage
 import org.scalatest.{FlatSpec, Matchers}
 
 

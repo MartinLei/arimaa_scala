@@ -1,4 +1,4 @@
-package controller.impl.messages.imp
+package controller.impl.messages.impl
 
 import controller.impl.messages.MessageTrade
 

@@ -1,7 +1,7 @@
 package controller.impl
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.imp._
+import controller.impl.messages.impl._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{PlayerNameEnum, TileNameEnum}
