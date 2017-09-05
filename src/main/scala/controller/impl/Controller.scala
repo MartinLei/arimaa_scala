@@ -6,7 +6,7 @@ import controller.impl.command.UndoManager
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
-import controller.rule.RuleBook
+import controller.rule.{Postcondition, RuleBook}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -42,6 +42,9 @@ class Controller extends ControllerTrait {
         undoManager.doCommand(removeCommand)
 
     }
+
+    if (Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom))
+      logger.info("Attention trap activ")
 
     preMessage
   }
