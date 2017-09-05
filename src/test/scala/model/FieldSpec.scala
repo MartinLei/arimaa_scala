@@ -200,7 +200,11 @@ class FieldSpec extends FlatSpec with Matchers {
 
     field.isSurroundByOwnTile(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(false)
   }
+  it should "be false if player is NONE" in {
+    val field = new Field()
 
+    field.isSurroundByOwnTile(PlayerNameEnum.NONE, new Position(1, 2), new Position(1, 3)) should be(false)
+  }
 
   "getPlayerName" should "give the player name of the tile if there is one" in {
     val field = new Field()

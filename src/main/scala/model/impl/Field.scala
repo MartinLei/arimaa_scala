@@ -97,6 +97,9 @@ class Field() extends FieldTrait {
   }
 
   override def isSurroundByOwnTile(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+    if (playerName.equals(PlayerNameEnum.NONE))
+      return false
+
     var surround = Position.getSurround(posTo)
     surround = surround.filter(surPos => !surPos.equals(posFrom))
 
