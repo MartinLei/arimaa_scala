@@ -43,8 +43,9 @@ class Controller extends ControllerTrait {
 
     }
 
-    if (Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom))
-      logger.info("Attention trap activ")
+    val posMessage: Option[MessageTrade] = Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom)
+    if (posMessage.isDefined)
+      logger.info(posMessage.get.text)
 
     preMessage
   }
