@@ -96,12 +96,12 @@ class Field() extends FieldTrait {
     sb.toString()
   }
 
-  override def isSurroundByOwnTile(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+  override def isSurroundByOwnTile(playerName: PlayerNameEnum, posFrom_Ignore: Position, posTo_Observe: Position): Boolean = {
     if (playerName.equals(PlayerNameEnum.NONE))
       return false
 
-    var surround = Position.getSurround(posTo)
-    surround = surround.filter(surPos => !surPos.equals(posFrom))
+    var surround = Position.getSurround(posTo_Observe)
+    surround = surround.filter(surPos => !surPos.equals(posFrom_Ignore))
 
     surround.foreach(surPos => {
       val surPlayerName = getPlayerName(surPos)

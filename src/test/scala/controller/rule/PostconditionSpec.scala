@@ -16,7 +16,7 @@ class PostconditionSpec extends FlatSpec with Matchers {
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
 
-    Postcondition.isATileNoTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should be(true)
+    Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should be(true)
   }
   it should "false, if own figure stands on trap but still surround by one own tile" in {
     val field = new Field()
@@ -30,7 +30,7 @@ class PostconditionSpec extends FlatSpec with Matchers {
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
 
-    Postcondition.isATileNoTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should be(false)
+    Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should be(false)
   }
   it should "false, if on tile is NONE tile" in {
     val field = new Field()
@@ -39,10 +39,19 @@ class PostconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
+
+    Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should be(false)
+  }
+  it should "false, if player is NONE" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
 
-    Postcondition.isATileNoTrapped(PlayerNameEnum.GOLD, new Position(2, 3)) should be(false)
+    Postcondition.isATileNoTrapped(field, PlayerNameEnum.NONE, new Position(2, 3)) should be(false)
   }
 
 
