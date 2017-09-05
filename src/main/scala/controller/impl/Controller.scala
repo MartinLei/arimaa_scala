@@ -6,6 +6,7 @@ import controller.impl.command.UndoManager
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
+import controller.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -27,7 +28,7 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): MessageTrade = {
-    val preMessage: MessageTrade = ruleBook.precondition(actPlayerName, posFrom, posTo)
+    val preMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
     if (!preMessage.valid)
       return preMessage
 
