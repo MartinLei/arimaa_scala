@@ -7,9 +7,6 @@ class UndoActionManager {
   var actionStack: List[ActionCommand] = List()
 
   def doAction(action: ActionCommand): Any = {
-    //command.doCommand()
-
-    // commandStack = commandStack.::(command)
     action.doAction()
     actionStack = actionStack.::(action)
   }
