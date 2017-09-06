@@ -24,14 +24,14 @@ class RuleBook(val field: FieldTrait) {
     if (messageIsFix.isDefined)
       return messageIsFix.get
 
-    val messageIsTrapped = Precondition.isTileTrapped(field, player, posFrom, posTo)
-    if (messageIsTrapped.isDefined)
-      return messageIsTrapped.get
-
     new MoveMessage(posFrom, posTo)
   }
 
   def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): Option[MessageTrade] = {
+    val messageIsTrapped = Postcondition.isTileTrapped(field, player, posFrom, posTo)
+    if (messageIsTrapped.isDefined)
+      return messageIsTrapped
+
     val messageTileTrapped = Postcondition.isATileNoTrapped(field, player, posFrom)
     if (messageTileTrapped.isDefined)
       return messageTileTrapped

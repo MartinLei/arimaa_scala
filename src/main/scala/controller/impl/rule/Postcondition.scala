@@ -8,6 +8,16 @@ import util.position.Position
 
 object Postcondition {
 
+  def isTileTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[TileTrappedMessage] = {
+    if (!Position.isPosATrap(posTo))
+      return Option(null)
+
+    if (field.isSurroundByOwnTile(playerName, posFrom, posTo))
+      return Option(null)
+
+    Option(new TileTrappedMessage(posTo))
+  }
+
   def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position): Option[TileTrappedMessage] = {
     val traps = Position.traps
 

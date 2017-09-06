@@ -5,7 +5,7 @@ import controller.ControllerTrait
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
+import controller.impl.messages.impl.TileTrappedMessage
 import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -33,13 +33,7 @@ class Controller extends ControllerTrait {
       return List(ruleComplaintMessage)
 
     var commandList: List[CommandTrait] = List()
-
-    ruleComplaintMessage match {
-      case preMessage: MoveMessage =>
-        commandList = commandList.::(new MoveCommand(field, actPlayerName, posFrom, posTo))
-      case preMessage: TileTrappedMessage =>
-        commandList = commandList.::(new RemoveCommand(field, actPlayerName, posFrom, posTo))
-    }
+    commandList = commandList.::(new MoveCommand(field, actPlayerName, posFrom, posTo))
 
     val posMessageOption: Option[MessageTrade] = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
     if (posMessageOption.isDefined) {
@@ -47,7 +41,7 @@ class Controller extends ControllerTrait {
       posMessage match {
         case posMessage: TileTrappedMessage =>
           val trapPos = posMessage.pos
-          commandList = commandList.::(new RemoveCommand(field, actPlayerName, trapPos, trapPos))
+          commandList = commandList.::(new RemoveCommand(field, actPlayerName, trapPos))
       }
     }
 

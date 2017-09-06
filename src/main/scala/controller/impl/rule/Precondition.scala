@@ -43,13 +43,4 @@ object Precondition {
     Option(null)
   }
 
-  def isTileTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[TileTrappedMessage] = {
-    if (!Position.isPosATrap(posTo))
-      return Option(null)
-
-    if (field.isSurroundByOwnTile(playerName, posFrom, posTo))
-      return Option(null)
-
-    Option(new TileTrappedMessage(posTo))
-  }
 }

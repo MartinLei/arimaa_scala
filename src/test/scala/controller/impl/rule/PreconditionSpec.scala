@@ -101,36 +101,6 @@ class PreconditionSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
-  "isTileTrapped" should "give TileTrappedMessage, if the tail is trapped" in {
-    val field = new Field()
 
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
-
-    Precondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3)) should
-      be(Some(new TileTrappedMessage(new Position(3, 3))))
-  }
-
-  it should "be null if pos is not a trap position" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-
-    Precondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)) should
-      be(Option(null))
-  }
-
-  it should "be null if pos is surround by one own tile" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
-
-    Precondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3)) should
-      be(Option(null))
-  }
 
 }

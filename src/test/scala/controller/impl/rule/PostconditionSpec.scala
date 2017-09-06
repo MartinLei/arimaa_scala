@@ -7,6 +7,38 @@ import util.position.Position
 
 class PostconditionSpec extends FlatSpec with Matchers {
 
+  "isTileTrapped" should "give TileTrappedMessage, if the tail is trapped" in {
+    val field = new Field()
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+
+    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3)) should
+      be(Some(new TileTrappedMessage(new Position(3, 3))))
+  }
+
+  it should "be null if pos is not a trap position" in {
+    val field = new Field()
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+
+    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)) should
+      be(Option(null))
+  }
+
+  it should "be null if pos is surround by one own tile" in {
+    val field = new Field()
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+
+    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3)) should
+      be(Option(null))
+  }
+
   "isATileNoTrapped" should "true, if own figure stands on trap and is now not surround by any own tile" in {
     val field = new Field()
 

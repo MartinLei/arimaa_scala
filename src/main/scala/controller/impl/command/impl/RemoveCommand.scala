@@ -8,16 +8,16 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
-class RemoveCommand(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position) extends CommandTrait {
-  val tileName: TileNameEnum = field.getTileName(playerName, posFrom)
+class RemoveCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Position) extends CommandTrait {
+  val tileName: TileNameEnum = field.getTileName(playerName, pos)
 
   override def doCommand(): MessageTrade = {
-    field.removeTile(posFrom)
-    new TileTrappedMessage(posTo)
+    field.removeTile(pos)
+    new TileTrappedMessage(pos)
   }
 
   override def undoCommand(): MessageTrade = {
-    field.addTile(playerName, tileName, posFrom)
-    new UndoRemoveMessage(posTo, posFrom)
+    field.addTile(playerName, tileName, pos)
+    new UndoRemoveMessage(pos)
   }
 }
