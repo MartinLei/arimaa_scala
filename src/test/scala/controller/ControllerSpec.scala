@@ -176,6 +176,5 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
-
   }
 }

@@ -15,6 +15,8 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     val moveCommand = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
     val trapCommand = new RemoveCommand(field, PlayerNameEnum.GOLD, new Position(3, 3), new Position(3, 3))
     val actionCommand = new ActionCommand(moveCommand, trapCommand)
+
+    actionCommand.doAction()
   }
   /*
   it should "have a constructor for only one command" in {
