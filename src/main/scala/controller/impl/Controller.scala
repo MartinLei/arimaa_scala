@@ -28,25 +28,30 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[MessageTrade] = {
-    val preMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
-    if (!preMessage.valid)
-      return List(preMessage)
+    val ruleComplaintMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
+    if (!ruleComplaintMessage.valid)
+      return List(ruleComplaintMessage)
 
     var commandList: List[CommandTrait] = List()
 
-    preMessage match {
+    ruleComplaintMessage match {
       case preMessage: MoveMessage =>
         commandList = commandList.::(new MoveCommand(field, actPlayerName, posFrom, posTo))
       case preMessage: TileTrappedMessage =>
         commandList = commandList.::(new RemoveCommand(field, actPlayerName, posFrom, posTo))
     }
 
-    // val posMessage: Option[MessageTrade] = Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom)
-    // if (posMessage.isDefined)
-    //   logger.info(posMessage.get.text)
+    val posMessageOption: Option[MessageTrade] = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
+    if (posMessageOption.isDefined) {
+      val posMessage: MessageTrade = posMessageOption.get
+      posMessage match {
+        case posMessage: TileTrappedMessage =>
+          val trapPos = posMessage.pos
+          commandList = commandList.::(new RemoveCommand(field, actPlayerName, trapPos, trapPos))
+      }
+    }
 
-    val action = new ActionCommand(commandList)
-
+    val action = new ActionCommand(commandList.reverse)
     undoActionManager.doAction(action)
   }
 

@@ -31,5 +31,11 @@ class RuleBook(val field: FieldTrait) {
     new MoveMessage(posFrom, posTo)
   }
 
+  def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): Option[MessageTrade] = {
+    val messageTileTrapped = Postcondition.isATileNoTrapped(field, player, posFrom)
+    if (messageTileTrapped.isDefined)
+      return messageTileTrapped
 
+    Option(null)
+  }
 }

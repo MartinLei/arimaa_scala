@@ -143,6 +143,34 @@ class ControllerSpec extends FlatSpec with Matchers {
 
   }
 
+  it should "remove a own tile from trap,if actual move frees the tile" in {
+    val controller = new Controller()
+
+    controller.moveTile(new Position(2, 2), new Position(2, 3)) should
+      be(List(new MoveMessage(new Position(2, 2), new Position(2, 3))))
+    controller.moveTile(new Position(3, 2), new Position(3, 3)) should
+      be(List(new MoveMessage(new Position(3, 2), new Position(3, 3))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+
+    controller.moveTile(new Position(2, 3), new Position(2, 4)) should
+      be(List(
+        new MoveMessage(new Position(2, 3), new Position(2, 4)),
+        new TileTrappedMessage(new Position(3, 3))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.HORSE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+
+    val undoMessageList = controller.moveTileUndo()
+    val undoMessageListShould = List(
+      new UndoMoveMessage(new Position(2, 4), new Position(2, 3)),
+      new UndoRemoveMessage(new Position(3, 3), new Position(3, 3)))
+
+    undoMessageList shouldEqual undoMessageListShould
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+  }
   "changePlayer" should "change the Player" in {
     val controller: ControllerTrait = new Controller()
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
