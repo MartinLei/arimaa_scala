@@ -4,8 +4,15 @@ import controller.impl.messages.MessageTrade
 
 class ActionCommand(commandList: List[CommandTrait]) {
 
-  def doAction(): Unit = {
-    commandList.foreach(command => command.doCommand())
+  def doAction(): List[MessageTrade] = {
+    var doMessageList: List[MessageTrade] = List()
+
+    commandList.reverse.foreach(command => {
+      val doMessage = command.doCommand()
+      doMessageList = doMessageList.::(doMessage)
+    })
+
+    doMessageList
   }
 
   def undoAction(): List[MessageTrade] = {

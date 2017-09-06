@@ -2,11 +2,11 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.UndoActionManager
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
+import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
-import controller.impl.rule.{Postcondition, RuleBook}
+import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -19,7 +19,7 @@ class Controller extends ControllerTrait {
   private val ruleBook: RuleBook = new RuleBook(field)
 
   private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
-  private val undoManager = new UndoActionManager
+  private val undoActionManager = new UndoActionManager
 
   override def getActPlayerName: PlayerNameEnum = actPlayerName
 
@@ -27,27 +27,27 @@ class Controller extends ControllerTrait {
     field.toString
   }
 
-  override def moveTile(posFrom: Position, posTo: Position): MessageTrade = {
+  override def moveTile(posFrom: Position, posTo: Position): List[MessageTrade] = {
     val preMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
     if (!preMessage.valid)
-      return preMessage
+      return List(preMessage)
+
+    var commandList: List[CommandTrait] = List()
 
     preMessage match {
       case preMessage: MoveMessage =>
-        val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
-      //TODO undoManager.doCommand(moveCommand)
-
+        commandList = commandList.::(new MoveCommand(field, actPlayerName, posFrom, posTo))
       case preMessage: TileTrappedMessage =>
-        val removeCommand = new RemoveCommand(field, actPlayerName, posFrom, posTo)
-      //TODO undoManager.doCommand(removeCommand)
-
+        commandList = commandList.::(new RemoveCommand(field, actPlayerName, posFrom, posTo))
     }
 
-    val posMessage: Option[MessageTrade] = Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom)
-    if (posMessage.isDefined)
-      logger.info(posMessage.get.text)
+    // val posMessage: Option[MessageTrade] = Postcondition.isATileNoTrapped(field, PlayerNameEnum.GOLD, posFrom)
+    // if (posMessage.isDefined)
+    //   logger.info(posMessage.get.text)
 
-    preMessage
+    val action = new ActionCommand(commandList)
+
+    undoActionManager.doAction(action)
   }
 
   override def moveTileUndo(): MessageTrade = {

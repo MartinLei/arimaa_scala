@@ -42,7 +42,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
     controller.moveTile(new Position(1, 2), new Position(1, 3)) should
-      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+      be(List(new MoveMessage(new Position(1, 2), new Position(1, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
@@ -55,7 +55,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
 
     controller.moveTile(new Position(1, 7), new Position(1, 6)) should
-      be(new WrongFromPosMessage(new Position(1, 7)))
+      be(List(new WrongFromPosMessage(new Position(1, 7))))
 
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
@@ -67,7 +67,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
 
     controller.moveTile(new Position(1, 2), new Position(2, 2)) should
-      be(new WrongToPosMessage(new Position(2, 2)))
+      be(List(new WrongToPosMessage(new Position(2, 2))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
@@ -77,12 +77,12 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller = new Controller()
 
     controller.moveTile(new Position(1, 2), new Position(1, 3)) should
-      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+      be(List(new MoveMessage(new Position(1, 2), new Position(1, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
     controller.moveTile(new Position(1, 3), new Position(1, 2)) should
-      be(new WrongRabbitMoveMessage)
+      be(List(new WrongRabbitMoveMessage))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
@@ -93,21 +93,21 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller = new Controller()
 
     controller.moveTile(new Position(4, 2), new Position(4, 3)) should
-      be(new MoveMessage(new Position(4, 2), new Position(4, 3)))
+      be(List(new MoveMessage(new Position(4, 2), new Position(4, 3))))
     controller.moveTile(new Position(4, 3), new Position(4, 4)) should
-      be(new MoveMessage(new Position(4, 3), new Position(4, 4)))
+      be(List(new MoveMessage(new Position(4, 3), new Position(4, 4))))
     controller.changePlayer()
     controller.moveTile(new Position(4, 7), new Position(4, 6)) should
-      be(new MoveMessage(new Position(4, 7), new Position(4, 6)))
+      be(List(new MoveMessage(new Position(4, 7), new Position(4, 6))))
     controller.moveTile(new Position(4, 6), new Position(4, 5)) should
-      be(new MoveMessage(new Position(4, 6), new Position(4, 5)))
+      be(List(new MoveMessage(new Position(4, 6), new Position(4, 5))))
     controller.changePlayer()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
 
     controller.moveTile(new Position(4, 4), new Position(5, 4)) should
-      be(new FixTileMessage(new Position(4, 5)))
+      be(List(new FixTileMessage(new Position(4, 5))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
@@ -119,7 +119,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
-      be(new TileTrappedMessage(new Position(3, 3)))
+      be(List(new TileTrappedMessage(new Position(3, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
@@ -128,14 +128,14 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller = new Controller()
 
     controller.moveTile(new Position(2, 2), new Position(2, 3)) should
-      be(new MoveMessage(new Position(2, 2), new Position(2, 3)))
+      be(List(new MoveMessage(new Position(2, 2), new Position(2, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
-      be(new MoveMessage(new Position(3, 2), new Position(3, 3)))
+      be(List(new MoveMessage(new Position(3, 2), new Position(3, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
@@ -156,23 +156,23 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller: ControllerTrait = new Controller()
 
     controller.moveTile(new Position(1, 2), new Position(1, 3)) should
-      be(new MoveMessage(new Position(1, 2), new Position(1, 3)))
+      be(List(new MoveMessage(new Position(1, 2), new Position(1, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
     controller.moveTile(new Position(1, 3), new Position(1, 4)) should
-      be(new MoveMessage(new Position(1, 3), new Position(1, 4)))
+      be(List(new MoveMessage(new Position(1, 3), new Position(1, 4))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.RABBIT)
 
-    controller.moveTileUndo() should be(new UndoMoveMessage(new Position(1, 4), new Position(1, 3)))
+    controller.moveTileUndo() should be(List(new UndoMoveMessage(new Position(1, 4), new Position(1, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.NONE)
 
-    controller.moveTileUndo() should be(new UndoMoveMessage(new Position(1, 3), new Position(1, 2)))
+    controller.moveTileUndo() should be(List(new UndoMoveMessage(new Position(1, 3), new Position(1, 2))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)

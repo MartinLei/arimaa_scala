@@ -12,7 +12,7 @@ trait ControllerTrait {
 
   def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum
 
-  def moveTile(posFrom: Position, posTo: Position): MessageTrade
+  def moveTile(posFrom: Position, posTo: Position): List[MessageTrade]
 
   def moveTileUndo(): MessageTrade
 

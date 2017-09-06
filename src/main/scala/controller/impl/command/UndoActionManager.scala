@@ -6,9 +6,9 @@ import controller.impl.messages.impl.EmptyUndoStackMessage
 class UndoActionManager {
   var actionStack: List[ActionCommand] = List()
 
-  def doAction(action: ActionCommand): Any = {
-    action.doAction()
+  def doAction(action: ActionCommand): List[MessageTrade] = {
     actionStack = actionStack.::(action)
+    action.doAction()
   }
 
   def undoAction(): List[MessageTrade] = {

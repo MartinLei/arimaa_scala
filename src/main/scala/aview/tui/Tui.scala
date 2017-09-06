@@ -2,6 +2,7 @@ package aview.tui
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
+import controller.impl.messages.MessageTrade
 import util.Coordinate
 import util.position.Position
 
@@ -33,9 +34,10 @@ class Tui(controller: ControllerTrait) {
         val coordinates = input.split(" ")
         val posFrom: Position = Coordinate.toPosition(coordinates(0))
         val posTo: Position = Coordinate.toPosition(coordinates(1))
-        val message = controller.moveTile(posFrom, posTo)
+
+        val messageList: List[MessageTrade] = controller.moveTile(posFrom, posTo)
         logger.info(controller.getFieldAsString)
-        logger.info(message.text)
+        messageList.foreach(message => logger.info(message.text))
       } else {
         logger.info("Wrong input, use h for help")
       }

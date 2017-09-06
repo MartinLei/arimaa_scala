@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.command.impl.MoveCommand
-import controller.impl.messages.impl.{EmptyUndoStackMessage, UndoMoveMessage}
+import controller.impl.messages.impl.{EmptyUndoStackMessage, MoveMessage, UndoMoveMessage}
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -22,13 +22,23 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
   val undoActionManager = new UndoActionManager()
 
   "doAction" should "do the action" in {
-    undoActionManager.doAction(actionCommand1)
+    val doMessageListShould1 = List(
+      new MoveMessage(new Position(1, 2), new Position(1, 3)),
+      new MoveMessage(new Position(2, 2), new Position(2, 3)))
+    val doMessageList1 = undoActionManager.doAction(actionCommand1)
+
+    doMessageList1 shouldEqual doMessageListShould1
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
-    undoActionManager.doAction(actionCommand2)
+    val doMessageListShould2 = List(
+      new MoveMessage(new Position(1, 3), new Position(1, 4)),
+      new MoveMessage(new Position(2, 3), new Position(2, 4)))
+    val doMessageList2 = undoActionManager.doAction(actionCommand2)
+
+    doMessageList2 shouldEqual doMessageListShould2
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.RABBIT)
@@ -52,6 +62,7 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
       new UndoMoveMessage(new Position(2, 3), new Position(2, 2)))
 
     val undoMessageList2 = undoActionManager.undoAction()
+
     undoMessageList2 shouldEqual undoMessageListShould2
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
@@ -59,6 +70,7 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
 
     undoActionManager.undoAction() shouldEqual List(new EmptyUndoStackMessage)
+
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)

@@ -1,6 +1,6 @@
 package controller.impl.command.impl
 
-import controller.impl.messages.impl.UndoRemoveMessage
+import controller.impl.messages.impl.{TileTrappedMessage, UndoRemoveMessage}
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -14,7 +14,7 @@ class RemoveCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
-    removeCommand.doCommand()
+    removeCommand.doCommand() should be(new TileTrappedMessage(new Position(3, 3)))
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
