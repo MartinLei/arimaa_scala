@@ -6,7 +6,7 @@ import controller.impl.command.UndoActionManager
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
-import controller.rule.{Postcondition, RuleBook}
+import controller.impl.rule.{Postcondition, RuleBook}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
