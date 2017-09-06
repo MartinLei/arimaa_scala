@@ -35,32 +35,32 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
 
   "undoAction" should "undo the action" in {
     val undoMessageListShould1 = List(
-      new UndoMoveMessage(new Position(1, 3), new Position(1, 2)),
-      new UndoMoveMessage(new Position(2, 3), new Position(2, 2)))
+      new UndoMoveMessage(new Position(1, 4), new Position(1, 3)),
+      new UndoMoveMessage(new Position(2, 4), new Position(2, 3)))
 
     val undoMessageList1 = undoActionManager.undoAction()
     undoMessageList1 shouldEqual undoMessageListShould1
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.NONE)
+
+    val undoMessageListShould2 = List(
+      new UndoMoveMessage(new Position(1, 3), new Position(1, 2)),
+      new UndoMoveMessage(new Position(2, 3), new Position(2, 2)))
+
+    val undoMessageList2 = undoActionManager.undoAction()
+    undoMessageList2 shouldEqual undoMessageListShould2
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
 
-    val undoMessageListShould2 = List(
-      new UndoMoveMessage(new Position(1, 4), new Position(1, 3)),
-      new UndoMoveMessage(new Position(2, 4), new Position(2, 3)))
-
-    val undoMessageList2 = undoActionManager.undoAction()
-    undoMessageList2 shouldEqual undoMessageListShould2
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.NONE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.NONE)
-
     undoActionManager.undoAction() shouldEqual List(new EmptyUndoStackMessage)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 4)) should be(TileNameEnum.NONE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
   }
 
 }
