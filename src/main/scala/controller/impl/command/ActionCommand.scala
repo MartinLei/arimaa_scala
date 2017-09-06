@@ -2,17 +2,20 @@ package controller.impl.command
 
 import controller.impl.messages.MessageTrade
 
-class ActionCommand(preCommand: CommandTrait, postCommand: CommandTrait) {
+class ActionCommand(commandList: List[CommandTrait]) {
 
   def doAction(): Unit = {
-    preCommand.doCommand()
-    postCommand.doCommand()
+    commandList.foreach(command => command.doCommand())
   }
 
   def undoAction(): List[MessageTrade] = {
-    val preUndoMessage = preCommand.undoCommand()
-    val postUndoMessage = postCommand.undoCommand()
+    var undoMessageList: List[MessageTrade] = List()
 
-    List(preUndoMessage, postUndoMessage)
+    commandList.reverse.foreach(command => {
+      val undoMessage = command.undoCommand()
+      undoMessageList = undoMessageList.::(undoMessage)
+    })
+
+    undoMessageList
   }
 }

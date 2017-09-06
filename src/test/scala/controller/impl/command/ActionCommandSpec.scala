@@ -1,47 +1,29 @@
 package controller.impl.command
 
-import controller.impl.command.impl.{MoveCommand, RemoveCommand}
+import controller.impl.command.impl.MoveCommand
 import controller.impl.messages.impl.UndoMoveMessage
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
 class ActionCommandSpec extends FlatSpec with Matchers {
+  val field = new Field()
+  val commandList = List(
+    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
 
+  val actionCommand = new ActionCommand(commandList)
 
-  "ActionCommand" should "have a constructor for a pre and post command" in {
-    val field = new Field()
-    val moveCommand = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
-    val trapCommand = new RemoveCommand(field, PlayerNameEnum.GOLD, new Position(3, 3), new Position(3, 3))
-    val actionCommand = new ActionCommand(moveCommand, trapCommand)
+  "doAction" should "execute all commands" in {
 
     actionCommand.doAction()
-  }
-  /*
-  it should "have a constructor for only one command" in {
-    val field = new Field()
-    val moveCommand = new MoveCommand(field,PlayerNameEnum.GOLD, new Position(2,3), new Position(2,4))
-    val ac = new ActionCommand(moveCommand)
-  }
-  */
-  it should "do both doCommands" in {
-    val field = new Field()
-    val moveCommand1 = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
-    val moveCommand2 = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-
-    val actionCommand = new ActionCommand(moveCommand1, moveCommand2)
-    actionCommand.doAction()
-
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
   }
-  it should "do both undoCommands" in {
-    val field = new Field()
-    val moveCommand1 = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
-    val moveCommand2 = new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
 
-    val actionCommand = new ActionCommand(moveCommand1, moveCommand2)
-    actionCommand.doAction()
+  "undoAction" should "execute all undo commands" in {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
@@ -58,6 +40,8 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
   }
+
+
   /*
   it should "do both doCommands" in{
     val field = new Field()
