@@ -2,7 +2,7 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.UndoManager
+import controller.impl.command.UndoActionManager
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.{MoveMessage, TileTrappedMessage}
@@ -19,7 +19,7 @@ class Controller extends ControllerTrait {
   private val ruleBook: RuleBook = new RuleBook(field)
 
   private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
-  private val undoManager = new UndoManager
+  private val undoManager = new UndoActionManager
 
   override def getActPlayerName: PlayerNameEnum = actPlayerName
 
@@ -35,11 +35,11 @@ class Controller extends ControllerTrait {
     preMessage match {
       case preMessage: MoveMessage =>
         val moveCommand = new MoveCommand(field, actPlayerName, posFrom, posTo)
-        undoManager.doCommand(moveCommand)
+      //TODO undoManager.doCommand(moveCommand)
 
       case preMessage: TileTrappedMessage =>
         val removeCommand = new RemoveCommand(field, actPlayerName, posFrom, posTo)
-        undoManager.doCommand(removeCommand)
+      //TODO undoManager.doCommand(removeCommand)
 
     }
 
@@ -51,7 +51,8 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTileUndo(): MessageTrade = {
-    undoManager.undoCommand()
+    // TODO undoManager.undoCommand()
+    null
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
