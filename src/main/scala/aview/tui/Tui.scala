@@ -23,9 +23,10 @@ class Tui(controller: ControllerTrait) {
       logger.info("Change Player " + controller.getActPlayerName)
       true
     case "u" =>
-      val message = controller.moveTileUndo()
+      val messageList: List[MessageTrade] = controller.moveTileUndo()
+
       logger.info(controller.getFieldAsString)
-      logger.info(message.text)
+      messageList.foreach(message => logger.info(message.text))
       logger.info("Input::")
       true
     case _ =>

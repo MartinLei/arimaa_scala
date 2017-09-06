@@ -50,9 +50,8 @@ class Controller extends ControllerTrait {
     undoActionManager.doAction(action)
   }
 
-  override def moveTileUndo(): MessageTrade = {
-    // TODO undoManager.undoCommand()
-    null
+  override def moveTileUndo(): List[MessageTrade] = {
+    undoActionManager.undoAction()
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {

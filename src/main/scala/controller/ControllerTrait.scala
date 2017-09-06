@@ -14,7 +14,7 @@ trait ControllerTrait {
 
   def moveTile(posFrom: Position, posTo: Position): List[MessageTrade]
 
-  def moveTileUndo(): MessageTrade
+  def moveTileUndo(): List[MessageTrade]
 
   def getFieldAsString: String
 
