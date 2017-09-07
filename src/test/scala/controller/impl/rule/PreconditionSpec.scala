@@ -101,6 +101,49 @@ class PreconditionSpec extends FlatSpec with Matchers {
       be(Option(null))
   }
 
+  "isTilePull" should "give PullMessage if pull tile is other player and surround by stronger other player tile" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
 
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5)) should
+      be(new PullMessage(new Position(5, 5), new Position(6, 5)))
+
+  }
+  it should "be CantPullMessage if, pull tile not surround by other player" in {
+    val field = new Field()
+
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5)) should
+      be(new CantPullMessage(new Position(5, 5), new Position(6, 5)))
+  }
+  it should "be CantPullStrongerTileMessage if, pull tile not surround by stronger other player" in {
+    val field = new Field()
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5)) should
+      be(new CantPullStrongerTileMessage(new Position(5, 5), new Position(6, 5)))
+  }
+  it should "be null if not" in {
+    val field = new Field()
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    Precondition.isFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should
+      be(Option(null))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+  }
 
 }

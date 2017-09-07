@@ -1,13 +1,15 @@
 package controller.impl.rule
 
+import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{PlayerNameEnum, TileNameEnum}
+import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import util.DirectionEnum
 import util.position.Position
 
 object Precondition {
+
   def isFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Option[WrongFromPosMessage] = {
     val playerName = field.getPlayerName(posFrom)
 
@@ -36,11 +38,21 @@ object Precondition {
   }
 
   def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
-    val fixedTilePos = field.getStrongerOtherTilesWhoAround(playerName, pos)
+    val fixedTilePos = field.getStrongerTilesWhoAround(playerName, pos)
     if (fixedTilePos.isDefined)
       return Option(new FixTileMessage(fixedTilePos.get))
 
     Option(null)
   }
 
+  def isTailPull(field: Field, playerName: PlayerNameEnum, posFrom: Position): Option[MessageTrade] = {
+    val pasPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
+    val pasPlayerTile = field.getTileName(pasPlayerName, posFrom)
+
+    if (pasPlayerTile.equals(TileNameEnum.NONE))
+      return Option(null)
+
+
+    Option(null)
+  }
 }
