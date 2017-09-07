@@ -166,8 +166,8 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     val undoMessageList = controller.moveTileUndo()
     val undoMessageListShould = List(
-      new UndoMoveMessage(new Position(2, 4), new Position(2, 3)),
-      new UndoRemoveMessage(new Position(3, 3)))
+      new UndoRemoveMessage(new Position(3, 3)),
+      new UndoMoveMessage(new Position(2, 4), new Position(2, 3)))
 
     undoMessageList shouldEqual undoMessageListShould
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
