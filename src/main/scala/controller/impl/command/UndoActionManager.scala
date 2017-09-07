@@ -3,32 +3,22 @@ package controller.impl.command
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.EmptyUndoStackMessage
 
+import scala.collection.mutable
+
 class UndoActionManager {
-  var actionStack: List[ActionCommand] = List()
+  var actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[MessageTrade] = {
-    actionStack = actionStack.::(action)
+    actionStack.push(action)
     action.doAction()
   }
 
   def undoAction(): List[MessageTrade] = {
-    val getLastAction = actionStackPOP()
-    if (getLastAction.isDefined) {
-      val lastAction: ActionCommand = getLastAction.get
-      return lastAction.undoAction()
-    }
-
-    List(new EmptyUndoStackMessage)
-  }
-
-  private def actionStackPOP(): Option[ActionCommand] = {
     if (actionStack.isEmpty)
-      return Option(null)
+      return List(new EmptyUndoStackMessage)
 
-    val poopedAction: ActionCommand = actionStack.head
-    actionStack = actionStack.tail
-
-    Option(poopedAction)
+    val lastAction = actionStack.pop()
+    lastAction.undoAction()
   }
 
 }
