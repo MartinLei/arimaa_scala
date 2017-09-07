@@ -29,10 +29,10 @@ class Controller extends ControllerTrait {
     field.toString
   }
 
-  override def moveTile(posFrom: Position, posTo: Position): List[MessageTrade] = {
+  override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val ruleComplaintMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
     if (!ruleComplaintMessage.valid)
-      return List(ruleComplaintMessage)
+      return List("ruleComplaintMessage") //TODO
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
     commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))
@@ -51,7 +51,7 @@ class Controller extends ControllerTrait {
     undoActionManager.doAction(action)
   }
 
-  override def moveTileUndo(): List[MessageTrade] = {
+  override def moveTileUndo(): List[String] = {
     undoActionManager.undoAction()
   }
 

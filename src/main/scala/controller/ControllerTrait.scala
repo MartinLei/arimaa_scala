@@ -1,6 +1,5 @@
 package controller
 
-import controller.impl.messages.MessageTrade
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
@@ -12,9 +11,9 @@ trait ControllerTrait {
 
   def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum
 
-  def moveTile(posFrom: Position, posTo: Position): List[MessageTrade]
+  def moveTile(posFrom: Position, posTo: Position): List[String]
 
-  def moveTileUndo(): List[MessageTrade]
+  def moveTileUndo(): List[String]
 
   def getFieldAsString: String
 

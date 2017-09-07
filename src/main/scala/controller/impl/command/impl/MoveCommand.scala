@@ -1,20 +1,19 @@
 package controller.impl.command.impl
 
 import controller.impl.command.CommandTrait
-import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl.{MoveMessage, UndoMoveMessage}
+import controller.impl.messages.impl.Message
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 class MoveCommand(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position) extends CommandTrait {
-  override def doCommand(): MessageTrade = {
+  override def doCommand(): String = {
     field.changeTilePos(playerName, posFrom, posTo)
-    new MoveMessage(posFrom, posTo)
+    Message.doMove(posFrom, posTo)
   }
 
-  override def undoCommand(): MessageTrade = {
+  override def undoCommand(): String = {
     field.changeTilePos(playerName, posTo, posFrom)
-    new UndoMoveMessage(posTo, posFrom)
+    Message.undoMove(posFrom, posTo)
   }
 }
