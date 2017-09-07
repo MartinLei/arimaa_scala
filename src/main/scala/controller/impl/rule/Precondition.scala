@@ -38,7 +38,9 @@ object Precondition {
   }
 
   def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
-    val fixedTilePos = field.getStrongerTilesWhoAround(playerName, pos)
+    val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
+    val fixedTilePos = field.getStrongerTilesWhoAround(otherPlayerName, pos)
+
     if (fixedTilePos.isDefined)
       return Option(new FixTileMessage(fixedTilePos.get))
 

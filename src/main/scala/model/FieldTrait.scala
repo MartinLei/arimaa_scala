@@ -15,7 +15,7 @@ trait FieldTrait {
 
   def getPlayerTiles(player: PlayerNameEnum): Set[Tile]
 
-  def getStrongerOtherTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position]
+  def getStrongerTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position]
 
   def isSurroundByOwnTile(player: PlayerNameEnum, posFrom_Ignore: Position, posTo_Observe: Position): Boolean
 

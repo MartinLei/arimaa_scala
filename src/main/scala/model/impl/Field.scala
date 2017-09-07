@@ -133,13 +133,12 @@ class Field() extends FieldTrait {
     false
   }
 
-  override def getStrongerOtherTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position] = {
+  override def getStrongerTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position] = {
     val surround = Position.getSurround(pos)
     val posTileName = getTileName(player, pos)
-    val pasPlayer = PlayerNameEnum.getInvertPlayer(player)
 
     surround.foreach(surPos => {
-      val surPosTileName = getTileName(pasPlayer, surPos)
+      val surPosTileName = getTileName(player, surPos)
       if (surPosTileName.compare(posTileName) > 0)
         return Option(surPos)
     })
