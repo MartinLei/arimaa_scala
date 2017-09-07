@@ -13,6 +13,8 @@ import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
 
+import scala.collection.mutable.ListBuffer
+
 class Controller extends ControllerTrait {
   private val logger = Logger[Controller]
   private val field: FieldTrait = new Field()
@@ -32,8 +34,8 @@ class Controller extends ControllerTrait {
     if (!ruleComplaintMessage.valid)
       return List(ruleComplaintMessage)
 
-    var commandList: List[CommandTrait] = List()
-    commandList = commandList.::(new MoveCommand(field, actPlayerName, posFrom, posTo))
+    var commandList: ListBuffer[CommandTrait] = ListBuffer()
+    commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))
 
     val posMessageOption: Option[MessageTrade] = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
     if (posMessageOption.isDefined) {
@@ -41,11 +43,11 @@ class Controller extends ControllerTrait {
       posMessage match {
         case posMessage: TileTrappedMessage =>
           val trapPos = posMessage.pos
-          commandList = commandList.::(new RemoveCommand(field, actPlayerName, trapPos))
+          commandList.+=(new RemoveCommand(field, actPlayerName, trapPos))
       }
     }
 
-    val action = new ActionCommand(commandList.reverse)
+    val action = new ActionCommand(commandList.toList)
     undoActionManager.doAction(action)
   }
 

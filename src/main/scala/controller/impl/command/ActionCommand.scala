@@ -2,27 +2,29 @@ package controller.impl.command
 
 import controller.impl.messages.MessageTrade
 
+import scala.collection.mutable.ListBuffer
+
 class ActionCommand(commandList: List[CommandTrait]) {
 
   def doAction(): List[MessageTrade] = {
-    var doMessageList: List[MessageTrade] = List()
+    var doMessageList: ListBuffer[MessageTrade] = ListBuffer()
 
-    commandList.reverse.foreach(command => {
+    commandList.foreach(command => {
       val doMessage = command.doCommand()
-      doMessageList = doMessageList.::(doMessage)
+      doMessageList.+=(doMessage)
     })
 
-    doMessageList
+    doMessageList.toList
   }
 
   def undoAction(): List[MessageTrade] = {
-    var undoMessageList: List[MessageTrade] = List()
+    var undoMessageList: ListBuffer[MessageTrade] = ListBuffer()
 
     commandList.reverse.foreach(command => {
       val undoMessage = command.undoCommand()
-      undoMessageList = undoMessageList.::(undoMessage)
+      undoMessageList.+=(undoMessage)
     })
 
-    undoMessageList
+    undoMessageList.toList
   }
 }

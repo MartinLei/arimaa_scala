@@ -34,8 +34,8 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
     val undoMessageListShould = List(
-      new UndoMoveMessage(new Position(1, 3), new Position(1, 2)),
-      new UndoMoveMessage(new Position(2, 3), new Position(2, 2)))
+      new UndoMoveMessage(new Position(2, 3), new Position(2, 2)),
+      new UndoMoveMessage(new Position(1, 3), new Position(1, 2)))
 
     val undoMessageList = actionCommand.undoAction()
     undoMessageList shouldEqual undoMessageListShould
