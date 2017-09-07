@@ -7,20 +7,20 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
-  def isMoveRuleComplaint(player: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
-    val messageIsFromPosNotOwn = Precondition.isFromPosNotOwn(field, player, posFrom)
+  def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
+    val messageIsFromPosNotOwn = Precondition.isFromPosNotOwn(field, playerName, posFrom)
     if (messageIsFromPosNotOwn.isDefined)
       return messageIsFromPosNotOwn.get
 
-    val messageIsToPosNotFree = Precondition.isToPosNotFree(field, player, posTo)
+    val messageIsToPosNotFree = Precondition.isToPosNotFree(field, playerName, posTo)
     if (messageIsToPosNotFree.isDefined)
       return messageIsToPosNotFree.get
 
-    val messageWrongRabbitMove = Precondition.isWrongRabbitMove(field, player, posFrom, posTo)
+    val messageWrongRabbitMove = Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo)
     if (messageWrongRabbitMove.isDefined)
       return messageWrongRabbitMove.get
 
-    val messageIsFix = Precondition.isTailFixed(field, player, posFrom)
+    val messageIsFix = Precondition.isTailFixed(field, playerName, posFrom)
     if (messageIsFix.isDefined)
       return messageIsFix.get
 
