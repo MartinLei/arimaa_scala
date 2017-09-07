@@ -1,6 +1,5 @@
 package controller.impl.rule
 
-import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -39,22 +38,26 @@ object Precondition {
 
   def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
-    val fixedTilePos = field.getStrongerTilesWhoAround(otherPlayerName, pos)
+    val fixedTilePosList = field.getStrongerTilesWhoAround(otherPlayerName, pos, playerName)
 
-    if (fixedTilePos.isDefined)
-      return Option(new FixTileMessage(fixedTilePos.get))
-
-    Option(null)
-  }
-
-  def isTailPull(field: Field, playerName: PlayerNameEnum, posFrom: Position): Option[MessageTrade] = {
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
-    val pasPlayerTile = field.getTileName(pasPlayerName, posFrom)
-
-    if (pasPlayerTile.equals(TileNameEnum.NONE))
+    if (fixedTilePosList.isEmpty)
       return Option(null)
 
+    val oneTilePos = fixedTilePosList.head // Attention: not the strongest tile
+    Option(new FixTileMessage(oneTilePos))
+  }
 
-    Option(null)
+  def isTailPull(field: Field, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[PullMessage] = {
+    val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
+    val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
+
+    if (otherPlayerTileName.equals(TileNameEnum.NONE))
+      return Option(null)
+
+    val strongerSurroundsPasListOption = field.getStrongerTilesWhoAround(playerName, posFrom, otherPlayerName)
+    if (strongerSurroundsPasListOption.isEmpty)
+      return Option(null)
+
+    Option(new PullMessage(posFrom, posTo))
   }
 }

@@ -5,6 +5,8 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
+import scala.collection.mutable.ListBuffer
+
 
 class Field() extends FieldTrait {
   private val playerGold: Player = getInitGoldPlayer
@@ -133,16 +135,22 @@ class Field() extends FieldTrait {
     false
   }
 
-  override def getStrongerTilesWhoAround(player: PlayerNameEnum, pos: Position): Option[Position] = {
-    val surround = Position.getSurround(pos)
-    val posTileName = getTileName(player, pos)
+  override def getStrongerTilesWhoAround(playerAround: PlayerNameEnum, pos: Position, playerPos: PlayerNameEnum): List[Position] = {
+    if (playerAround.equals(PlayerNameEnum.NONE) || playerPos.equals(PlayerNameEnum.NONE))
+      return List()
 
-    surround.foreach(surPos => {
-      val surPosTileName = getTileName(player, surPos)
+    val surroundPosList = Position.getSurround(pos)
+    val posTileName = getTileName(playerPos, pos)
+
+    val strongerSurroundPosList: ListBuffer[Position] = ListBuffer()
+
+    surroundPosList.foreach(surPos => {
+      val surPosTileName = getTileName(playerAround, surPos)
       if (surPosTileName.compare(posTileName) > 0)
-        return Option(surPos)
+        strongerSurroundPosList.+=(surPos)
     })
-    Option(null)
+
+    strongerSurroundPosList.toList
   }
 
   private def cellTileAsString(pos: Position): String = {

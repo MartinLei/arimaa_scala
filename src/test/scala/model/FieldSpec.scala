@@ -162,10 +162,18 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
 
-    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 4)) should
-      be(Some(new Position(4, 5)))
+    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 4), PlayerNameEnum.GOLD) should
+      be(List(new Position(4, 5)))
   }
-  it should "be null if surround tile weaker than own" in {
+  it should "get pos of stronger own tile surround" in {
+    val field = new Field()
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    field.getStrongerTilesWhoAround(PlayerNameEnum.GOLD, new Position(1, 2), PlayerNameEnum.GOLD) should
+      be(List(new Position(2, 2)))
+  }
+  it should "be empty if surround tile weaker than own" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
@@ -174,22 +182,29 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.RABBIT)
 
-    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 2)) should
-      be(Option(null))
+    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 2), PlayerNameEnum.GOLD) should
+      be(List())
   }
-  it should "be null if it not surround" in {
+  it should "be empty if it not surround" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
 
-    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 2)) should
-      be(Option(null))
+    field.getStrongerTilesWhoAround(PlayerNameEnum.SILVER, new Position(4, 2), PlayerNameEnum.GOLD) should
+      be(List())
   }
-  it should "be empty if player is NONE" in {
+  it should "be empty if player around is NONE" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
 
-    field.getStrongerTilesWhoAround(PlayerNameEnum.NONE, new Position(4, 2)) should
-      be(Option(null))
+    field.getStrongerTilesWhoAround(PlayerNameEnum.NONE, new Position(4, 2), PlayerNameEnum.GOLD) should
+      be(List())
+  }
+  it should "be empty if player pos is NONE" in {
+    val field = new Field()
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
+
+    field.getStrongerTilesWhoAround(PlayerNameEnum.GOLD, new Position(4, 2), PlayerNameEnum.NONE) should
+      be(List())
   }
 
   "isSurroundByOwnTile" should "be true if a own tile is around" in {
