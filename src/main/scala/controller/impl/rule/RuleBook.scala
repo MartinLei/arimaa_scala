@@ -8,6 +8,10 @@ import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
   def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
+    val messageIsTailePull = Precondition.isTailPull(field, playerName, posFrom, posTo)
+    if (messageIsTailePull.isDefined)
+      return messageIsTailePull.get
+
     val messageIsFromPosNotOwn = Precondition.isFromPosNotOwn(field, playerName, posFrom)
     if (messageIsFromPosNotOwn.isDefined)
       return messageIsFromPosNotOwn.get

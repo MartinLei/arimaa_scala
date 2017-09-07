@@ -3,7 +3,7 @@ package controller.impl.rule
 import controller.impl.messages.impl._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{Field, PlayerNameEnum, TileNameEnum}
+import model.impl.{PlayerNameEnum, TileNameEnum}
 import util.DirectionEnum
 import util.position.Position
 
@@ -47,7 +47,7 @@ object Precondition {
     Option(new FixTileMessage(oneTilePos))
   }
 
-  def isTailPull(field: Field, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[PullMessage] = {
+  def isTailPull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[PullMessage] = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
 
