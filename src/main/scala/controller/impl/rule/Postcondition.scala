@@ -1,6 +1,5 @@
 package controller.impl.rule
 
-import controller.impl.messages.impl.RemoveMessageMessage
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum
@@ -8,25 +7,25 @@ import util.position.Position
 
 object Postcondition {
 
-  def isTileTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[RemoveMessageMessage] = {
+  def isTileTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     if (!Position.isPosATrap(posTo))
-      return Option(null)
+      return false
 
     if (field.isSurroundByOwnTile(playerName, posFrom, posTo))
-      return Option(null)
+      return false
 
-    Option(new RemoveMessageMessage(posTo))
+    true
   }
 
-  def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position): Option[RemoveMessageMessage] = {
+  def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val traps = Position.traps
 
     traps.foreach(trapPos => {
       if (isATileNoTrapped(field, playerName, posFrom, trapPos))
-        return Option(new RemoveMessageMessage(trapPos))
+        return true
     })
 
-    Option(null)
+    false
   }
 
   private def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, trapPos: Position): Boolean = {

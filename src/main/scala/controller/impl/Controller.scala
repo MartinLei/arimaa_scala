@@ -2,12 +2,11 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.impl.{MoveCommand, RemoveCommand}
+import controller.impl.command.impl.MoveCommand
 import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
-import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl.RemoveMessageMessage
-import controller.impl.rule.RuleBook
+import controller.impl.messages.impl.Message
 import controller.impl.rule.RuleEnum.RuleEnum
+import controller.impl.rule.{RuleBook, RuleEnum}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -32,21 +31,20 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
-    //if (!ruleComplaintMessage.valid)
-    //  return List("ruleComplaintMessage") //TODO
+    if (!RuleEnum.isValide(ruleComplaint))
+      return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
     commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))
 
-    val posMessageOption: Option[MessageTrade] = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
-    if (posMessageOption.isDefined) {
-      val posMessage: MessageTrade = posMessageOption.get
-      posMessage match {
-        case posMessage: RemoveMessageMessage =>
-          val trapPos = posMessage.pos
-          commandList.+=(new RemoveCommand(field, actPlayerName, trapPos))
+    val postRule = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
+    postRule match {
+      case RuleEnum.TRAPPED =>
+      //val trapPos = posMessage.pos //TODO
+      //commandList.+=(new RemoveCommand(field, actPlayerName, trapPos))
+      case RuleEnum.NONE =>
       }
-    }
+
 
     val action = new ActionCommand(commandList.toList)
     undoActionManager.doAction(action)

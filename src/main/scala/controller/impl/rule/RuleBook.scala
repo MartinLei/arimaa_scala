@@ -1,6 +1,5 @@
 package controller.impl.rule
 
-import controller.impl.messages.MessageTrade
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -28,15 +27,14 @@ class RuleBook(val field: FieldTrait) {
     RuleEnum.MOVE
   }
 
-  def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): Option[MessageTrade] = {
-    val messageIsTrapped = Postcondition.isTileTrapped(field, player, posFrom, posTo)
-    if (messageIsTrapped.isDefined)
-      return messageIsTrapped
+  def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
 
-    val messageTileTrapped = Postcondition.isATileNoTrapped(field, player, posFrom)
-    if (messageTileTrapped.isDefined)
-      return messageTileTrapped
+    if (Postcondition.isTileTrapped(field, player, posFrom, posTo))
+      return RuleEnum.TRAPPED
 
-    Option(null)
+    if (Postcondition.isATileNoTrapped(field, player, posFrom))
+      return RuleEnum.TRAPPED
+
+    RuleEnum.NONE
   }
 }
