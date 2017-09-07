@@ -5,7 +5,7 @@ import controller.ControllerTrait
 import controller.impl.command.impl.{MoveCommand, RemoveCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl.TileTrappedMessage
+import controller.impl.messages.impl.RemoveMessageMessage
 import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -41,7 +41,7 @@ class Controller extends ControllerTrait {
     if (posMessageOption.isDefined) {
       val posMessage: MessageTrade = posMessageOption.get
       posMessage match {
-        case posMessage: TileTrappedMessage =>
+        case posMessage: RemoveMessageMessage =>
           val trapPos = posMessage.pos
           commandList.+=(new RemoveCommand(field, actPlayerName, trapPos))
       }

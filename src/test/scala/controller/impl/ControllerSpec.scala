@@ -121,7 +121,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
       be(List(
         new MoveMessage(new Position(3, 2), new Position(3, 3)),
-        new TileTrappedMessage(new Position(3, 3))))
+        new RemoveMessageMessage(new Position(3, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
@@ -159,7 +159,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(2, 3), new Position(2, 4)) should
       be(List(
         new MoveMessage(new Position(2, 3), new Position(2, 4)),
-        new TileTrappedMessage(new Position(3, 3))))
+        new RemoveMessageMessage(new Position(3, 3))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.HORSE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)

@@ -2,7 +2,7 @@ package controller.impl.command.impl
 
 import controller.impl.command.CommandTrait
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl.{TileTrappedMessage, UndoRemoveMessage}
+import controller.impl.messages.impl.{RemoveMessageMessage, UndoRemoveMessage}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -13,7 +13,7 @@ class RemoveCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Position
 
   override def doCommand(): MessageTrade = {
     field.removeTile(pos)
-    new TileTrappedMessage(pos)
+    new RemoveMessageMessage(pos)
   }
 
   override def undoCommand(): MessageTrade = {
