@@ -7,6 +7,7 @@ import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
 import controller.impl.messages.MessageTrade
 import controller.impl.messages.impl.RemoveMessageMessage
 import controller.impl.rule.RuleBook
+import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -30,9 +31,9 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val ruleComplaintMessage: MessageTrade = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
-    if (!ruleComplaintMessage.valid)
-      return List("ruleComplaintMessage") //TODO
+    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
+    //if (!ruleComplaintMessage.valid)
+    //  return List("ruleComplaintMessage") //TODO
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
     commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))

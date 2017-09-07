@@ -1,6 +1,5 @@
 package controller.impl.rule
 
-import controller.impl.messages.impl._
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{PlayerNameEnum, TileNameEnum}
@@ -9,55 +8,56 @@ import util.position.Position
 
 object Precondition {
 
-  def isFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Option[WrongFromPosMessage] = {
+  def isFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val playerName = field.getPlayerName(posFrom)
 
     if (!actPlayerName.equals(playerName))
-      return Option(new WrongFromPosMessage(posFrom))
+      return true
 
-    Option(null)
+    false
   }
 
-  def isToPosNotFree(field: FieldTrait, actPlayerName: PlayerNameEnum, posTo: Position): Option[WrongToPosMessage] = {
+  def isToPosNotFree(field: FieldTrait, actPlayerName: PlayerNameEnum, posTo: Position): Boolean = {
     if (field.isOccupied(posTo))
-      return Option(new WrongToPosMessage(posTo))
-    Option(null)
+      return true
+    false
   }
 
-  def isWrongRabbitMove(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[WrongRabbitMoveMessage] = {
+  def isWrongRabbitMove(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     if (!field.getTileName(playerName, posFrom).equals(TileNameEnum.RABBIT))
-      return Option(null)
+      return false
 
     val direction = DirectionEnum.getDirection(posFrom, posTo)
     if (playerName.equals(PlayerNameEnum.GOLD) && direction.equals(DirectionEnum.SOUTH) ||
       playerName.equals(PlayerNameEnum.SILVER) && direction.equals(DirectionEnum.NORTH))
-      return Option(new WrongRabbitMoveMessage)
+      return true
 
-    Option(null)
+    false
   }
 
-  def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Option[FixTileMessage] = {
+  def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val fixedTilePosList = field.getStrongerTilesWhoAround(otherPlayerName, pos, playerName)
 
     if (fixedTilePosList.isEmpty)
-      return Option(null)
+      return false
 
     val oneTilePos = fixedTilePosList.head // Attention: not the strongest tile
-    Option(new FixTileMessage(oneTilePos))
+
+    true
   }
 
-  def isTailPull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Option[PullMessage] = {
+  def isTailPull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
 
     if (otherPlayerTileName.equals(TileNameEnum.NONE))
-      return Option(null)
+      return false
 
     val strongerSurroundsPasListOption = field.getStrongerTilesWhoAround(playerName, posFrom, otherPlayerName)
     if (strongerSurroundsPasListOption.isEmpty)
-      return Option(null)
+      return false
 
-    Option(new PullMessage(posFrom, posTo))
+    true
   }
 }

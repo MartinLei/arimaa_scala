@@ -1,34 +1,31 @@
 package controller.impl.rule
 
 import controller.impl.messages.MessageTrade
-import controller.impl.messages.impl._
+import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 class RuleBook(val field: FieldTrait) {
-  def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageTrade = {
-    val messageIsTailePull = Precondition.isTailPull(field, playerName, posFrom, posTo)
-    if (messageIsTailePull.isDefined)
-      return messageIsTailePull.get
+  def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
 
-    val messageIsFromPosNotOwn = Precondition.isFromPosNotOwn(field, playerName, posFrom)
-    if (messageIsFromPosNotOwn.isDefined)
-      return messageIsFromPosNotOwn.get
+    if (Precondition.isTailPull(field, playerName, posFrom, posTo))
+      return RuleEnum.PULL
 
-    val messageIsToPosNotFree = Precondition.isToPosNotFree(field, playerName, posTo)
-    if (messageIsToPosNotFree.isDefined)
-      return messageIsToPosNotFree.get
+    if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
+      return RuleEnum.FROM_POS_NOT_OWN
 
-    val messageWrongRabbitMove = Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo)
-    if (messageWrongRabbitMove.isDefined)
-      return messageWrongRabbitMove.get
+    if (Precondition.isToPosNotFree(field, playerName, posTo))
+      return RuleEnum.TO_POS_NOT_FREE
 
-    val messageIsFix = Precondition.isTailFixed(field, playerName, posFrom)
-    if (messageIsFix.isDefined)
-      return messageIsFix.get
+    if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
+      return RuleEnum.WRONG_RABBIT_MOVE
 
-    new MoveMessage(posFrom, posTo)
+
+    if (Precondition.isTailFixed(field, playerName, posFrom))
+      return RuleEnum.TILE_FIXED
+
+    RuleEnum.MOVE
   }
 
   def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): Option[MessageTrade] = {
