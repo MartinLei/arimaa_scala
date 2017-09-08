@@ -7,8 +7,8 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
-class RemoveCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Position) extends CommandTrait {
-  val tileName: TileNameEnum = field.getTileName(playerName, pos)
+case class RemoveCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Position) extends CommandTrait {
+  private val tileName: TileNameEnum = field.getTileName(playerName, pos)
 
   override def doCommand(): String = {
     field.removeTile(pos)
