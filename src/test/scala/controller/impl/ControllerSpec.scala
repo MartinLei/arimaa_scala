@@ -174,7 +174,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
   }
 
-  it should "pull a other player tile, if it surround by player stronger tile" in {
+  it should "push a other player tile, if it surround by player stronger tile" in {
     val controller = new Controller()
 
     controller.moveTile(new Position(5, 2), new Position(5, 3)) should
@@ -195,7 +195,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
     controller.moveTile(new Position(5, 5), new Position(6, 5)) should
-      be(List(Message.doPull(new Position(5, 5), new Position(6, 5))))
+      be(List(Message.doPush(new Position(5, 5), new Position(6, 5))))
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)

@@ -1,6 +1,7 @@
 package controller.impl.command
 
 import controller.impl.messages.Message
+import util.position.Position
 
 import scala.collection.mutable
 
@@ -20,4 +21,11 @@ class UndoActionManager {
     lastAction.undoAction()
   }
 
+  def getLastActionPushCommandPosFrom: Option[Position] = {
+    if (actionStack.isEmpty)
+      return Option(null)
+
+    val lastAction = actionStack.top
+    lastAction.getPushCommandPosFrom
+  }
 }

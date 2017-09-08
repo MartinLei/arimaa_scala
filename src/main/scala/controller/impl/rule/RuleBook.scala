@@ -1,7 +1,7 @@
 package controller.impl.rule
 
-import controller.impl.command.CommandTrait
 import controller.impl.command.impl.RemoveCommand
+import controller.impl.command.{CommandTrait, UndoActionManager}
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -9,11 +9,13 @@ import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
-class RuleBook(val field: FieldTrait) {
+class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
   def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
+    if (Precondition.isPushNotFinish(field, playerName, posTo, undoActionManager))
+      return RuleEnum.PUSH_NOT_FINISH
 
-    if (Precondition.isTailPull(field, playerName, posFrom, posTo))
-      return RuleEnum.PULL
+    if (Precondition.isTailPush(field, playerName, posFrom, posTo))
+      return RuleEnum.PUSH
 
     if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
       return RuleEnum.FROM_POS_NOT_OWN

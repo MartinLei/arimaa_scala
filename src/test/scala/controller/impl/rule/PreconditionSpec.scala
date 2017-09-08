@@ -1,5 +1,7 @@
 package controller.impl.rule
 
+import controller.impl.command.impl.PushCommand
+import controller.impl.command.{ActionCommand, UndoActionManager}
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -7,7 +9,7 @@ import util.position.Position
 class PreconditionSpec extends FlatSpec with Matchers {
 
   "precondition" should "give a move message if its a valid move" in {
-    val ruleBook = new RuleBook(new Field())
+    val ruleBook = new RuleBook(new Field(), new UndoActionManager)
 
     ruleBook.isMoveRuleComplaint(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
   }
@@ -90,7 +92,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isTailFixed(field, PlayerNameEnum.GOLD, new Position(4, 2)) should be(false)
   }
 
-  "isTilePull" should "return true, if pull tile is other player and surround by stronger other player tile" in {
+  "isTailPush" should "return true, if push tile is other player and surround by stronger other player tile" in {
     val field = new Field()
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 4))
     field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
@@ -98,19 +100,19 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(true)
+    Precondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(true)
 
   }
-  it should "false if, pull tile not surround by other player" in {
+  it should "false if, push tile not surround by other player" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
+    Precondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
   }
-  it should "fals if pull tile not surround by stronger other player" in {
+  it should "false if push tile not surround by stronger other player" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
@@ -119,7 +121,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    Precondition.isTailPull(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
+    Precondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
   }
   it should "be null if not" in {
     val field = new Field()
@@ -131,4 +133,32 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
 
+  "isPushNotFinish" should "true, if last move was a push and posTo is not the old pos from push tile" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
+    undoActionManager.doAction(action)
+
+    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(1, 2), undoActionManager) should be(true)
+  }
+  it should "false , if not" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
+    undoActionManager.doAction(action)
+
+    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(5, 5), undoActionManager) should be(false)
+  }
 }

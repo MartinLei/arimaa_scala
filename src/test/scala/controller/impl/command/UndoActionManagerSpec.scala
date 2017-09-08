@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.messages.Message
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -10,13 +10,13 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
   val field = new Field()
 
   val commandList1 = List(
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
   val actionCommand1 = new ActionCommand(commandList1)
 
   val commandList2 = List(
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4)),
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4)))
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4)),
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4)))
   val actionCommand2 = new ActionCommand(commandList2)
 
   val undoActionManager = new UndoActionManager()
@@ -75,6 +75,31 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
+  }
+
+  "getLastActionPushCommandPosFrom" should "give the last actions first command" in {
+    val undoActionManager1 = new UndoActionManager()
+    val actionCommand1 = new ActionCommand(commandList1)
+    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    undoActionManager1.doAction(actionCommand1)
+    undoActionManager1.doAction(actionCommand2)
+
+    undoActionManager1.getLastActionPushCommandPosFrom should be(Some(new Position(1, 2)))
+  }
+  it should "null if no  push command action" in {
+    val undoActionManager1 = new UndoActionManager()
+    val actionCommand1 = new ActionCommand(commandList1)
+    val actionCommand2 = new ActionCommand(commandList2)
+
+    undoActionManager1.doAction(actionCommand1)
+    undoActionManager1.doAction(actionCommand2)
+
+    undoActionManager1.getLastActionPushCommandPosFrom should be(Option(null))
+  }
+  it should "null if empty" in {
+    val undoActionManager1 = new UndoActionManager()
+    undoActionManager1.getLastActionPushCommandPosFrom should be(Option(null))
   }
 
 }

@@ -1,5 +1,6 @@
 package controller.impl.rule
 
+import controller.impl.command.UndoActionManager
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{PlayerNameEnum, TileNameEnum}
@@ -45,7 +46,7 @@ object Precondition {
     true
   }
 
-  def isTailPull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+  def isTailPush(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
 
@@ -57,5 +58,16 @@ object Precondition {
       return false
 
     true
+  }
+
+  def isPushNotFinish(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
+    val posFromPushCommandOption = undoActionManager.getLastActionPushCommandPosFrom
+    if (posFromPushCommandOption.isDefined) {
+      val posFromPushCommand: Position = posFromPushCommandOption.get
+      if (!posFromPushCommand.equals(posTo))
+        return true
+    }
+
+    false
   }
 }

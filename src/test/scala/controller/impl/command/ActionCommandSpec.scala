@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.messages.Message
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -9,8 +9,8 @@ import util.position.Position
 class ActionCommandSpec extends FlatSpec with Matchers {
   val field = new Field()
   val commandList = List(
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
-    new MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+    MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
 
   val actionCommand = new ActionCommand(commandList)
 
@@ -44,5 +44,17 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
+  }
+
+  "getPushCommandPosFrom" should "give the first command on list" in {
+    val actionCommand1 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.getPushCommandPosFrom should be(Some(new Position(1, 2)))
+  }
+  it should "null if first command is no push command" in {
+    actionCommand.getPushCommandPosFrom should be(Option(null))
+  }
+  it should "null if empty" in {
+    val actionCommand1 = new ActionCommand(List())
+    actionCommand1.getPushCommandPosFrom should be(Option(null))
   }
 }
