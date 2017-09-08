@@ -15,10 +15,8 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 # TODO
 ## inf
 - gui (observer)
-- undo (push pull)
+- list of moves
 ## rules
-- push
 - pull
-- trap
 - victory
-- 4 moves
+- 4 moves (player)
