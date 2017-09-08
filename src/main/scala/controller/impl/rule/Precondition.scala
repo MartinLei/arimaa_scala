@@ -42,8 +42,6 @@ object Precondition {
     if (fixedTilePosList.isEmpty)
       return false
 
-    val oneTilePos = fixedTilePosList.head // Attention: not the strongest tile
-
     true
   }
 
