@@ -2,7 +2,7 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.impl.{MoveCommand, PullCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
 import controller.impl.messages.impl.Message
 import controller.impl.rule.RuleEnum.RuleEnum
@@ -35,7 +35,12 @@ class Controller extends ControllerTrait {
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
-    commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))
+
+    ruleComplaint match {
+      case RuleEnum.MOVE => commandList.+=(new MoveCommand(field, actPlayerName, posFrom, posTo))
+      case RuleEnum.PULL => commandList.+=(new PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
+    }
+
 
     val postRule = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
     postRule match {

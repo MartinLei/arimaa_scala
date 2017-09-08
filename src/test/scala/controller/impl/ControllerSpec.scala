@@ -199,7 +199,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
-    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 6)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.CAMEL)
   }
 
   "changePlayer" should "change the Player" in {

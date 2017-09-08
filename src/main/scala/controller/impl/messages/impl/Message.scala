@@ -41,6 +41,10 @@ object Message {
     "Pull to " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
 
+  def undoPull(posFrom: Position, posTo: Position): String = {
+    "Pull back to " + Coordinate.moveToCoordinate(posFrom, posTo)
+  }
+
   def fixTile: String = {
     "You can`t move its fixed"
   }
