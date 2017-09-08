@@ -43,7 +43,7 @@ object Message {
   }
 
   def pushNotFinish: String = {
-    "You must finish your push"
+    "You must first finish your push"
   }
 
   def fixTile: String = {
