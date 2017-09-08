@@ -1,4 +1,4 @@
-package controller.impl.messages.impl
+package controller.impl.messages
 
 import controller.impl.rule.RuleEnum
 import controller.impl.rule.RuleEnum.RuleEnum

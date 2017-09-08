@@ -1,7 +1,7 @@
 package controller.impl.command.impl
 
 import controller.impl.command.CommandTrait
-import controller.impl.messages.impl.Message
+import controller.impl.messages.Message
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum

@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.messages.impl.Message
+import controller.impl.messages.Message
 
 import scala.collection.mutable
 

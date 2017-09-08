@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.command.impl.MoveCommand
-import controller.impl.messages.impl.Message
+import controller.impl.messages.Message
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position

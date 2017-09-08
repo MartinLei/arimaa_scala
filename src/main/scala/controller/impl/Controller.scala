@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{MoveCommand, PullCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
-import controller.impl.messages.impl.Message
+import controller.impl.messages.Message
 import controller.impl.rule.RuleEnum.RuleEnum
 import controller.impl.rule.{RuleBook, RuleEnum}
 import model.FieldTrait
