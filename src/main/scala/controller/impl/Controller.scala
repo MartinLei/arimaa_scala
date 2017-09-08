@@ -42,13 +42,14 @@ class Controller extends ControllerTrait {
     }
 
 
-    val postRule = ruleBook.postMoveCommand(actPlayerName, posFrom, posTo)
-    postRule match {
-      case RuleEnum.TRAPPED =>
+    val postCommandList: List[CommandTrait] = ruleBook.postMoveCommand(field, actPlayerName, posFrom, posTo)
+    commandList.++=(postCommandList)
+    //postRule match {
+    //  case RuleEnum.TRAPPED =>
       //val trapPos = posMessage.pos //TODO
       //commandList.+=(new RemoveCommand(field, actPlayerName, trapPos))
-      case RuleEnum.NONE =>
-      }
+    //  case RuleEnum.NONE =>
+    //  }
 
 
     val action = new ActionCommand(commandList.toList)

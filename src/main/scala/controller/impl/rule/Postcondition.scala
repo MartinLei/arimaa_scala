@@ -17,18 +17,18 @@ object Postcondition {
     true
   }
 
-  def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
+  def isATileNowTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position): Option[Position] = {
     val traps = Position.traps
 
     traps.foreach(trapPos => {
-      if (isATileNoTrapped(field, playerName, posFrom, trapPos))
-        return true
+      if (isATileNowTrapped(field, playerName, posFrom, trapPos))
+        return Option(trapPos)
     })
 
-    false
+    Option(null)
   }
 
-  private def isATileNoTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, trapPos: Position): Boolean = {
+  private def isATileNowTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, trapPos: Position): Boolean = {
     if (field.getTileName(playerName, trapPos).equals(TileNameEnum.NONE))
       return false
 

@@ -1,9 +1,13 @@
 package controller.impl.rule
 
+import controller.impl.command.CommandTrait
+import controller.impl.command.impl.RemoveCommand
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
+
+import scala.collection.mutable.ListBuffer
 
 class RuleBook(val field: FieldTrait) {
   def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
@@ -27,14 +31,18 @@ class RuleBook(val field: FieldTrait) {
     RuleEnum.MOVE
   }
 
-  def postMoveCommand(player: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
+  def postMoveCommand(field: FieldTrait, player: PlayerNameEnum, posFrom: Position, posTo: Position): List[CommandTrait] = {
+    var commandList: ListBuffer[CommandTrait] = ListBuffer()
 
     if (Postcondition.isTileTrapped(field, player, posFrom, posTo))
-      return RuleEnum.TRAPPED
+      commandList.+=(new RemoveCommand(field, player, posTo))
 
-    if (Postcondition.isATileNoTrapped(field, player, posFrom))
-      return RuleEnum.TRAPPED
+    val isNowTrapped: Option[Position] = Postcondition.isATileNowTrapped(field, player, posFrom)
+    if (isNowTrapped.isDefined) {
+      val trapPos = isNowTrapped.get
+      commandList.+=(new RemoveCommand(field, player, trapPos))
+    }
 
-    RuleEnum.NONE
+    commandList.toList
   }
 }
