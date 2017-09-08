@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.impl.RemoveCommand
+import controller.impl.command.impl.TrapCommand
 import controller.impl.command.{CommandTrait, UndoActionManager}
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
@@ -37,12 +37,12 @@ class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
 
     if (Postcondition.isTileTrapped(field, player, posFrom, posTo))
-      commandList.+=(new RemoveCommand(field, player, posTo))
+      commandList.+=(TrapCommand(field, player, posTo))
 
     val isNowTrapped: Option[Position] = Postcondition.isATileNowTrapped(field, player, posFrom)
     if (isNowTrapped.isDefined) {
       val trapPos = isNowTrapped.get
-      commandList.+=(new RemoveCommand(field, player, trapPos))
+      commandList.+=(TrapCommand(field, player, trapPos))
     }
 
     commandList.toList
