@@ -60,19 +60,14 @@ class PostconditionSpec extends FlatSpec with Matchers {
       be(Some(new Position(3, 3)))
   }
 
-  it should "false, if own figure stands on trap but still surround by one own tile" in {
-    val field = new Field()
+  it should "null, if own figure stands on trap but still surround by one own tile" in {
+    val field = new Field(Set(
+      new Tile(TileNameEnum.RABBIT, new Position(3, 3)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 3)),
+    ), Set())
 
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 3)) should be(TileNameEnum.CAMEL)
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
-
-    Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should be(Option(null))
+    Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(3, 3)) should
+      be(Option(null))
   }
   it should "false, if on tile is NONE tile" in {
     val field = new Field()
