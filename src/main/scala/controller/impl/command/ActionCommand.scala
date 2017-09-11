@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.PushCommand
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
@@ -29,6 +29,7 @@ class ActionCommand(commandList: List[CommandTrait]) {
     undoMessageList.toList
   }
 
+  //TODO ref. give true if equals
   def getPushCommandPosFrom: Option[Position] = {
     if (commandList.isEmpty)
       return Option(null)
@@ -40,5 +41,20 @@ class ActionCommand(commandList: List[CommandTrait]) {
     }
 
     Option(null)
+  }
+
+  def isCommandFromPosEqual(pos: Position): Boolean = {
+    if (commandList.isEmpty)
+      return false
+
+    commandList.head match {
+      case pushCommand: PushCommand =>
+        return pushCommand.posFrom.equals(pos)
+      case moveCommand: MoveCommand =>
+        return moveCommand.posFrom.equals(pos)
+      case _ => return false
+    }
+
+    false
   }
 }

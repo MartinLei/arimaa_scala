@@ -57,4 +57,17 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     val actionCommand1 = new ActionCommand(List())
     actionCommand1.getPushCommandPosFrom should be(Option(null))
   }
+
+  "isCommandFromPosEqual" should "true, if given pos equal command fromPos" in {
+    val actionCommand1 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.isCommandFromPosEqual(new Position(1, 2)) should be(true)
+
+    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand2.isCommandFromPosEqual(new Position(1, 2)) should be(true)
+  }
+  it should "false, if not equal" in {
+    val actionCommand1 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.isCommandFromPosEqual(new Position(1, 3)) should be(false)
+  }
+
 }

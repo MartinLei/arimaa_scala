@@ -70,4 +70,9 @@ object Precondition {
 
     false
   }
+
+  def isTilePull(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
+
+    false
+  }
 }

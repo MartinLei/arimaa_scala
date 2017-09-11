@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.impl.PushCommand
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.command.{ActionCommand, UndoActionManager}
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -160,5 +160,36 @@ class PreconditionSpec extends FlatSpec with Matchers {
     undoActionManager.doAction(action)
 
     Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(5, 5), undoActionManager) should be(false)
+  }
+
+  "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(5, 4), new Position(6, 4))))
+    undoActionManager.doAction(action)
+
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(5, 4), undoActionManager) should be(true)
+  }
+  it should "false, if posTo is not the last tile posFrom" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(5, 4), new Position(6, 4))))
+    undoActionManager.doAction(action)
+
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(6, 5), undoActionManager) should be(false)
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 5), undoActionManager) should be(false)
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(5, 6), undoActionManager) should be(false)
   }
 }
