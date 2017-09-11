@@ -216,10 +216,10 @@ class PreconditionSpec extends FlatSpec with Matchers {
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
     undoActionManager.doAction(action)
 
-    Precondition.isTilePull(field, new Position(4, 5), new Position(3, 5), undoActionManager) should be(false)
-    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 5), undoActionManager) should be(false)
-    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 6), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 5), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 3), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
   }
-
 
 }

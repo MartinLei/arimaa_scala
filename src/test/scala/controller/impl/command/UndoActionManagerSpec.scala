@@ -78,9 +78,10 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
   }
 
   "getLastActionPushCommandPosFrom" should "give the last actions first command" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -88,8 +89,9 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionPushCommandPosFrom should be(Some(new Position(1, 2)))
   }
   it should "null if no  push command action" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
     val actionCommand2 = new ActionCommand(commandList2)
 
     undoActionManager1.doAction(actionCommand1)
@@ -98,14 +100,16 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionPushCommandPosFrom should be(Option(null))
   }
   it should "null if empty" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
     undoActionManager1.getLastActionPushCommandPosFrom should be(Option(null))
   }
 
   "getLastActionCommandPosFrom" should "give the last actions first push command" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -113,9 +117,10 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionCommandPosFrom should be(Some(new Position(1, 3)))
   }
   it should "give the last actions first move command" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -123,9 +128,10 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionCommandPosFrom should be(Some(new Position(1, 3)))
   }
   it should "null if no push or move command action" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(TrapCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -133,14 +139,16 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionCommandPosFrom should be(Option(null))
   }
   it should "null if empty" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
     undoActionManager1.getLastActionCommandPosFrom should be(Option(null))
   }
 
   "getLastActionCommandPosTo" should "give the last actions first push command posTo" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -148,9 +156,10 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionCommandPosTo should be(Some(new Position(1, 4)))
   }
   it should "give the last actions first move command" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
@@ -158,9 +167,10 @@ class UndoActionManagerSpec extends FlatSpec with Matchers {
     undoActionManager1.getLastActionCommandPosTo should be(Some(new Position(1, 4)))
   }
   it should "null if no push or move command action" in {
+    val field1 = new Field()
     val undoActionManager1 = new UndoActionManager()
-    val actionCommand1 = new ActionCommand(commandList1)
-    val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field1, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(TrapCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2))))
 
     undoActionManager1.doAction(actionCommand1)
     undoActionManager1.doAction(actionCommand2)
