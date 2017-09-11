@@ -17,6 +17,9 @@ class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
     if (Precondition.isTailPush(field, playerName, posFrom, posTo))
       return RuleEnum.PUSH
 
+    if (Precondition.isTilePull(field, posFrom, posTo, undoActionManager))
+      return RuleEnum.PULL
+
     if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
       return RuleEnum.FROM_POS_NOT_OWN
 

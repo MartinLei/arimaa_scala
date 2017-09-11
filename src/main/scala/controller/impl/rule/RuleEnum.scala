@@ -10,11 +10,13 @@ object RuleEnum extends Enumeration {
   val WRONG_RABBIT_MOVE: Value = Value("WRONG_RABBIT_MOVE")
   val TILE_FIXED: Value = Value("TILE_FIXED")
   val PUSH_NOT_FINISH: Value = Value("PUSH_NOT_FINISH")
+  val PULL: Value = Value("PULL")
 
   val TRAPPED: Value = Value("TRAPPED")
 
+
   def isValid(element: RuleEnum): Boolean = {
-    if (element.equals(RuleEnum.MOVE) || element.equals(RuleEnum.PUSH))
+    if (element.equals(RuleEnum.MOVE) || element.equals(RuleEnum.PUSH) || element.equals(RuleEnum.PULL))
       return true
 
     false

@@ -71,7 +71,7 @@ object Precondition {
     false
   }
 
-  def isTilePull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
+  def isTilePull(field: FieldTrait, posFrom: Position, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
     val lastPosFromOption = undoActionManager.getLastActionCommandPosFrom
     val lastPosToOption = undoActionManager.getLastActionCommandPosTo
 
