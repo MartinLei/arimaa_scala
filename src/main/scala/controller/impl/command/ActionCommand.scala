@@ -43,18 +43,19 @@ class ActionCommand(commandList: List[CommandTrait]) {
     Option(null)
   }
 
-  def isCommandFromPosEqual(pos: Position): Boolean = {
+  def getLastCommandFromPos: Option[Position] = {
     if (commandList.isEmpty)
-      return false
+      return Option(null)
 
     commandList.head match {
       case pushCommand: PushCommand =>
-        return pushCommand.posFrom.equals(pos)
+        return Option(pushCommand.posFrom)
       case moveCommand: MoveCommand =>
-        return moveCommand.posFrom.equals(pos)
-      case _ => return false
+        return Option(moveCommand.posFrom)
+      case _ =>
+        return Option(null)
     }
 
-    false
+    Option(null)
   }
 }

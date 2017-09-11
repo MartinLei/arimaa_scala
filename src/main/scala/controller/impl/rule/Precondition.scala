@@ -72,6 +72,18 @@ object Precondition {
   }
 
   def isTilePull(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
+    val passPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
+    val lastPosFrom = new Position(1, 2)
+
+    val lastPosPlayer = field.getPlayerName(lastPosFrom)
+    if (lastPosPlayer.equals(passPlayerName)) {
+      if (lastPosFrom.equals(posTo)) {
+        val lastPosTileName = field.getTileName(passPlayerName, lastPosFrom)
+        val actPosTileName = field.getTileName(playerName, posTo)
+        if (lastPosTileName.compare(actPosTileName) < 0)
+          return true
+      }
+    }
 
     false
   }

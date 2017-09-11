@@ -164,32 +164,60 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
   "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
     val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 7), new Position(4, 5))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
     val undoActionManager = new UndoActionManager()
-    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(5, 4), new Position(6, 4))))
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
     undoActionManager.doAction(action)
 
-    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(5, 4), undoActionManager) should be(true)
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 4), undoActionManager) should be(true)
+  }
+  it should "false, if old moved tile is not from other player" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(4, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 5)) should be(TileNameEnum.HORSE)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
+    undoActionManager.doAction(action)
+
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 4), undoActionManager) should be(false)
+  }
+  it should "false, if old moved tile from other player is not strong enough" in {
+    val field = new Field()
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(4, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 7), new Position(4, 5))
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAT)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
+
+    val undoActionManager = new UndoActionManager()
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
+    undoActionManager.doAction(action)
+
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 4), undoActionManager) should be(false)
   }
   it should "false, if posTo is not the last tile posFrom" in {
     val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 7), new Position(4, 5))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
     val undoActionManager = new UndoActionManager()
-    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(5, 4), new Position(6, 4))))
+    val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
     undoActionManager.doAction(action)
 
-    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(6, 5), undoActionManager) should be(false)
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(3, 5), undoActionManager) should be(false)
     Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 5), undoActionManager) should be(false)
-    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(5, 6), undoActionManager) should be(false)
+    Precondition.isTilePull(field, PlayerNameEnum.GOLD, new Position(4, 6), undoActionManager) should be(false)
   }
 }
