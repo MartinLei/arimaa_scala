@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import model.impl.{Field, PlayerNameEnum, TileNameEnum}
+import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -48,7 +48,20 @@ class PostconditionSpec extends FlatSpec with Matchers {
     Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should
       be(Some(new Position(3, 3)))
   }
-  it should "true, if own figure stands on another trap and is now not surround by any own tile" in {
+  it should "the trap pos, if trap is a tile and surround tile gets pulled" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(2, 3)),
+      new Tile(TileNameEnum.CAT, new Position(3, 3)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(2, 4)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 4), new Position(3, 4))
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
+    Postcondition.isATileNowTrapped(field, PlayerNameEnum.SILVER, new Position(2, 4)) should be(new Position(3, 3))
+  }
+
+  it should "the trap pos, if own figure stands on another trap and is now not surround by any own tile" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 3))
