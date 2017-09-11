@@ -1,5 +1,6 @@
 package model.impl
 
+import com.typesafe.scalalogging.Logger
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -9,6 +10,8 @@ import scala.collection.mutable.ListBuffer
 
 
 class Field() extends FieldTrait {
+  private val logger = Logger[FieldTrait]
+
   private val playerGold: Player = getInitGoldPlayer
   private val playerSilver: Player = getInitSilverPlayer
 
@@ -121,8 +124,10 @@ class Field() extends FieldTrait {
   }
 
   override def changeTilePos(player: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
-    if (isOccupied(posTo))
+    if (isOccupied(posTo)) {
+      logger.error("CANT MOVE TILE FROM " + posFrom + " TO " + posTo)
       return false
+    }
 
     player match {
       case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)
