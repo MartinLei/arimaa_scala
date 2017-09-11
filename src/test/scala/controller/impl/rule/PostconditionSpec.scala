@@ -69,14 +69,10 @@ class PostconditionSpec extends FlatSpec with Matchers {
     Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(3, 3)) should
       be(Option(null))
   }
-  it should "false, if on tile is NONE tile" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
+  it should "null, if on tile is NONE tile" in {
+    val field = new Field(Set(
+      new Tile(TileNameEnum.RABBIT, new Position(2, 3))
+    ), Set())
 
     Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should be(Option(null))
   }
