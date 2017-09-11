@@ -32,8 +32,8 @@ object Message {
       case RuleEnum.WRONG_RABBIT_MOVE => Message.wrongRabbitMove
       case RuleEnum.TILE_FIXED => Message.fixTile
       case RuleEnum.PUSH_NOT_FINISH => Message.pushNotFinish
-      case RuleEnum.PULL => Message.doPull(posFrom, posTo)
 
+      case RuleEnum.PULL => Message.doPull(posFrom, posTo)
       case RuleEnum.TRAPPED => Message.doTrap(posFrom)
       case _ => "NONE"
     }
