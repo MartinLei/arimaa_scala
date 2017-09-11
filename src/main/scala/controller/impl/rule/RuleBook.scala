@@ -20,16 +20,16 @@ class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
     if (Precondition.isTilePull(field, posFrom, posTo, undoActionManager))
       return RuleEnum.PULL
 
-    if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
-      return RuleEnum.FROM_POS_NOT_OWN
-
     if (Precondition.isToPosNotFree(field, playerName, posTo))
       return RuleEnum.TO_POS_NOT_FREE
 
+
+    if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
+      return RuleEnum.FROM_POS_NOT_OWN
+
     if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
       return RuleEnum.WRONG_RABBIT_MOVE
-
-
+    
     if (Precondition.isTailFixed(field, playerName, posFrom))
       return RuleEnum.TILE_FIXED
 

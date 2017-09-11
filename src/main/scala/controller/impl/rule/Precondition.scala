@@ -50,6 +50,9 @@ object Precondition {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
 
+    if (field.isOccupied(posTo))
+      return false
+
     if (otherPlayerTileName.equals(TileNameEnum.NONE))
       return false
 
