@@ -7,12 +7,11 @@ import util.position.Position
 class PostconditionSpec extends FlatSpec with Matchers {
 
   "isTileTrapped" should "return true, if the tail is trapped" in {
-    val field = new Field()
+    val field = new Field(Set(
+      new Tile(TileNameEnum.RABBIT, new Position(3, 5)),
+    ), Set())
 
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
-
-    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3)) should be(true)
+    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(3, 5), new Position(3, 6)) should be(true)
   }
 
   it should "false if pos is not a trap position" in {
