@@ -58,7 +58,9 @@ class PostconditionSpec extends FlatSpec with Matchers {
 
     field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 4), new Position(3, 4))
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
-    Postcondition.isATileNowTrapped(field, PlayerNameEnum.SILVER, new Position(2, 4)) should be(new Position(3, 3))
+
+    Postcondition.isATileNowTrapped(field, PlayerNameEnum.SILVER, new Position(2, 4)) should
+      be(Some(new Position(3, 3)))
   }
 
   it should "the trap pos, if own figure stands on another trap and is now not surround by any own tile" in {

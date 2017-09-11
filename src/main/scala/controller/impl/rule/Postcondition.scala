@@ -2,7 +2,7 @@ package controller.impl.rule
 
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.TileNameEnum
+import model.impl.{PlayerNameEnum, TileNameEnum}
 import util.position.Position
 
 object Postcondition {
@@ -29,10 +29,15 @@ object Postcondition {
   }
 
   private def isATileNowTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, trapPos: Position): Boolean = {
-    if (field.getTileName(playerName, trapPos).equals(TileNameEnum.NONE))
+    val trapPlayerName = field.getPlayerName(trapPos)
+
+    if (trapPlayerName.equals(PlayerNameEnum.NONE))
       return false
 
-    if (field.isSurroundByOwnTile(playerName, posFrom, trapPos))
+    if (field.getTileName(trapPlayerName, trapPos).equals(TileNameEnum.NONE))
+      return false
+
+    if (field.isSurroundByOwnTile(trapPlayerName, posFrom, trapPos))
       return false
 
     true
