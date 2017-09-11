@@ -24,27 +24,25 @@ class PostconditionSpec extends FlatSpec with Matchers {
   }
 
   it should "false if pos is not a trap position" in {
-    val field = new Field()
+    val field = new Field(Set(
+      new Tile(TileNameEnum.RABBIT, new Position(4, 4)),
+    ), Set())
 
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-
-    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)) should be(false)
+    Postcondition.isTileTrapped(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(4, 5)) should be(false)
   }
 
+  "isATileNowTrapped" should "the trap pos, if own figure stands on trap and is now not surround by any own tile" in {
+    val field = new Field(Set(
+      new Tile(TileNameEnum.RABBIT, new Position(3, 3)),
+      new Tile(TileNameEnum.RABBIT, new Position(2, 3)),
+    ), Set())
 
-
-  "isATileNowTrapped" should "true, if own figure stands on trap and is now not surround by any own tile" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(3, 2), new Position(3, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+    Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(3, 3)) should
+      be(Option(null))
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4))
 
-    Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(2, 3)) should
+    Postcondition.isATileNowTrapped(field, PlayerNameEnum.GOLD, new Position(3, 3)) should
       be(Some(new Position(3, 3)))
   }
   it should "the trap pos, if trap is a tile and surround tile gets pulled" in {
