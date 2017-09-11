@@ -10,16 +10,21 @@ import controller.impl.rule.{RuleBook, RuleEnum}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import model.impl.{Field, PlayerNameEnum}
+import model.impl.{Field, PlayerNameEnum, Tile}
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
 class Controller extends ControllerTrait {
+  private val ruleBook = RuleBook()
   private val logger = Logger[Controller]
-  private val field: FieldTrait = new Field()
+  private var field: FieldTrait = new Field()
   private val undoActionManager = new UndoActionManager
-  private val ruleBook: RuleBook = new RuleBook(field, undoActionManager)
+
+  def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
+    this()
+    this.field = new Field(playerGoldTiles, playerSilverTiles)
+  }
 
   private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
   override def getActPlayerName: PlayerNameEnum = actPlayerName
@@ -29,7 +34,7 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(actPlayerName, posFrom, posTo)
+    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, undoActionManager, actPlayerName, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 

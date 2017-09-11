@@ -2,7 +2,7 @@ package controller.impl
 
 import controller.ControllerTrait
 import controller.impl.messages.Message
-import model.impl.{PlayerNameEnum, TileNameEnum}
+import model.impl.{PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -13,6 +13,16 @@ class ControllerSpec extends FlatSpec with Matchers {
     val controller: ControllerTrait = new Controller()
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+  }
+  it should "have a constructor to can set specific tiles" in {
+    val playerGoldTiles = Set(new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 8)) should be(TileNameEnum.RABBIT)
   }
 
   "toString" should "have given output" in {
@@ -174,6 +184,25 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
   }
 
+  it should "remove tile from trap if its not surround, it gets pulled" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(2, 3)),
+      new Tile(TileNameEnum.CAT, new Position(3, 3)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(2, 4)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer()
+
+    controller.moveTile(new Position(2, 4), new Position(3, 4)) should
+      be(List(Message.doMove(new Position(2, 4), new Position(3, 4))))
+
+    controller.moveTile(new Position(2, 3), new Position(2, 4)) should
+      be(List(
+        Message.doPull(new Position(2, 3), new Position(2, 4)),
+        Message.doTrap(new Position(3, 3))))
+  }
+
   it should "push a other player tile, if it surround by player stronger tile" in {
     val controller = new Controller()
 
@@ -261,7 +290,6 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
   }
-
 
 
   "changePlayer" should "change the Player" in {

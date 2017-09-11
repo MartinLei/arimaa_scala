@@ -9,9 +9,11 @@ import util.position.Position
 class PreconditionSpec extends FlatSpec with Matchers {
 
   "precondition" should "give a move message if its a valid move" in {
-    val ruleBook = new RuleBook(new Field(), new UndoActionManager)
+    val field = new Field()
+    val undoActionManager = new UndoActionManager
+    val ruleBook = RuleBook()
 
-    ruleBook.isMoveRuleComplaint(PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
+    ruleBook.isMoveRuleComplaint(field, undoActionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
   }
 
   "isFromPosNotOwn" should "return true, if tile on posFrom is not own" in {

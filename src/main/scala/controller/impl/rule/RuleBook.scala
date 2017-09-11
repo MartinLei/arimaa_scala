@@ -9,8 +9,9 @@ import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
-class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
-  def isMoveRuleComplaint(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
+case class RuleBook() {
+  def isMoveRuleComplaint(field: FieldTrait, undoActionManager: UndoActionManager,
+                          playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
     if (Precondition.isPushNotFinish(field, playerName, posTo, undoActionManager))
       return RuleEnum.PUSH_NOT_FINISH
 
@@ -29,7 +30,7 @@ class RuleBook(val field: FieldTrait, undoActionManager: UndoActionManager) {
 
     if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
       return RuleEnum.WRONG_RABBIT_MOVE
-    
+
     if (Precondition.isTailFixed(field, playerName, posFrom))
       return RuleEnum.TILE_FIXED
 

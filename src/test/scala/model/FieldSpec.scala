@@ -1,6 +1,6 @@
 package model
 
-import model.impl._
+import model.impl.{Tile, _}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -30,7 +30,6 @@ class FieldSpec extends FlatSpec with Matchers {
 
     tilesGold shouldEqual tilesGoldShouldBe
   }
-
   it should "have a silver 99of9 start tiles position" in {
     val tilesSilverShouldBe: Set[Tile] = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
@@ -53,6 +52,14 @@ class FieldSpec extends FlatSpec with Matchers {
     val field: FieldTrait = new Field()
     val tilesSilver: Set[Tile] = field.getPlayerTiles(PlayerNameEnum.SILVER)
     tilesSilver shouldEqual tilesSilverShouldBe
+  }
+  it should "init with other tiles" in {
+    val playerGoldTiles = Set(new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    field.getPlayerTiles(PlayerNameEnum.GOLD) shouldEqual playerGoldTiles
+    field.getPlayerTiles(PlayerNameEnum.SILVER) shouldEqual playerSilverTiles
   }
 
   it should "give a empty set if player is NONE" in {

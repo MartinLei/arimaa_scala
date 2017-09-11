@@ -10,10 +10,17 @@ import scala.collection.mutable.ListBuffer
 
 
 class Field() extends FieldTrait {
+  private var playerGold: Player = getInitGoldPlayer
+  private var playerSilver: Player = getInitSilverPlayer
+
+  def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
+    this()
+    this.playerGold = new Player(PlayerNameEnum.GOLD, playerGoldTiles)
+    this.playerSilver = new Player(PlayerNameEnum.SILVER, playerSilverTiles)
+  }
+
   private val logger = Logger[FieldTrait]
 
-  private val playerGold: Player = getInitGoldPlayer
-  private val playerSilver: Player = getInitSilverPlayer
 
   override def getPlayerTiles(player: PlayerNameEnum): Set[Tile] = player match {
     case PlayerNameEnum.GOLD => playerGold.getTiles
