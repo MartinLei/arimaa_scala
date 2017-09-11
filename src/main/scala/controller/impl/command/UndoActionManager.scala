@@ -34,6 +34,14 @@ class UndoActionManager {
       return Option(null)
 
     val lastAction = actionStack.top
-    lastAction.getLastCommandFromPos
+    lastAction.getLastCommandPosFrom
+  }
+
+  def getLastActionCommandPosTo: Option[Position] = {
+    if (actionStack.isEmpty)
+      return Option(null)
+
+    val lastAction = actionStack.top
+    lastAction.getLastCommandPosTo
   }
 }

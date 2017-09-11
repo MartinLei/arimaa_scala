@@ -43,7 +43,7 @@ class ActionCommand(commandList: List[CommandTrait]) {
     Option(null)
   }
 
-  def getLastCommandFromPos: Option[Position] = {
+  def getLastCommandPosFrom: Option[Position] = {
     if (commandList.isEmpty)
       return Option(null)
 
@@ -52,6 +52,22 @@ class ActionCommand(commandList: List[CommandTrait]) {
         return Option(pushCommand.posFrom)
       case moveCommand: MoveCommand =>
         return Option(moveCommand.posFrom)
+      case _ =>
+        return Option(null)
+    }
+
+    Option(null)
+  }
+
+  def getLastCommandPosTo: Option[Position] = {
+    if (commandList.isEmpty)
+      return Option(null)
+
+    commandList.head match {
+      case pushCommand: PushCommand =>
+        return Option(pushCommand.posTo)
+      case moveCommand: MoveCommand =>
+        return Option(moveCommand.posTo)
       case _ =>
         return Option(null)
     }

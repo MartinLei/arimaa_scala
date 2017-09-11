@@ -71,20 +71,26 @@ object Precondition {
     false
   }
 
-  def isTilePull(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
-    val passPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
-    val lastPosFrom = new Position(1, 2)
+  def isTilePull(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
+    val lastPosFromOption = undoActionManager.getLastActionCommandPosFrom
+    val lastPosToOption = undoActionManager.getLastActionCommandPosTo
 
-    val lastPosPlayer = field.getPlayerName(lastPosFrom)
-    if (lastPosPlayer.equals(passPlayerName)) {
-      if (lastPosFrom.equals(posTo)) {
-        val lastPosTileName = field.getTileName(passPlayerName, lastPosFrom)
-        val actPosTileName = field.getTileName(playerName, posTo)
-        if (lastPosTileName.compare(actPosTileName) < 0)
-          return true
-      }
+    if (lastPosFromOption.isDefined && lastPosToOption.isDefined) {
+      val lastPosFrom = lastPosFromOption.get
+      val lastPosTo = lastPosToOption.get
+      val lastTilePlayerName = field.getPlayerName(lastPosTo)
+      val actTilePlayerName = field.getPlayerName(posFrom)
+      if (lastTilePlayerName.equals(actTilePlayerName))
+        return false
+
+      if (!lastPosFrom.equals(posTo))
+        return false
+
+      val lastPosTileName = field.getTileName(lastTilePlayerName, lastPosTo)
+      val actPosTileName = field.getTileName(actTilePlayerName, posFrom)
+      if (lastPosTileName.compare(actPosTileName) > 0)
+        return true
     }
-
     false
   }
 }
