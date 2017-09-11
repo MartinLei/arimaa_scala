@@ -120,10 +120,15 @@ class Field() extends FieldTrait {
     case PlayerNameEnum.NONE => TileNameEnum.NONE
   }
 
-  override def changeTilePos(player: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = player match {
-    case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)
-    case PlayerNameEnum.SILVER => playerSilver.moveTile(posFrom, posTo)
-    case PlayerNameEnum.NONE => false
+  override def changeTilePos(player: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+    if (isOccupied(posTo))
+      return false
+
+    player match {
+      case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)
+      case PlayerNameEnum.SILVER => playerSilver.moveTile(posFrom, posTo)
+      case PlayerNameEnum.NONE => false
+    }
   }
 
   override def isOccupied(pos: Position): Boolean = {

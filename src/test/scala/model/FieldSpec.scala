@@ -152,6 +152,24 @@ class FieldSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
   }
+  it should "be false if position is already occupied" in {
+    val field: FieldTrait = new Field()
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    field.changeTilePos(PlayerNameEnum.NONE, new Position(1, 1), new Position(1, 2)) should be(false)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+
+    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+
+    field.changeTilePos(PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 7)) should be(false)
+
+    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
+    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+  }
 
   "getStrongerTilesWhoAround" should "get the pos of the stronger other player tile who surround the tile" in {
     val field = new Field()

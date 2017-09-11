@@ -220,4 +220,6 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isTilePull(field, new Position(4, 5), new Position(4, 5), undoActionManager) should be(false)
     Precondition.isTilePull(field, new Position(4, 5), new Position(4, 6), undoActionManager) should be(false)
   }
+
+
 }
