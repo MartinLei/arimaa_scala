@@ -221,21 +221,11 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.CAMEL)
   }
   it should "first finish push before moving other tiles" in {
-    val controller = new Controller()
-
-    controller.moveTile(new Position(5, 2), new Position(5, 3)) should
-      be(List(Message.doMove(new Position(5, 2), new Position(5, 3))))
-    controller.moveTile(new Position(5, 3), new Position(5, 4)) should
-      be(List(Message.doMove(new Position(5, 3), new Position(5, 4))))
-
-    controller.changePlayer()
-
-    controller.moveTile(new Position(5, 7), new Position(5, 6)) should
-      be(List(Message.doMove(new Position(5, 7), new Position(5, 6))))
-    controller.moveTile(new Position(5, 6), new Position(5, 5)) should
-      be(List(Message.doMove(new Position(5, 6), new Position(5, 5))))
-
-    controller.changePlayer()
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
     controller.moveTile(new Position(5, 5), new Position(6, 5)) should
       be(List(Message.doPush(new Position(5, 5), new Position(6, 5))))
