@@ -155,16 +155,11 @@ class ControllerSpec extends FlatSpec with Matchers {
 
   }
 
-  it should "remove a own tile from trap,if actual move frees the tile" in {
-    val controller = new Controller()
-
-    controller.moveTile(new Position(2, 2), new Position(2, 3)) should
-      be(List(Message.doMove(new Position(2, 2), new Position(2, 3))))
-    controller.moveTile(new Position(3, 2), new Position(3, 3)) should
-      be(List(Message.doMove(new Position(3, 2), new Position(3, 3))))
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
+  it should "remove a own tile from trap,if actual move frees the tile and test undo move" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(2, 3)),
+      new Tile(TileNameEnum.CAT, new Position(3, 3)))
+    val controller = new Controller(playerGoldTiles, Set())
 
     controller.moveTile(new Position(2, 3), new Position(2, 4)) should
       be(List(
