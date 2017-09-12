@@ -100,21 +100,11 @@ class ControllerSpec extends FlatSpec with Matchers {
 
 
   it should "not move a tile if the tile is fixed by other player stronger tile" in {
-    val controller = new Controller()
-
-    controller.moveTile(new Position(4, 2), new Position(4, 3)) should
-      be(List(Message.doMove(new Position(4, 2), new Position(4, 3))))
-    controller.moveTile(new Position(4, 3), new Position(4, 4)) should
-      be(List(Message.doMove(new Position(4, 3), new Position(4, 4))))
-    controller.changePlayer()
-    controller.moveTile(new Position(4, 7), new Position(4, 6)) should
-      be(List(Message.doMove(new Position(4, 7), new Position(4, 6))))
-    controller.moveTile(new Position(4, 6), new Position(4, 5)) should
-      be(List(Message.doMove(new Position(4, 6), new Position(4, 5))))
-    controller.changePlayer()
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
-    controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(4, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(4, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
     controller.moveTile(new Position(4, 4), new Position(5, 4)) should
       be(List(Message.fixTile))
