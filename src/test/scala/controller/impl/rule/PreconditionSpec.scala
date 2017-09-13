@@ -16,12 +16,12 @@ class PreconditionSpec extends FlatSpec with Matchers {
     ruleBook.isMoveRuleComplaint(field, undoActionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
   }
 
-  "isFromPosNotOwn" should "return true, if tile on posFrom is not own" in {
+  "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {
     val field = new Field()
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
 
-    Precondition.isFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 7)) should be(true)
+    Precondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 7)) should be(true)
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
   }
@@ -30,7 +30,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
 
-    Precondition.isFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
+    Precondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
@@ -147,7 +147,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
 
-    Precondition.isFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
+    Precondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
@@ -241,7 +241,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
   }
 
-  "isFromPosEmpty" should "true if on from pos is no tile" in {
+  "isPosFromEmpty" should "true if on from pos is no tile" in {
     val field = new Field(Set(), Set())
     Precondition.isPosFromEmpty(field, new Position(4, 4)) should be(true)
   }

@@ -9,7 +9,7 @@ import util.position.Position
 
 object Precondition {
 
-  def isFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Boolean = {
+  def isPosFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val playerName = field.getPlayerName(posFrom)
 
     if (!actPlayerName.equals(playerName))

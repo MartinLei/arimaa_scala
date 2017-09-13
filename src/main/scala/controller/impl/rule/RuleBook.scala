@@ -28,7 +28,7 @@ case class RuleBook() {
     if (Precondition.isTilePull(field, posFrom, posTo, undoActionManager))
       return RuleEnum.PULL
 
-    if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
+    if (Precondition.isPosFromPosNotOwn(field, playerName, posFrom))
       return RuleEnum.FROM_POS_NOT_OWN
 
     if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
