@@ -126,26 +126,39 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
   }
   it should "not remove tile if it is trapped but surround by own tiles" in {
-    val controller = new Controller()
-
-    controller.moveTile(new Position(2, 2), new Position(2, 3)) should
-      be(List(Message.doMove(new Position(2, 2), new Position(2, 3))))
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAT, new Position(3, 2)),
+      new Tile(TileNameEnum.DOG, new Position(2, 3)))
+    val controller = new Controller(playerGoldTiles, Set())
 
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
       be(List(Message.doMove(new Position(3, 2), new Position(3, 3))))
 
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.DOG)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
-
   }
-  /*"tileTrapUndo" should "respawn the figure" in{
+  "tileTrapUndo" should "respawn the figure" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAT, new Position(3, 2)))
+    val controller = new Controller(playerGoldTiles, Set())
 
-  }*/
+    controller.moveTile(new Position(3, 2), new Position(3, 3)) should
+      be(List(
+        Message.doMove(new Position(3, 2), new Position(3, 3)),
+        Message.doTrap(new Position(3, 3))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+
+    controller.moveTileUndo() should
+      be(List(
+        Message.undoTrap(new Position(3, 3)),
+        Message.undoMove(new Position(3, 2), new Position(3, 3))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+  }
 
   "tileNowTrapped" should "remove a own tile from trap,if actual move frees the tile and test undo move" in {
     val playerGoldTiles = Set(
