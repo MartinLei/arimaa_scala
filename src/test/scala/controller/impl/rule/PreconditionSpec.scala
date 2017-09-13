@@ -13,7 +13,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     val actionManager = new ActionManager
     val ruleBook = RuleBook()
 
-    ruleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
+    ruleBook.isMoveRuleComplaint(field, actionManager, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
   }
 
   "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {

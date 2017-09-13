@@ -2,7 +2,7 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
+import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
 import controller.impl.messages.Message
 import controller.impl.rule.RuleEnum.RuleEnum
@@ -26,15 +26,15 @@ class Controller extends ControllerTrait {
     this.field = new Field(playerGoldTiles, playerSilverTiles)
   }
 
-  private var actPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
-  override def getActPlayerName: PlayerNameEnum = actPlayerName
+  override def getActPlayerName: PlayerNameEnum = field.actualPlayerName
 
   override def getFieldAsString: String = {
     field.toString
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, actPlayerName, posFrom, posTo)
+    val actPlayerName = field.actualPlayerName // TODO
+    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
@@ -61,8 +61,10 @@ class Controller extends ControllerTrait {
     field.getTileName(player, pos)
   }
 
-  override def changePlayer(): Unit = {
-    actPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
+  override def changePlayer(): List[String] = {
+    val changePlayerCommand = ChangePlayerCommand(field)
+    val action = new ActionCommand(List(changePlayerCommand))
+    actionManager.doAction(action)
   }
 
 }

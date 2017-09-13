@@ -5,7 +5,7 @@ import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
 trait ControllerTrait {
-  def changePlayer(): Unit
+  def changePlayer(): List[String]
 
   def getActPlayerName: PlayerNameEnum
 

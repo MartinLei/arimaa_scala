@@ -305,5 +305,14 @@ class FieldSpec extends FlatSpec with Matchers {
     field.addTile(PlayerNameEnum.SILVER, TileNameEnum.RABBIT, new Position(1, 2))
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 2)) should be(TileNameEnum.NONE)
   }
+
+  "changePlayer" should "change player form gold to silver" in {
+    val field = new Field()
+    field.actualPlayerName should be(PlayerNameEnum.GOLD)
+    field.changePlayer()
+    field.actualPlayerName should be(PlayerNameEnum.SILVER)
+    field.changePlayer()
+    field.actualPlayerName should be(PlayerNameEnum.GOLD)
+  }
 }
 

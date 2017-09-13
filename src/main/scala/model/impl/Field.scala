@@ -13,6 +13,8 @@ class Field() extends FieldTrait {
   private var playerGold: Player = getInitGoldPlayer
   private var playerSilver: Player = getInitSilverPlayer
 
+  override var actualPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
+
   def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
     this()
     this.playerGold = new Player(PlayerNameEnum.GOLD, playerGoldTiles)
@@ -212,5 +214,9 @@ class Field() extends FieldTrait {
       case PlayerNameEnum.SILVER => playerSilver.add(tileName, pos)
       case PlayerNameEnum.NONE =>
     }
+  }
+
+  override def changePlayer(): Unit = {
+    actualPlayerName = PlayerNameEnum.getInvertPlayer(actualPlayerName)
   }
 }

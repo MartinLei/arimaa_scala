@@ -2,6 +2,7 @@ package controller.impl.messages
 
 import controller.impl.rule.RuleEnum
 import controller.impl.rule.RuleEnum.RuleEnum
+import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.Coordinate
 import util.position.Position
 
@@ -84,4 +85,7 @@ object Message {
     "Pull back to " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
 
+  def changePlayer(playerName: PlayerNameEnum): String = {
+    playerName + " your turn"
+  }
 }

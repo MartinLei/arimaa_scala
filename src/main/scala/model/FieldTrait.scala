@@ -24,4 +24,8 @@ trait FieldTrait {
   def removeTile(pos: Position): Unit
 
   def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Unit
+
+  var actualPlayerName: PlayerNameEnum
+
+  def changePlayer(): Unit
 }

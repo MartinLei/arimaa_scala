@@ -18,15 +18,14 @@ class Tui(controller: ControllerTrait) {
       logger.info("Input::")
       true
     case "c" =>
-      controller.changePlayer()
-      logger.info("Change Player " + controller.getActPlayerName)
+      val messageList: List[String] = controller.changePlayer()
+
+      printControllerResponse(messageList)
       true
     case "u" =>
       val messageList: List[String] = controller.moveTileUndo()
 
-      logger.info(controller.getFieldAsString)
-      messageList.foreach(message => logger.info(message))
-      logger.info("Input::")
+      printControllerResponse(messageList)
       true
     case _ =>
       val patternCoordinate = "^[a-h][1-8] [a-h][1-8]$".r
@@ -36,8 +35,7 @@ class Tui(controller: ControllerTrait) {
         val posTo: Position = Coordinate.toPosition(coordinates(1))
 
         val messageList: List[String] = controller.moveTile(posFrom, posTo)
-        logger.info(controller.getFieldAsString)
-        messageList.foreach(message => logger.info(message))
+        printControllerResponse(messageList)
       } else {
         logger.info("Wrong input, use h for help")
       }
@@ -46,4 +44,9 @@ class Tui(controller: ControllerTrait) {
       true
   }
 
+  private def printControllerResponse(messageList: List[String]): Unit = {
+    logger.info(controller.getFieldAsString)
+    messageList.foreach(message => logger.info(message))
+    logger.info("Input::")
+  }
 }
