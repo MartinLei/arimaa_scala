@@ -58,7 +58,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
   }
 
-  it should "not move a tile if posFrom is not own tile" in {
+  "posFromNotOwn" should "not move a tile if posFrom is not own tile" in {
     val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
@@ -70,7 +70,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
   }
-  it should "not move a tile if toPos is notFree" in {
+  "posToNotFree" should "not move a tile if posTo is not free" in {
     val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
@@ -83,7 +83,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)
   }
 
-  it should "not move a tile if a rabbit moves backward" in {
+  "rabbitMove" should "not move a tile if a rabbit moves backward" in {
     val controller = new Controller()
 
     controller.moveTile(new Position(1, 2), new Position(1, 3)) should
@@ -98,7 +98,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
   }
 
-  it should "not move a tile if the tile is freeze by other stronger player tile" in {
+  "tileFreeze" should "not move a tile if the tile is freeze by other stronger player tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.CAMEL, new Position(4, 4)))
     val playerSilverTiles = Set(
@@ -111,7 +111,8 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
   }
-  it should "remove tile if it is trapped" in {
+
+  "tileTrapped" should "remove tile if it is trapped" in {
     val controller = new Controller()
 
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
@@ -144,7 +145,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
   }
 
-  it should "remove a own tile from trap,if actual move frees the tile and test undo move" in {
+  "tileNowTrapped" should "remove a own tile from trap,if actual move frees the tile and test undo move" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.HORSE, new Position(2, 3)),
       new Tile(TileNameEnum.CAT, new Position(3, 3)))
@@ -187,7 +188,7 @@ class ControllerSpec extends FlatSpec with Matchers {
         Message.doTrap(new Position(3, 3))))
   }
 
-  it should "push a other player tile, if it surround by player stronger tile" in {
+  "pushTile" should "push a other player tile, if it surround by player stronger tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
     val playerSilverTiles = Set(
@@ -221,7 +222,8 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(5, 4), new Position(4, 4)) should
       be(List(Message.pushNotFinish))
   }
-  it should "pull a other player tile, if posTo is the same as the old posFrom last moved tile" in {
+
+  "pullTile" should "pull a other player tile, if posTo is the same as the old posFrom last moved tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
     val playerSilverTiles = Set(
