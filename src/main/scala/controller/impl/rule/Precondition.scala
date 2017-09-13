@@ -37,6 +37,9 @@ object Precondition {
   }
 
   def isTailFreeze(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
+    if (field.isSurroundByOwnTile(playerName, pos, pos))
+      return false
+
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val freezeTilePosList = field.getStrongerTilesWhoAround(otherPlayerName, pos, playerName)
 
