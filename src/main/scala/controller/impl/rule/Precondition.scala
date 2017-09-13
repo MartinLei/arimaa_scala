@@ -18,7 +18,7 @@ object Precondition {
     false
   }
 
-  def isToPosNotFree(field: FieldTrait, actPlayerName: PlayerNameEnum, posTo: Position): Boolean = {
+  def isToPosNotFree(field: FieldTrait, posTo: Position): Boolean = {
     if (field.isOccupied(posTo))
       return true
     false
@@ -66,7 +66,7 @@ object Precondition {
     true
   }
 
-  def isPushNotFinish(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, actionManager: ActionManager): Boolean = {
+  def isPushNotFinish(field: FieldTrait, posTo: Position, actionManager: ActionManager): Boolean = {
     val posFromPushCommandOption = actionManager.getLastActionPushCommandPosFrom
     if (posFromPushCommandOption.isDefined) {
       val posFromPushCommand: Position = posFromPushCommandOption.get

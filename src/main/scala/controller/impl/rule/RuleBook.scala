@@ -4,22 +4,21 @@ import controller.impl.command.impl.TrapCommand
 import controller.impl.command.{ActionManager, CommandTrait}
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
-import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
 case class RuleBook() {
   def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager, posFrom: Position, posTo: Position): RuleEnum = {
-    val playerName = field.actualPlayerName // TODO
+    val playerName = field.actualPlayerName
 
     if (Precondition.isPosFromEmpty(field, posFrom))
       return RuleEnum.POS_FROM_EMPTY
 
-    if (Precondition.isToPosNotFree(field, playerName, posTo))
+    if (Precondition.isToPosNotFree(field, posTo))
       return RuleEnum.TO_POS_NOT_FREE
 
-    if (Precondition.isPushNotFinish(field, playerName, posTo, actionManager))
+    if (Precondition.isPushNotFinish(field, posTo, actionManager))
       return RuleEnum.PUSH_NOT_FINISH
 
     if (Precondition.isTailPush(field, playerName, posFrom, posTo))
@@ -40,16 +39,17 @@ case class RuleBook() {
     RuleEnum.MOVE
   }
 
-  def postMoveCommand(field: FieldTrait, player: PlayerNameEnum, posFrom: Position, posTo: Position): List[CommandTrait] = {
+  def postMoveCommand(field: FieldTrait, posFrom: Position, posTo: Position): List[CommandTrait] = {
+    val playerName = field.actualPlayerName
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
 
-    if (Postcondition.isTileTrapped(field, player, posFrom, posTo))
-      commandList.+=(TrapCommand(field, player, posTo))
+    if (Postcondition.isTileTrapped(field, playerName, posFrom, posTo))
+      commandList.+=(TrapCommand(field, playerName, posTo))
 
     val isNowTrapped: Option[Position] = Postcondition.isATileNowTrapped(field, posFrom)
     if (isNowTrapped.isDefined) {
       val trapPos = isNowTrapped.get
-      commandList.+=(TrapCommand(field, player, trapPos))
+      commandList.+=(TrapCommand(field, playerName, trapPos))
     }
 
     commandList.toList

@@ -33,20 +33,20 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val actPlayerName = field.actualPlayerName // TODO
     val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
 
+    val actPlayerName = field.actualPlayerName
     ruleComplaint match {
       case RuleEnum.MOVE => commandList.+=(MoveCommand(field, actPlayerName, posFrom, posTo))
       case RuleEnum.PUSH => commandList.+=(PushCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
       case RuleEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
     }
 
-    val postCommandList: List[CommandTrait] = ruleBook.postMoveCommand(field, actPlayerName, posFrom, posTo)
+    val postCommandList: List[CommandTrait] = ruleBook.postMoveCommand(field, posFrom, posTo)
     commandList.++=(postCommandList)
 
     val action = new ActionCommand(commandList.toList)

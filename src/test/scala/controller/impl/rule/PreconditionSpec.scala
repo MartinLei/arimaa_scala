@@ -40,18 +40,18 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
 
-    Precondition.isToPosNotFree(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(true)
+    Precondition.isToPosNotFree(field, new Position(1, 2)) should be(true)
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 8)) should be(TileNameEnum.RABBIT)
 
-    Precondition.isToPosNotFree(field, PlayerNameEnum.GOLD, new Position(1, 8)) should be(true)
+    Precondition.isToPosNotFree(field, new Position(1, 8)) should be(true)
   }
   it should "false if not" in {
     val field = new Field()
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    Precondition.isToPosNotFree(field, PlayerNameEnum.GOLD, new Position(1, 3)) should be(false)
+    Precondition.isToPosNotFree(field, new Position(1, 3)) should be(false)
   }
 
   "isWrongRabbitMove" should "return true, if a rabbit gets moved back" in {
@@ -164,7 +164,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
     actionManager.doAction(action)
 
-    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(1, 2), actionManager) should be(true)
+    Precondition.isPushNotFinish(field, new Position(1, 2), actionManager) should be(true)
   }
   it should "false , if not" in {
     val field = new Field()
@@ -178,7 +178,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
     actionManager.doAction(action)
 
-    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(5, 5), actionManager) should be(false)
+    Precondition.isPushNotFinish(field, new Position(5, 5), actionManager) should be(false)
   }
 
   "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
