@@ -17,6 +17,9 @@ class Tui(controller: ControllerTrait) {
       logger.info("u : undo last move")
       logger.info("Input::")
       true
+    case "q" =>
+      logger.info("Bye")
+      false
     case "c" =>
       val messageList: List[String] = controller.changePlayer()
 
@@ -38,9 +41,9 @@ class Tui(controller: ControllerTrait) {
         printControllerResponse(messageList)
       } else {
         logger.info("Wrong input, use h for help")
+        logger.info("Input::")
       }
 
-      logger.info("Input::")
       true
   }
 
