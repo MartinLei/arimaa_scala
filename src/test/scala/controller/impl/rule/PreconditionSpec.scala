@@ -1,7 +1,7 @@
 package controller.impl.rule
 
 import controller.impl.command.impl.{MoveCommand, PushCommand}
-import controller.impl.command.{ActionCommand, UndoActionManager}
+import controller.impl.command.{ActionCommand, ActionManager}
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -10,10 +10,10 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
   "precondition" should "give a move message if its a valid move" in {
     val field = new Field()
-    val undoActionManager = new UndoActionManager
+    val actionManager = new ActionManager
     val ruleBook = RuleBook()
 
-    ruleBook.isMoveRuleComplaint(field, undoActionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
+    ruleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
   }
 
   "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {
@@ -160,11 +160,11 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(1, 2), undoActionManager) should be(true)
+    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(1, 2), actionManager) should be(true)
   }
   it should "false , if not" in {
     val field = new Field()
@@ -174,11 +174,11 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(5, 5), undoActionManager) should be(false)
+    Precondition.isPushNotFinish(field, PlayerNameEnum.GOLD, new Position(5, 5), actionManager) should be(false)
   }
 
   "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
@@ -189,11 +189,11 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), undoActionManager) should be(true)
+    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), actionManager) should be(true)
   }
   it should "false, if old moved tile is not from other player" in {
     val field = new Field()
@@ -203,11 +203,11 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), actionManager) should be(false)
   }
   it should "false, if old moved tile from other player is not strong enough" in {
     val field = new Field()
@@ -217,11 +217,11 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 5), new Position(4, 4), actionManager) should be(false)
   }
   it should "false, if posTo is not the last tile posFrom" in {
     val field = new Field()
@@ -231,14 +231,14 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
 
-    val undoActionManager = new UndoActionManager()
+    val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
 
-    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 5), undoActionManager) should be(false)
-    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 3), undoActionManager) should be(false)
-    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
-    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 5), actionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(4, 3), actionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), actionManager) should be(false)
+    Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), actionManager) should be(false)
   }
 
   "isPosFromEmpty" should "true if on from pos is no tile" in {

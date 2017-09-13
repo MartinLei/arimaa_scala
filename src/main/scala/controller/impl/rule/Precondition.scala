@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.UndoActionManager
+import controller.impl.command.ActionManager
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.{PlayerNameEnum, TileNameEnum}
@@ -66,8 +66,8 @@ object Precondition {
     true
   }
 
-  def isPushNotFinish(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
-    val posFromPushCommandOption = undoActionManager.getLastActionPushCommandPosFrom
+  def isPushNotFinish(field: FieldTrait, playerName: PlayerNameEnum, posTo: Position, actionManager: ActionManager): Boolean = {
+    val posFromPushCommandOption = actionManager.getLastActionPushCommandPosFrom
     if (posFromPushCommandOption.isDefined) {
       val posFromPushCommand: Position = posFromPushCommandOption.get
       if (!posFromPushCommand.equals(posTo))
@@ -77,9 +77,9 @@ object Precondition {
     false
   }
 
-  def isTilePull(field: FieldTrait, posFrom: Position, posTo: Position, undoActionManager: UndoActionManager): Boolean = {
-    val lastPosFromOption = undoActionManager.getLastActionCommandPosFrom
-    val lastPosToOption = undoActionManager.getLastActionCommandPosTo
+  def isTilePull(field: FieldTrait, posFrom: Position, posTo: Position, actionManager: ActionManager): Boolean = {
+    val lastPosFromOption = actionManager.getLastActionCommandPosFrom
+    val lastPosToOption = actionManager.getLastActionCommandPosTo
 
     if (lastPosFromOption.isDefined && lastPosToOption.isDefined) {
       val lastPosFrom = lastPosFromOption.get

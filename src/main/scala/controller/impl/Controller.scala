@@ -3,7 +3,7 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
-import controller.impl.command.{ActionCommand, CommandTrait, UndoActionManager}
+import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
 import controller.impl.messages.Message
 import controller.impl.rule.RuleEnum.RuleEnum
 import controller.impl.rule.{RuleBook, RuleEnum}
@@ -19,7 +19,7 @@ class Controller extends ControllerTrait {
   private val ruleBook = RuleBook()
   private val logger = Logger[Controller]
   private var field: FieldTrait = new Field()
-  private val undoActionManager = new UndoActionManager
+  private val actionManager = new ActionManager
 
   def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
     this()
@@ -34,7 +34,7 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, undoActionManager, actPlayerName, posFrom, posTo)
+    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, actPlayerName, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
@@ -50,11 +50,11 @@ class Controller extends ControllerTrait {
     commandList.++=(postCommandList)
 
     val action = new ActionCommand(commandList.toList)
-    undoActionManager.doAction(action)
+    actionManager.doAction(action)
   }
 
   override def moveTileUndo(): List[String] = {
-    undoActionManager.undoAction()
+    actionManager.undoAction()
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {

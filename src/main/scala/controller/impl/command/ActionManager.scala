@@ -5,7 +5,7 @@ import util.position.Position
 
 import scala.collection.mutable
 
-class UndoActionManager {
+class ActionManager {
   var actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[String] = {
