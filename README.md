@@ -18,7 +18,6 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 - start change tile set
 ## rules
 - coordinate should only be one tile distance
-- freeze unlock if surround by one, own tile
 - 4 steps per round (player)
 - detect third time same move
 - victory
