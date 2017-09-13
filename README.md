@@ -26,4 +26,6 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 ## bug
 - trap undo, no tile gets respawn
 - get trap, although its own tile to hold it (push it on trap)
+- cant pull a tile backwards "its not your tile"
+- cant push a tile forward "its not your tile"
  
