@@ -113,10 +113,9 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
 
   "tileTrapped" should "remove tile if it is trapped" in {
-    val controller = new Controller()
-
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 2)) should be(TileNameEnum.CAT)
-    controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAT, new Position(3, 2)))
+    val controller = new Controller(playerGoldTiles, Set())
 
     controller.moveTile(new Position(3, 2), new Position(3, 3)) should
       be(List(
@@ -144,6 +143,9 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.CAT)
 
   }
+  /*"tileTrapUndo" should "respawn the figure" in{
+
+  }*/
 
   "tileNowTrapped" should "remove a own tile from trap,if actual move frees the tile and test undo move" in {
     val playerGoldTiles = Set(
