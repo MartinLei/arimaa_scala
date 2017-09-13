@@ -24,7 +24,6 @@ case class RuleBook() {
     if (Precondition.isToPosNotFree(field, playerName, posTo))
       return RuleEnum.TO_POS_NOT_FREE
 
-
     if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
       return RuleEnum.FROM_POS_NOT_OWN
 
@@ -43,7 +42,7 @@ case class RuleBook() {
     if (Postcondition.isTileTrapped(field, player, posFrom, posTo))
       commandList.+=(TrapCommand(field, player, posTo))
 
-    val isNowTrapped: Option[Position] = Postcondition.isATileNowTrapped(field, player, posFrom)
+    val isNowTrapped: Option[Position] = Postcondition.isATileNowTrapped(field, posFrom)
     if (isNowTrapped.isDefined) {
       val trapPos = isNowTrapped.get
       commandList.+=(TrapCommand(field, player, trapPos))
