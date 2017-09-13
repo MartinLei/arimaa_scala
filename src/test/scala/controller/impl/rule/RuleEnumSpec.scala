@@ -8,7 +8,7 @@ class RuleEnumSpec extends FlatSpec with Matchers {
     RuleEnum.isValid(RuleEnum.NONE) should be(false)
     RuleEnum.isValid(RuleEnum.MOVE) should be(true)
     RuleEnum.isValid(RuleEnum.PUSH) should be(true)
-    RuleEnum.isValid(RuleEnum.FROM_POS_NOT_OWN) should be(false)
+    RuleEnum.isValid(RuleEnum.POS_FROM_NOT_OWN) should be(false)
     RuleEnum.isValid(RuleEnum.TO_POS_NOT_FREE) should be(false)
     RuleEnum.isValid(RuleEnum.WRONG_RABBIT_MOVE) should be(false)
     RuleEnum.isValid(RuleEnum.TILE_FREEZE) should be(false)

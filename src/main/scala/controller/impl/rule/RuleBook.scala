@@ -29,7 +29,7 @@ case class RuleBook() {
       return RuleEnum.PULL
 
     if (Precondition.isPosFromPosNotOwn(field, playerName, posFrom))
-      return RuleEnum.FROM_POS_NOT_OWN
+      return RuleEnum.POS_FROM_NOT_OWN
 
     if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
       return RuleEnum.WRONG_RABBIT_MOVE

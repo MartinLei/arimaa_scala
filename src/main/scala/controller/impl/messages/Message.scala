@@ -27,7 +27,7 @@ object Message {
       case RuleEnum.NONE => "NONE"
       case RuleEnum.MOVE => Message.doMove(posFrom, posTo)
       case RuleEnum.PUSH => Message.doPush(posFrom, posTo)
-      case RuleEnum.FROM_POS_NOT_OWN => Message.wrongPosFrom(posFrom)
+      case RuleEnum.POS_FROM_NOT_OWN => Message.wrongPosFrom(posFrom)
       case RuleEnum.TO_POS_NOT_FREE => Message.wrongPosTo(posTo)
       case RuleEnum.WRONG_RABBIT_MOVE => Message.wrongRabbitMove
       case RuleEnum.TILE_FREEZE => Message.freezeTile
