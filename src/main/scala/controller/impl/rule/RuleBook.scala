@@ -12,6 +12,10 @@ import scala.collection.mutable.ListBuffer
 case class RuleBook() {
   def isMoveRuleComplaint(field: FieldTrait, undoActionManager: UndoActionManager,
                           playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
+
+    if (Precondition.isToPosNotFree(field, playerName, posTo))
+      return RuleEnum.TO_POS_NOT_FREE
+
     if (Precondition.isPushNotFinish(field, playerName, posTo, undoActionManager))
       return RuleEnum.PUSH_NOT_FINISH
 
@@ -20,9 +24,6 @@ case class RuleBook() {
 
     if (Precondition.isTilePull(field, posFrom, posTo, undoActionManager))
       return RuleEnum.PULL
-
-    if (Precondition.isToPosNotFree(field, playerName, posTo))
-      return RuleEnum.TO_POS_NOT_FREE
 
     if (Precondition.isFromPosNotOwn(field, playerName, posFrom))
       return RuleEnum.FROM_POS_NOT_OWN
