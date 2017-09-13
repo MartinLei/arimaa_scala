@@ -354,13 +354,36 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 4)) should be(TileNameEnum.CAMEL)
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
   }
+  "pullTileUndo" should "undo pull" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
-  it should "do nothing, if pos from is empty" in {
+    controller.moveTile(new Position(5, 4), new Position(6, 4)) should
+      be(List(Message.doMove(new Position(5, 4), new Position(6, 4))))
+
+    controller.moveTile(new Position(5, 5), new Position(5, 4)) should
+      be(List(Message.doPull(new Position(5, 5), new Position(5, 4))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(6, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 4)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
+
+    controller.moveTileUndo() should
+      be(List(Message.undoPull(new Position(5, 5), new Position(5, 4))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(6, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 4)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+  }
+
+  "fromPosEmpty" should "do nothing, if pos from is empty" in {
     val controller = new Controller(Set(), Set())
     controller.moveTile(new Position(1, 1), new Position(1, 2)) should
       be(List(Message.posFromEmpty(new Position(1, 1))))
   }
-
 
   "changePlayer" should "change the Player" in {
     val controller: ControllerTrait = new Controller()
