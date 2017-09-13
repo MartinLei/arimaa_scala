@@ -2,7 +2,7 @@ package controller.impl.rule
 
 import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.command.{ActionCommand, UndoActionManager}
-import model.impl.{Field, PlayerNameEnum, TileNameEnum}
+import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -74,24 +74,31 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isWrongRabbitMove(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 2)) should be(false)
   }
 
-  "isTailFreeze" should "return true, if the tail is surround by one stronger tile from other player" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(4, 7), new Position(4, 5))
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
+  "isTailFreeze" should "return true, if the tail is not surround by own tile but one stronger tile from other player" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(4, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(4, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(true)
   }
+  it should "false if surround by own tile and one stronger tail from other player" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(4, 4)),
+      new Tile(TileNameEnum.RABBIT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(4, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
-  it should "false if not" in {
-    val field = new Field()
+    Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
+  }
+  it should "false if the tail is not surround by other player tiles" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(4, 4)))
+    val field = new Field(playerGoldTiles, Set())
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
-
-    Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 2)) should be(false)
+    Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
   }
 
   "isTailPush" should "return true, if push tile is other player and surround by stronger other player tile" in {

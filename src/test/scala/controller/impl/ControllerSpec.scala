@@ -98,7 +98,6 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
   }
 
-
   it should "not move a tile if the tile is freeze by other stronger player tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.CAMEL, new Position(4, 4)))
