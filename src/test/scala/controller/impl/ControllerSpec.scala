@@ -288,6 +288,55 @@ class ControllerSpec extends FlatSpec with Matchers {
       be(List(Message.pushNotFinish))
   }
 
+  "pushTileUndo" should "push tile back" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(5, 5), new Position(5, 4)) should
+      be(List(Message.wrongPosTo(new Position(5, 4))))
+
+    controller.moveTile(new Position(5, 5), new Position(6, 5)) should
+      be(List(Message.doPush(new Position(5, 5), new Position(6, 5))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.CAMEL)
+
+    controller.moveTileUndo() should
+      be(List(Message.undoPush(new Position(5, 5), new Position(6, 5))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.NONE)
+  }
+  it should "undo half push" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(5, 5), new Position(6, 5)) should
+      be(List(Message.doPush(new Position(5, 5), new Position(6, 5))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.CAMEL)
+
+    controller.moveTileUndo() should
+      be(List(Message.undoPush(new Position(5, 5), new Position(6, 5))))
+
+    controller.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    controller.getTileName(PlayerNameEnum.SILVER, new Position(6, 5)) should be(TileNameEnum.NONE)
+
+    controller.moveTile(new Position(5, 4), new Position(4, 4)) should
+      be(List(Message.doMove(new Position(5, 4), new Position(4, 4))))
+  }
+
   "pullTile" should "pull a other player tile, if posTo is the same as the old posFrom last moved tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
