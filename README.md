@@ -17,8 +17,14 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 - get list of moves
 - start change tile set
 ## rules
+- coordinate should only be one tile distance
 - freeze unlock if surround by one, own tile
 - 4 steps per round (player)
 - detect third time same move
 - victory
+
+## bug
+- trap undo, no tile gets respawn
+- get trap, although its own tile to hold it (push it on trap)
+- empty coordinates get "is not your tile"
  
