@@ -20,7 +20,7 @@ class ChangePlayerCommandSpec extends FlatSpec with Matchers {
 
     field.actualPlayerName should be(PlayerNameEnum.GOLD)
   }
-  "unDolCommand" should "move the tile back to the given position" in {
+  "undoCommand" should "move the tile back to the given position" in {
     field.actualPlayerName should be(PlayerNameEnum.GOLD)
 
     changePlayerCommand.undoCommand() should be(Message.changePlayer(PlayerNameEnum.SILVER))

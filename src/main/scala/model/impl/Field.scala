@@ -14,6 +14,7 @@ class Field() extends FieldTrait {
   private var playerSilver: Player = getInitSilverPlayer
 
   override var actualPlayerName: PlayerNameEnum = PlayerNameEnum.GOLD
+  override var winPlayerName: PlayerNameEnum = PlayerNameEnum.NONE
 
   def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
     this()

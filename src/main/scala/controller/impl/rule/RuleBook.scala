@@ -1,9 +1,11 @@
 package controller.impl.rule
 
-import controller.impl.command.impl.TrapCommand
+import controller.impl.command.impl.{TrapCommand, WinCommand}
 import controller.impl.command.{ActionManager, CommandTrait}
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
+import model.impl.PlayerNameEnum
+import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
@@ -52,6 +54,14 @@ case class RuleBook() {
       commandList.+=(TrapCommand(field, playerName, trapPos))
     }
 
+    val winnerPlayer = isGameOver(field, posFrom, posTo)
+    if (!winnerPlayer.equals(PlayerNameEnum.NONE))
+      commandList.+=(WinCommand(field, winnerPlayer))
+
     commandList.toList
+  }
+
+  private def isGameOver(field: FieldTrait, posFrom: Position, posTo: Position): PlayerNameEnum = {
+    Postcondition.isRabbitReachedGoal(field, posFrom, posTo)
   }
 }

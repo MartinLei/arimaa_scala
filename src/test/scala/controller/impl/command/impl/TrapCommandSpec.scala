@@ -19,7 +19,7 @@ class TrapCommandSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
   }
-  "unDoCommand" should "respawn the tile back to the given position" in {
+  "undoCommand" should "respawn the tile back to the given position" in {
     field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
     trapCommand.undoCommand() should be(Message.undoTrap(new Position(3, 3)))

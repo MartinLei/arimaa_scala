@@ -28,4 +28,6 @@ trait FieldTrait {
   var actualPlayerName: PlayerNameEnum
 
   def changePlayer(): Unit
+
+  var winPlayerName: PlayerNameEnum
 }

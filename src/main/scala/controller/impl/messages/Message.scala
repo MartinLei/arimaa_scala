@@ -88,4 +88,12 @@ object Message {
   def changePlayer(playerName: PlayerNameEnum): String = {
     playerName + " your turn"
   }
+
+  def doWin(playerName: PlayerNameEnum): String = {
+    playerName + " you WIN"
+  }
+
+  def undoWin(playerName: PlayerNameEnum): String = {
+    playerName + " undo you WIN"
+  }
 }
