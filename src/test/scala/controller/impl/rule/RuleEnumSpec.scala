@@ -12,6 +12,9 @@ class RuleEnumSpec extends FlatSpec with Matchers {
     RuleEnum.isValid(RuleEnum.TO_POS_NOT_FREE) should be(false)
     RuleEnum.isValid(RuleEnum.WRONG_RABBIT_MOVE) should be(false)
     RuleEnum.isValid(RuleEnum.TILE_FREEZE) should be(false)
+    RuleEnum.isValid(RuleEnum.PULL) should be(true)
+    RuleEnum.isValid(RuleEnum.POS_FROM_EMPTY) should be(false)
+
     RuleEnum.isValid(RuleEnum.TRAPPED) should be(false)
   }
 }
