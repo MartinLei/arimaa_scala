@@ -2,8 +2,8 @@ package model.impl
 
 object PlayerNameEnum extends Enumeration {
   type PlayerNameEnum = Value
-  val GOLD: Value = Value("G")
-  val SILVER: Value = Value("S")
+  val GOLD: Value = Value("Gold")
+  val SILVER: Value = Value("Silver")
   val NONE: Value = Value("NONE")
 
   def getInvertPlayer(player: PlayerNameEnum): PlayerNameEnum = player match {

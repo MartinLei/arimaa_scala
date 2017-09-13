@@ -22,7 +22,7 @@ class PlayerSpec extends FlatSpec with Matchers {
   }
 
   "toString" should "have given output" in {
-    val playerString: String = "G:Set(R:{1,2})"
+    val playerString: String = "Gold:Set(R:{1,2})"
 
     val tiles: Set[Tile] = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
