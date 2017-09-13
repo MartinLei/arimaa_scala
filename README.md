@@ -24,6 +24,5 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 - victory
 
 ## bug
-- cant pull a tile backwards "its not your tile"
-- cant push a tile forward "its not your tile"
+
  
