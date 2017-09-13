@@ -31,8 +31,8 @@ case class RuleBook() {
     if (Precondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
       return RuleEnum.WRONG_RABBIT_MOVE
 
-    if (Precondition.isTailFixed(field, playerName, posFrom))
-      return RuleEnum.TILE_FIXED
+    if (Precondition.isTailFreeze(field, playerName, posFrom))
+      return RuleEnum.TILE_FREEZE
 
     RuleEnum.MOVE
   }

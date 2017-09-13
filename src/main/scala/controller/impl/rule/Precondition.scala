@@ -36,11 +36,11 @@ object Precondition {
     false
   }
 
-  def isTailFixed(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
+  def isTailFreeze(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
-    val fixedTilePosList = field.getStrongerTilesWhoAround(otherPlayerName, pos, playerName)
+    val freezeTilePosList = field.getStrongerTilesWhoAround(otherPlayerName, pos, playerName)
 
-    if (fixedTilePosList.isEmpty)
+    if (freezeTilePosList.isEmpty)
       return false
 
     true

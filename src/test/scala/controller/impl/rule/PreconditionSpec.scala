@@ -74,7 +74,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isWrongRabbitMove(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 2)) should be(false)
   }
 
-  "isTailFixed" should "return true, if the tail is surround by one stronger tile from other player" in {
+  "isTailFreeze" should "return true, if the tail is surround by one stronger tile from other player" in {
     val field = new Field()
 
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
@@ -83,7 +83,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
     field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.ELEPHANT)
 
-    Precondition.isTailFixed(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(true)
+    Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(true)
   }
 
   it should "false if not" in {
@@ -91,7 +91,7 @@ class PreconditionSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(4, 2)) should be(TileNameEnum.CAMEL)
 
-    Precondition.isTailFixed(field, PlayerNameEnum.GOLD, new Position(4, 2)) should be(false)
+    Precondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 2)) should be(false)
   }
 
   "isTailPush" should "return true, if push tile is other player and surround by stronger other player tile" in {

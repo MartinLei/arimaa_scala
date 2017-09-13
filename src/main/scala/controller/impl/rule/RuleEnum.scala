@@ -8,7 +8,7 @@ object RuleEnum extends Enumeration {
   val FROM_POS_NOT_OWN: Value = Value("FROM_POS_NOT_OWN")
   val TO_POS_NOT_FREE: Value = Value("TO_POS_NOT_FREE")
   val WRONG_RABBIT_MOVE: Value = Value("WRONG_RABBIT_MOVE")
-  val TILE_FIXED: Value = Value("TILE_FIXED")
+  val TILE_FREEZE: Value = Value("TILE_FREEZE")
   val PUSH_NOT_FINISH: Value = Value("PUSH_NOT_FINISH")
   val PULL: Value = Value("PULL")
 

@@ -30,7 +30,7 @@ object Message {
       case RuleEnum.FROM_POS_NOT_OWN => Message.wrongPosFrom(posFrom)
       case RuleEnum.TO_POS_NOT_FREE => Message.wrongPosTo(posTo)
       case RuleEnum.WRONG_RABBIT_MOVE => Message.wrongRabbitMove
-      case RuleEnum.TILE_FIXED => Message.fixTile
+      case RuleEnum.TILE_FREEZE => Message.freezeTile
       case RuleEnum.PUSH_NOT_FINISH => Message.pushNotFinish
 
       case RuleEnum.PULL => Message.doPull(posFrom, posTo)
@@ -47,8 +47,8 @@ object Message {
     "You must first finish your push"
   }
 
-  def fixTile: String = {
-    "You can`t move its fixed"
+  def freezeTile: String = {
+    "You can`t move its freeze"
   }
 
   def wrongPosFrom(pos: Position): String = {
