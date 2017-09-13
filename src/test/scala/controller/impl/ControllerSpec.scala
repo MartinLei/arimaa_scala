@@ -239,6 +239,12 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.NONE)
   }
 
+  it should "do nothing, if pos from is empty" in {
+    val controller = new Controller(Set(), Set())
+    controller.moveTile(new Position(1, 1), new Position(1, 2)) should
+      be(List(Message.posFromEmpty(new Position(1, 1))))
+  }
+
 
   "changePlayer" should "change the Player" in {
     val controller: ControllerTrait = new Controller()

@@ -11,6 +11,7 @@ object RuleEnum extends Enumeration {
   val TILE_FREEZE: Value = Value("TILE_FREEZE")
   val PUSH_NOT_FINISH: Value = Value("PUSH_NOT_FINISH")
   val PULL: Value = Value("PULL")
+  val POS_FROM_EMPTY: Value = Value("POS_FROM_EMPTY")
 
   val TRAPPED: Value = Value("TRAPPED")
 

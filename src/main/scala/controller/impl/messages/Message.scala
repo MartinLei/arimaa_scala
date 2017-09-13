@@ -32,6 +32,7 @@ object Message {
       case RuleEnum.WRONG_RABBIT_MOVE => Message.wrongRabbitMove
       case RuleEnum.TILE_FREEZE => Message.freezeTile
       case RuleEnum.PUSH_NOT_FINISH => Message.pushNotFinish
+      case RuleEnum.POS_FROM_EMPTY => Message.posFromEmpty(posFrom)
 
       case RuleEnum.PULL => Message.doPull(posFrom, posTo)
       case RuleEnum.TRAPPED => Message.doTrap(posFrom)
@@ -59,6 +60,9 @@ object Message {
     Coordinate.posToCoordinate(pos) + " is occupied"
   }
 
+  def posFromEmpty(pos: Position): String = {
+    Coordinate.posToCoordinate(pos) + " is empty"
+  }
 
   def emptyStack: String = {
     "No move remain to be undo"

@@ -26,5 +26,4 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 ## bug
 - trap undo, no tile gets respawn
 - get trap, although its own tile to hold it (push it on trap)
-- empty coordinates get "is not your tile"
  

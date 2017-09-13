@@ -241,4 +241,18 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isTilePull(field, new Position(4, 4), new Position(3, 4), undoActionManager) should be(false)
   }
 
+  "isFromPosEmpty" should "true if on from pos is no tile" in {
+    val field = new Field(Set(), Set())
+    Precondition.isPosFromEmpty(field, new Position(4, 4)) should be(true)
+  }
+  it should "false if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Precondition.isPosFromEmpty(field, new Position(1, 1)) should be(false)
+    Precondition.isPosFromEmpty(field, new Position(1, 8)) should be(false)
+  }
 }

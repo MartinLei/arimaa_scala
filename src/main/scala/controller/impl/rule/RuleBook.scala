@@ -13,6 +13,9 @@ case class RuleBook() {
   def isMoveRuleComplaint(field: FieldTrait, undoActionManager: UndoActionManager,
                           playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
 
+    if (Precondition.isPosFromEmpty(field, posFrom))
+      return RuleEnum.POS_FROM_EMPTY
+
     if (Precondition.isToPosNotFree(field, playerName, posTo))
       return RuleEnum.TO_POS_NOT_FREE
 

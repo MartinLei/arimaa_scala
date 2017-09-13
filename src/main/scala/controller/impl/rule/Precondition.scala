@@ -99,4 +99,12 @@ object Precondition {
     }
     false
   }
+
+  def isPosFromEmpty(field: FieldTrait, posFrom: Position): Boolean = {
+    val tilePlayerName = field.getPlayerName(posFrom)
+
+    tilePlayerName.equals(PlayerNameEnum.NONE)
+  }
+
+
 }
