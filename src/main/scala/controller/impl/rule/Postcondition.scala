@@ -2,7 +2,7 @@ package controller.impl.rule
 
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.TileNameEnum
+import model.impl.{PlayerNameEnum, TileNameEnum}
 import util.position.Position
 
 object Postcondition {
@@ -38,6 +38,22 @@ object Postcondition {
       return false
 
     true
+  }
+
+  def isRabbitReachedGoal(field: FieldTrait, posFrom: Position, posTo: Position): PlayerNameEnum = {
+    val tilePlayerName = field.getPlayerName(posFrom)
+    val tileName = field.getTileName(tilePlayerName, posFrom)
+
+    if (!tileName.equals(TileNameEnum.RABBIT))
+      return PlayerNameEnum.NONE
+
+    if (tilePlayerName.equals(PlayerNameEnum.GOLD) && posTo.isPosYEquals(8))
+      return PlayerNameEnum.GOLD
+
+    if (tilePlayerName.equals(PlayerNameEnum.SILVER) && posTo.isPosYEquals(1))
+      return PlayerNameEnum.SILVER
+
+    PlayerNameEnum.NONE
   }
 
 

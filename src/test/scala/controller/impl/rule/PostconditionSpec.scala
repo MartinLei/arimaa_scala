@@ -77,4 +77,22 @@ class PostconditionSpec extends FlatSpec with Matchers {
     Postcondition.isATileNowTrapped(field, new Position(2, 3)) should be(Option(null))
   }
 
+  "isRabbitReachedGoal" should "return the player hows tile is rabbit and posTo is on other field end" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.isRabbitReachedGoal(field, new Position(1, 7), new Position(1, 8)) should be(PlayerNameEnum.GOLD)
+
+    Postcondition.isRabbitReachedGoal(field, new Position(8, 2), new Position(8, 1)) should
+      be(PlayerNameEnum.SILVER)
+  }
+  it should "be NONE if not rabbit ore not on other side" in {
+    val field = new Field(Set(), Set())
+    Postcondition.isRabbitReachedGoal(field, new Position(2, 5), new Position(2, 6)) should be(PlayerNameEnum.NONE)
+    Postcondition.isRabbitReachedGoal(field, new Position(1, 7), new Position(1, 8)) should be(PlayerNameEnum.NONE)
+  }
+
 }

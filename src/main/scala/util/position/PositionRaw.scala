@@ -9,4 +9,8 @@ class PositionRaw(val x: Int, val y: Int) {
   override def hashCode(): Int = toString.hashCode
 
   override def toString: String = "{" + x + "," + y + "}"
+
+  def isPosYEquals(y: Int): Boolean = {
+    this.y == y
+  }
 }

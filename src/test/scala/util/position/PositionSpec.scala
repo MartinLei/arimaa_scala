@@ -41,4 +41,5 @@ class PositionSpec extends FlatSpec with Matchers {
   it should "false if not" in {
     Position.isPosATrap(new Position(1, 1)) should be(false)
   }
+
 }

@@ -37,4 +37,8 @@ class PositionRawSpec extends FlatSpec with Matchers {
     pos1 should not be 1
   }
 
+  "isPosYEquals" should "true, if y is equals to given pos" in {
+    val pos = new Position(1, 2)
+    pos.isPosYEquals(2)
+  }
 }
