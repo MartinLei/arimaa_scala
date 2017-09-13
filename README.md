@@ -14,9 +14,11 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 
 # TODO
 ## inf
-- gui (observer)
-- list of moves
+- get list of moves
+- start change tile set
 ## rules
-- pull
+- freeze unlock if surround by one, own tile
+- 4 steps per round (player)
+- detect third time same move
 - victory
-- 4 moves (player)
+ 
