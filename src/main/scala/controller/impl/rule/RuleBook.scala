@@ -58,9 +58,13 @@ case class RuleBook() {
 
 
   def winCommand(field: FieldTrait): Option[CommandTrait] = {
-    val playerName = Postcondition.winByKillAllOtherRabbits(field)
-    if (!playerName.equals(PlayerNameEnum.NONE))
-      return Option(WinCommand(field, playerName))
+    val winPlayerNameRabbitOnOtherSide = Postcondition.winByRabbitOnOtherSide(field)
+    if (!winPlayerNameRabbitOnOtherSide.equals(PlayerNameEnum.NONE))
+      return Option(WinCommand(field, winPlayerNameRabbitOnOtherSide))
+
+    val winPlayerNameKillALlOtherRabbits = Postcondition.winByKillAllOtherRabbits(field)
+    if (!winPlayerNameKillALlOtherRabbits.equals(PlayerNameEnum.NONE))
+      return Option(WinCommand(field, winPlayerNameKillALlOtherRabbits))
 
     Option(null)
   }
