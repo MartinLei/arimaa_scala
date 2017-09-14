@@ -230,7 +230,7 @@ class Field() extends FieldTrait {
 
   override def hasRabbitOnOtherSide(playerName: PlayerNameEnum): Boolean = playerName match {
     case PlayerNameEnum.GOLD => playerGold.hasRabbitOnRow(8)
-    case PlayerNameEnum.SILVER => playerGold.hasRabbitOnRow(1)
+    case PlayerNameEnum.SILVER => playerSilver.hasRabbitOnRow(1)
     case _ => false
   }
 }

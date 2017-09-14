@@ -69,8 +69,12 @@ object Postcondition {
   }
 
   def winByRabbitOnOtherSide(field: Field): PlayerNameEnum = {
-    field.hasRabbitOnOtherSide(PlayerNameEnum.GOLD)
+    if (field.hasRabbitOnOtherSide(field.actualPlayerName))
+      return field.actualPlayerName
 
+    val pasPlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
+    if (field.hasRabbitOnOtherSide(pasPlayerName))
+      return pasPlayerName
 
     PlayerNameEnum.NONE
   }

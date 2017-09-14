@@ -156,6 +156,7 @@ class PostconditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.GOLD)
+    field.actualPlayerName = PlayerNameEnum.SILVER
+    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.SILVER)
   }
 }
