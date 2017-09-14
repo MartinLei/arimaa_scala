@@ -381,25 +381,35 @@ class ControllerSpec extends FlatSpec with Matchers {
 
   "RabbitReachOtherSide" should "gold win, if a rabbit reach the other side" in {
     val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
     val controller = new Controller(playerGoldTiles, Set())
 
-    controller.moveTile(new Position(1, 7), new Position(1, 8)) should
+    controller.changePlayer() should
       be(List(
-        Message.doMove(new Position(1, 7), new Position(1, 8)),
+        Message.changePlayer(PlayerNameEnum.SILVER),
         Message.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if a rabbit reach the other side" in {
     val playerSilverTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
     val controller = new Controller(Set(), playerSilverTiles)
 
-    controller.changePlayer()
-
-    controller.moveTile(new Position(8, 2), new Position(8, 1)) should
+    controller.changePlayer() should
       be(List(
-        Message.doMove(new Position(8, 2), new Position(8, 1)),
+        Message.changePlayer(PlayerNameEnum.SILVER),
         Message.doWin(PlayerNameEnum.SILVER)))
+  }
+  it should "actual player win, if both player rabbit reach the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer() should
+      be(List(
+        Message.changePlayer(PlayerNameEnum.SILVER),
+        Message.doWin(PlayerNameEnum.GOLD)))
   }
 
   "PlayerHasNoRabbit" should "gold win, if silver has no rabbits" in {
