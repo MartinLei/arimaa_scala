@@ -40,22 +40,6 @@ object Postcondition {
     true
   }
 
-  def isRabbitReachedGoal(field: FieldTrait, posFrom: Position, posTo: Position): PlayerNameEnum = {
-    val tilePlayerName = field.getPlayerName(posFrom)
-    val tileName = field.getTileName(tilePlayerName, posFrom)
-
-    if (!tileName.equals(TileNameEnum.RABBIT))
-      return PlayerNameEnum.NONE
-
-    if (tilePlayerName.equals(PlayerNameEnum.GOLD) && posTo.isPosYEquals(8))
-      return PlayerNameEnum.GOLD
-
-    if (tilePlayerName.equals(PlayerNameEnum.SILVER) && posTo.isPosYEquals(1))
-      return PlayerNameEnum.SILVER
-
-    PlayerNameEnum.NONE
-  }
-
   def winByKillAllOtherRabbits(field: FieldTrait): PlayerNameEnum = {
     val actPlayerName = field.actualPlayerName
     val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
