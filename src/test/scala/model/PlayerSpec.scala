@@ -168,4 +168,36 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     player.hasNoRabbits should be(false)
   }
+
+  "hasRabbitOnRow" should "true if a Rabbit is on given row" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 7)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.hasRabbitOnRow(8) should be(true)
+  }
+  it should "false if no Rabbit on given row" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 7)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.hasRabbitOnRow(7) should be(false)
+  }
+  it should "false if  row out of 1-8 bound" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 8)),
+      new Tile(TileNameEnum.DOG, new Position(2, 7)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.hasRabbitOnRow(0) should be(false)
+    player.hasRabbitOnRow(9) should be(false)
+  }
 }

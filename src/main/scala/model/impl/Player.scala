@@ -6,6 +6,7 @@ import util.position.Position
 
 
 class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
+
   private var tiles: Set[Tile] = newTiles
 
 
@@ -68,5 +69,16 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     val rabbitCount = tiles.count(tile => tile.name.equals(TileNameEnum.RABBIT))
 
     rabbitCount == 0
+  }
+
+  def hasRabbitOnRow(row: Int): Boolean = {
+    if (row > 8 || row < 1)
+      return false
+
+    val rabbitOnRowCount = tiles.count(tile => {
+      tile.name.equals(TileNameEnum.RABBIT) && tile.pos.isPosYEquals(row)
+    })
+
+    rabbitOnRowCount > 0
   }
 }

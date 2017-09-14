@@ -2,7 +2,7 @@ package controller.impl.rule
 
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{PlayerNameEnum, TileNameEnum}
+import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import util.position.Position
 
 object Postcondition {
@@ -68,5 +68,10 @@ object Postcondition {
     PlayerNameEnum.NONE
   }
 
+  def winByRabbitOnOtherSide(field: Field): PlayerNameEnum = {
+    field.hasRabbitOnOtherSide(PlayerNameEnum.GOLD)
 
+
+    PlayerNameEnum.NONE
+  }
 }

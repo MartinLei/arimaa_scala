@@ -335,5 +335,20 @@ class FieldSpec extends FlatSpec with Matchers {
     val field = new Field()
     field.hasNoRabbits(PlayerNameEnum.NONE) should be(false)
   }
+
+  "hasRabbitOnOtherSide" should "true if player has one on the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    field.hasRabbitOnOtherSide(PlayerNameEnum.GOLD) should be(true)
+    field.hasRabbitOnOtherSide(PlayerNameEnum.SILVER) should be(false)
+  }
+  it should "false if its player NONE" in {
+    val field = new Field(Set(), Set())
+    field.hasRabbitOnOtherSide(PlayerNameEnum.NONE) should be(false)
+  }
 }
 

@@ -10,6 +10,7 @@ import scala.collection.mutable.ListBuffer
 
 
 class Field() extends FieldTrait {
+
   private var playerGold: Player = getInitGoldPlayer
   private var playerSilver: Player = getInitSilverPlayer
 
@@ -224,6 +225,12 @@ class Field() extends FieldTrait {
   override def hasNoRabbits(playerName: PlayerNameEnum): Boolean = playerName match {
     case PlayerNameEnum.GOLD => playerGold.hasNoRabbits
     case PlayerNameEnum.SILVER => playerSilver.hasNoRabbits
+    case _ => false
+  }
+
+  override def hasRabbitOnOtherSide(playerName: PlayerNameEnum): Boolean = playerName match {
+    case PlayerNameEnum.GOLD => playerGold.hasRabbitOnRow(8)
+    case PlayerNameEnum.SILVER => playerGold.hasRabbitOnRow(1)
     case _ => false
   }
 }

@@ -121,4 +121,41 @@ class PostconditionSpec extends FlatSpec with Matchers {
 
     Postcondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.NONE)
   }
+
+  "winByRabbitOnOtherSide" should "gold if a gold rabbit is on the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.GOLD)
+  }
+  it should "silver if a silver rabbit is on the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.SILVER)
+  }
+  it should "NONE if both have no rabbit on the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.NONE)
+  }
+  it should "act Player if both have a rabbit on the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.GOLD)
+  }
 }

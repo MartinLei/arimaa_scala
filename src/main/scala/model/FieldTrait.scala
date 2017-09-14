@@ -31,4 +31,6 @@ trait FieldTrait {
   var winPlayerName: PlayerNameEnum
 
   def hasNoRabbits(playerName: PlayerNameEnum): Boolean
+
+  def hasRabbitOnOtherSide(playerName: PlayerNameEnum): Boolean
 }
