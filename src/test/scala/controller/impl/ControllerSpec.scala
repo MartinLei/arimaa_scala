@@ -402,6 +402,30 @@ class ControllerSpec extends FlatSpec with Matchers {
         Message.doWin(PlayerNameEnum.SILVER)))
   }
 
+  "PlayerHasNoRabbit" should "gold win, if silver has no rabbits" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer() should be(
+      List(
+        Message.changePlayer(PlayerNameEnum.SILVER),
+        Message.doWin(PlayerNameEnum.GOLD)))
+  }
+  it should "silver win, if gold has no rabbits" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(3, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(3, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer() should be(
+      List(
+        Message.changePlayer(PlayerNameEnum.SILVER),
+        Message.doWin(PlayerNameEnum.GOLD)))
+  }
 
   "fromPosEmpty" should "do nothing, if pos from is empty" in {
     val controller = new Controller(Set(), Set())

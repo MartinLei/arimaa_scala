@@ -6,7 +6,6 @@ import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
 trait FieldTrait {
-
   def isOccupied(pos: Position): Boolean
 
   def changeTilePos(player: PlayerNameEnum, posOld: Position, posNew: Position): Boolean
@@ -30,4 +29,6 @@ trait FieldTrait {
   def changePlayer(): Unit
 
   var winPlayerName: PlayerNameEnum
+
+  def hasNoRabbits(playerName: PlayerNameEnum): Boolean
 }

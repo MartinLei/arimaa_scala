@@ -63,4 +63,10 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     val tile = new Tile(tileName, pos)
     tiles = tiles.+(tile)
   }
+
+  def hasNoRabbits: Boolean = {
+    val rabbitCount = tiles.count(tile => tile.name.equals(TileNameEnum.RABBIT))
+
+    rabbitCount == 0
+  }
 }

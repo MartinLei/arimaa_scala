@@ -255,4 +255,5 @@ class PreconditionSpec extends FlatSpec with Matchers {
     Precondition.isPosFromEmpty(field, new Position(1, 1)) should be(false)
     Precondition.isPosFromEmpty(field, new Position(1, 8)) should be(false)
   }
+
 }

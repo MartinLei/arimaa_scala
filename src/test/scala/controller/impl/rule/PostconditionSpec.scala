@@ -95,4 +95,30 @@ class PostconditionSpec extends FlatSpec with Matchers {
     Postcondition.isRabbitReachedGoal(field, new Position(1, 7), new Position(1, 8)) should be(PlayerNameEnum.NONE)
   }
 
+
+  "winByKillAllOtherRabbits" should "gold if silver has no rabbits on field" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val field = new Field(playerGoldTiles, Set())
+
+    Postcondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.GOLD)
+  }
+  it should "silver if gold has no rabbits on field" in {
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(Set(), playerSilverTiles)
+
+    field.changePlayer()
+
+    Postcondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.SILVER)
+  }
+  it should "NONE if gold and silver has a rabbit" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    Postcondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.NONE)
+  }
 }

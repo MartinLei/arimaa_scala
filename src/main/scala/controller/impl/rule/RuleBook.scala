@@ -62,6 +62,14 @@ case class RuleBook() {
   }
 
   private def isGameOver(field: FieldTrait, posFrom: Position, posTo: Position): PlayerNameEnum = {
-    Postcondition.isRabbitReachedGoal(field, posFrom, posTo)
+    Postcondition.isRabbitReachedGoal(field, posFrom, posTo) //TODO ref.
+  }
+
+  def winCommand(field: FieldTrait): Option[CommandTrait] = {
+    val playerName = Postcondition.winByKillAllOtherRabbits(field)
+    if (!playerName.equals(PlayerNameEnum.NONE))
+      return Option(WinCommand(field, playerName))
+
+    Option(null)
   }
 }

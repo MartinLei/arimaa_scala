@@ -220,4 +220,10 @@ class Field() extends FieldTrait {
   override def changePlayer(): Unit = {
     actualPlayerName = PlayerNameEnum.getInvertPlayer(actualPlayerName)
   }
+
+  override def hasNoRabbits(playerName: PlayerNameEnum): Boolean = playerName match {
+    case PlayerNameEnum.GOLD => playerGold.hasNoRabbits
+    case PlayerNameEnum.SILVER => playerSilver.hasNoRabbits
+    case _ => false
+  }
 }

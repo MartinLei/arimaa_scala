@@ -151,4 +151,21 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
     player.getTiles should contain theSameElementsAs tiles
   }
+
+  "hasNoRabbit" should "true if player has no rabbit" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.CAT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.hasNoRabbits should be(true)
+  }
+  it should "false if not" in {
+    val tiles: Set[Tile] = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+
+    val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
+
+    player.hasNoRabbits should be(false)
+  }
 }

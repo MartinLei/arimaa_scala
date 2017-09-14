@@ -62,8 +62,17 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): List[String] = {
-    val changePlayerCommand = ChangePlayerCommand(field)
-    val action = new ActionCommand(List(changePlayerCommand))
+    var commandList: ListBuffer[CommandTrait] = ListBuffer()
+    val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
+    commandList.+=(changePlayerCommand)
+
+    val winCommandOption: Option[CommandTrait] = ruleBook.winCommand(field)
+    if (winCommandOption.isDefined) {
+      val winCommand = winCommandOption.get
+      commandList.+=(winCommand)
+    }
+
+    val action = new ActionCommand(commandList.toList)
     actionManager.doAction(action)
   }
 

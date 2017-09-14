@@ -56,5 +56,17 @@ object Postcondition {
     PlayerNameEnum.NONE
   }
 
+  def winByKillAllOtherRabbits(field: FieldTrait): PlayerNameEnum = {
+    val actPlayerName = field.actualPlayerName
+    val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
+
+    if (field.hasNoRabbits(pasPlayerName))
+      return actPlayerName
+    if (field.hasNoRabbits(actPlayerName))
+      return pasPlayerName
+
+    PlayerNameEnum.NONE
+  }
+
 
 }
