@@ -56,7 +56,6 @@ case class RuleBook() {
     commandList.toList
   }
 
-
   def winCommand(field: FieldTrait): Option[CommandTrait] = {
     val winPlayerNameRabbitOnOtherSide = Postcondition.winByRabbitOnOtherSide(field)
     if (!winPlayerNameRabbitOnOtherSide.equals(PlayerNameEnum.NONE))

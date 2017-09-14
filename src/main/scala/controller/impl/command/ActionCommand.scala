@@ -29,7 +29,7 @@ class ActionCommand(commandList: List[CommandTrait]) {
     undoMessageList.toList
   }
 
-  //TODO ref. give true if equals
+
   def getPushCommandPosFrom: Option[Position] = {
     if (commandList.isEmpty)
       return Option(null)
