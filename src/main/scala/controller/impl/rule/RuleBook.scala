@@ -19,7 +19,7 @@ object RuleBook {
     if (PreCondition.isToPosNotFree(field, posTo))
       return RuleEnum.TO_POS_NOT_FREE
 
-    if (PreCondition.isPushNotFinish(field, posTo, actionManager))
+    if (PreCondition.isPushNotFinishWithPosTo(field, posTo, actionManager))
       return RuleEnum.PUSH_NOT_FINISH
 
     if (PreCondition.isTilePush(field, playerName, posFrom, posTo))

@@ -151,7 +151,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
 
-  "isPushNotFinish" should "true, if last move was a push and posTo is not the old pos from push tile" in {
+  "isPushNotFinishWithPosTo" should "true, if last move was a push and posTo is not the old pos from push tile" in {
     val field = new Field()
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
     field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
@@ -163,7 +163,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
     actionManager.doAction(action)
 
-    PreCondition.isPushNotFinish(field, new Position(1, 2), actionManager) should be(true)
+    PreCondition.isPushNotFinishWithPosTo(field, new Position(1, 2), actionManager) should be(true)
   }
   it should "false , if not" in {
     val field = new Field()
@@ -177,7 +177,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
     actionManager.doAction(action)
 
-    PreCondition.isPushNotFinish(field, new Position(5, 5), actionManager) should be(false)
+    PreCondition.isPushNotFinishWithPosTo(field, new Position(5, 5), actionManager) should be(false)
   }
 
   "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
