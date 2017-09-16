@@ -14,10 +14,11 @@ object RuleEnum extends Enumeration {
   val POS_FROM_EMPTY: Value = Value("POS_FROM_EMPTY")
 
   val TRAPPED: Value = Value("TRAPPED")
-
+  val CHANGE_PLAYER: Value = Value("CHANGE_PLAYER")
 
   def isValid(element: RuleEnum): Boolean = {
-    if (element.equals(RuleEnum.MOVE) || element.equals(RuleEnum.PUSH) || element.equals(RuleEnum.PULL))
+    if (element.equals(RuleEnum.MOVE) || element.equals(RuleEnum.PUSH) || element.equals(RuleEnum.PULL)
+      || element.equals(RuleEnum.CHANGE_PLAYER))
       return true
 
     false

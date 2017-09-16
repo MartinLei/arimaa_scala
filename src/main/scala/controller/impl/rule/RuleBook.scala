@@ -11,6 +11,7 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 object RuleBook {
+
   def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
     if (PreCondition.isPosFromEmpty(field, posFrom))
       return RuleEnum.POS_FROM_EMPTY
@@ -53,6 +54,15 @@ object RuleBook {
     }
 
     commandList.toList
+  }
+
+  def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): RuleEnum = {
+
+    //TODO isPushNotFinish
+
+    //TODO if action move is 3rd time repetitions
+
+    RuleEnum.CHANGE_PLAYER
   }
 
   def winCommand(field: FieldTrait, actionManager: ActionManager): Option[CommandTrait] = {
