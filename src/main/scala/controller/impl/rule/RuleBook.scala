@@ -58,6 +58,8 @@ object RuleBook {
 
   def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): RuleEnum = {
 
+    //TODO change player not after only a change command is on the stack
+
     //TODO isPushNotFinish
 
     //TODO if action move is 3rd time repetitions
