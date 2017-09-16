@@ -36,7 +36,7 @@ object PreCondition {
     false
   }
 
-  def isTailFreeze(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
+  def isTileFreeze(field: FieldTrait, playerName: PlayerNameEnum, pos: Position): Boolean = {
     if (field.isSurroundByOwnTile(playerName, pos, pos))
       return false
 
@@ -49,7 +49,7 @@ object PreCondition {
     true
   }
 
-  def isTailPush(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
+  def isTilePush(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     val otherPlayerName = PlayerNameEnum.getInvertPlayer(playerName)
     val otherPlayerTileName = field.getTileName(otherPlayerName, posFrom)
 

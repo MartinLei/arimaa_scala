@@ -73,16 +73,16 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isWrongRabbitMove(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 2)) should be(false)
   }
 
-  "isTailFreeze" should "return true, if the tail is not surround by own tile but one stronger tile from other player" in {
+  "isTileFreeze" should "return true, if the tile is not surround by own tile but one stronger tile from other player" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(4, 4)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.CAMEL, new Position(4, 5)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    PreCondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(true)
+    PreCondition.isTileFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(true)
   }
-  it should "false if surround by own tile and one stronger tail from other player" in {
+  it should "false if surround by own tile and one stronger tile from other player" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(4, 4)),
       new Tile(TileNameEnum.RABBIT, new Position(5, 4)))
@@ -90,17 +90,17 @@ class PreConditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.CAMEL, new Position(4, 5)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    PreCondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
+    PreCondition.isTileFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
   }
-  it should "false if the tail is not surround by other player tiles" in {
+  it should "false if the tile is not surround by other player tiles" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(4, 4)))
     val field = new Field(playerGoldTiles, Set())
 
-    PreCondition.isTailFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
+    PreCondition.isTileFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
   }
 
-  "isTailPush" should "return true, if push tile is other player and surround by stronger other player tile" in {
+  "isTilePush" should "return true, if push tile is other player and surround by stronger other player tile" in {
     val field = new Field()
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 4))
     field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
@@ -108,7 +108,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    PreCondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(true)
+    PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(true)
 
   }
   it should "false, if posTo is occupied" in {
@@ -119,7 +119,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    PreCondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 4)) should be(false)
+    PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 4)) should be(false)
   }
   it should "false if, push tile not surround by other player" in {
     val field = new Field()
@@ -128,7 +128,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    PreCondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
+    PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
   }
   it should "false if push tile not surround by stronger other player" in {
     val field = new Field()
@@ -139,7 +139,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
     field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
 
-    PreCondition.isTailPush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
+    PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
   }
   it should "be null if not" in {
     val field = new Field()

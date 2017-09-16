@@ -6,7 +6,7 @@ import util.position.Position
 
 class PostConditionSpec extends FlatSpec with Matchers {
 
-  "isTileTrapped" should "return true, if the tail is trapped" in {
+  "isTileTrapped" should "return true, if the tile is trapped" in {
     val field = new Field(Set(
       new Tile(TileNameEnum.RABBIT, new Position(3, 5)),
     ), Set())

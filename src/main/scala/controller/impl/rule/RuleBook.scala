@@ -21,7 +21,7 @@ object RuleBook {
     if (PreCondition.isPushNotFinish(field, posTo, actionManager))
       return RuleEnum.PUSH_NOT_FINISH
 
-    if (PreCondition.isTailPush(field, playerName, posFrom, posTo))
+    if (PreCondition.isTilePush(field, playerName, posFrom, posTo))
       return RuleEnum.PUSH
 
     if (PreCondition.isTilePull(field, posFrom, posTo, actionManager))
@@ -33,7 +33,7 @@ object RuleBook {
     if (PreCondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
       return RuleEnum.WRONG_RABBIT_MOVE
 
-    if (PreCondition.isTailFreeze(field, playerName, posFrom))
+    if (PreCondition.isTileFreeze(field, playerName, posFrom))
       return RuleEnum.TILE_FREEZE
 
     RuleEnum.MOVE
