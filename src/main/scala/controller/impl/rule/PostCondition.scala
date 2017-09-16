@@ -2,11 +2,10 @@ package controller.impl.rule
 
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.{PlayerNameEnum, TileNameEnum}
+import model.impl.TileNameEnum
 import util.position.Position
 
-object Postcondition {
-
+object PostCondition {
   def isTileTrapped(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
     if (!Position.isPosATrap(posTo))
       return false
@@ -16,6 +15,7 @@ object Postcondition {
 
     true
   }
+
 
   def isATileNowTrapped(field: FieldTrait, posFrom: Position): Option[Position] = {
     val traps = Position.traps
@@ -40,26 +40,5 @@ object Postcondition {
     true
   }
 
-  def winByKillAllOtherRabbits(field: FieldTrait): PlayerNameEnum = {
-    val actPlayerName = field.actualPlayerName
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
 
-    if (field.hasNoRabbits(pasPlayerName))
-      return actPlayerName
-    if (field.hasNoRabbits(actPlayerName))
-      return pasPlayerName
-
-    PlayerNameEnum.NONE
-  }
-
-  def winByRabbitOnOtherSide(field: FieldTrait): PlayerNameEnum = {
-    if (field.hasRabbitOnOtherSide(field.actualPlayerName))
-      return field.actualPlayerName
-
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
-    if (field.hasRabbitOnOtherSide(pasPlayerName))
-      return pasPlayerName
-
-    PlayerNameEnum.NONE
-  }
 }

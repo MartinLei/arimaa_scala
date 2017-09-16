@@ -33,7 +33,8 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, posFrom, posTo)
+    val actualPlayerName = field.actualPlayerName
+    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
@@ -66,7 +67,7 @@ class Controller extends ControllerTrait {
     val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
     commandList.+=(changePlayerCommand)
 
-    val winCommandOption: Option[CommandTrait] = ruleBook.winCommand(field)
+    val winCommandOption: Option[CommandTrait] = ruleBook.winCommand(field, actionManager)
     if (winCommandOption.isDefined) {
       val winCommand = winCommandOption.get
       commandList.+=(winCommand)

@@ -7,7 +7,7 @@ import model.impl.{PlayerNameEnum, TileNameEnum}
 import util.DirectionEnum
 import util.position.Position
 
-object Precondition {
+object PreCondition {
 
   def isPosFromPosNotOwn(field: FieldTrait, actPlayerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val playerName = field.getPlayerName(posFrom)

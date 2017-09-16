@@ -437,6 +437,21 @@ class ControllerSpec extends FlatSpec with Matchers {
         Message.doWin(PlayerNameEnum.GOLD)))
   }
 
+  "PassivePlayerCantMakeAMove" should "active player win, if passive player cant move any tile" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 5)),
+      new Tile(TileNameEnum.DOG, new Position(2, 4)),
+      new Tile(TileNameEnum.DOG, new Position(1, 3)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 4)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer() should be(
+      List(
+        Message.changePlayer(PlayerNameEnum.SILVER),
+        Message.doWin(PlayerNameEnum.GOLD)))
+  }
+
   "fromPosEmpty" should "do nothing, if pos from is empty" in {
     val controller = new Controller(Set(), Set())
     controller.moveTile(new Position(1, 1), new Position(1, 2)) should
