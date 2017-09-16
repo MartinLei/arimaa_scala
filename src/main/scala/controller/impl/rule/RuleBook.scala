@@ -10,7 +10,7 @@ import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
-case class RuleBook() {
+object RuleBook {
   def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
     if (PreCondition.isPosFromEmpty(field, posFrom))
       return RuleEnum.POS_FROM_EMPTY

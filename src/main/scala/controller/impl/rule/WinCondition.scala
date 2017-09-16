@@ -53,9 +53,8 @@ object WinCondition {
 
   private def hasPossibleMove(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val possiblePosTo = Position.getSurround(posFrom)
-    val ruleBook = RuleBook()
     val countPossiblePosTo: Int = possiblePosTo.count(posTo => {
-      val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, playerName, posFrom, posTo)
+      val ruleComplaint: RuleEnum = RuleBook.isMoveRuleComplaint(field, actionManager, playerName, posFrom, posTo)
       RuleEnum.isValid(ruleComplaint)
     })
 

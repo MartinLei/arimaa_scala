@@ -16,7 +16,6 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class Controller extends ControllerTrait {
-  private val ruleBook = RuleBook()
   private val logger = Logger[Controller]
   private var field: FieldTrait = new Field()
   private val actionManager = new ActionManager
@@ -34,7 +33,7 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val actualPlayerName = field.actualPlayerName
-    val ruleComplaint: RuleEnum = ruleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
+    val ruleComplaint: RuleEnum = RuleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
     if (!RuleEnum.isValid(ruleComplaint))
       return List(Message.getMessage(ruleComplaint, posFrom, posTo))
 
@@ -47,7 +46,7 @@ class Controller extends ControllerTrait {
       case RuleEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
     }
 
-    val postCommandList: List[CommandTrait] = ruleBook.postMoveCommand(field, posFrom, posTo)
+    val postCommandList: List[CommandTrait] = RuleBook.postMoveCommand(field, posFrom, posTo)
     commandList.++=(postCommandList)
 
     val action = new ActionCommand(commandList.toList)
@@ -67,7 +66,7 @@ class Controller extends ControllerTrait {
     val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
     commandList.+=(changePlayerCommand)
 
-    val winCommandOption: Option[CommandTrait] = ruleBook.winCommand(field, actionManager)
+    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, actionManager)
     if (winCommandOption.isDefined) {
       val winCommand = winCommandOption.get
       commandList.+=(winCommand)
