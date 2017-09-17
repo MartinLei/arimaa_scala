@@ -183,7 +183,7 @@ class ControllerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.CAMEL, new Position(2, 4)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
-    controller.changePlayer()
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
 
     controller.moveTile(new Position(2, 4), new Position(3, 4)) should
       be(List(MessageText.doMove(new Position(2, 4), new Position(3, 4))))
@@ -222,13 +222,15 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
   it should "respawn tile from trap, if now surrounded by undo pull" in {
     val playerGoldTiles = Set(
-      new Tile(TileNameEnum.HORSE, new Position(2, 3)),
+      new Tile(TileNameEnum.HORSE, new Position(2, 2)),
       new Tile(TileNameEnum.CAT, new Position(3, 3)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.CAMEL, new Position(2, 4)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
-    controller.changePlayer()
+    controller.moveTile(new Position(2, 2), new Position(2, 3))
+
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
 
     controller.moveTile(new Position(2, 4), new Position(3, 4)) should
       be(List(MessageText.doMove(new Position(2, 4), new Position(3, 4))))
@@ -488,13 +490,12 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
 
     controller.moveTile(new Position(1, 2), new Position(1, 3))
-    controller.changePlayer()
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
 
     controller.getActPlayerName should be(PlayerNameEnum.SILVER)
 
     controller.moveTile(new Position(1, 7), new Position(1, 6))
-    controller.changePlayer()
-
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
   it should "do nothing, if actual player not finish his move" in {
