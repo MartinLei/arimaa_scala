@@ -59,13 +59,10 @@ class PreConditionSpec extends FlatSpec with Matchers {
 
     PreCondition.isWrongRabbitMove(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 2)) should be(true)
   }
-
   it should "false if not" in {
-    val field = new Field()
-
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3))
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.NONE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(2, 3)))
+    val field = new Field(playerGoldTiles, Set())
 
     PreCondition.isWrongRabbitMove(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 2)) should be(false)
   }
