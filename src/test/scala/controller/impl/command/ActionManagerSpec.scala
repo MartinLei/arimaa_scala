@@ -179,6 +179,34 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val actionManager = new ActionManager()
     actionManager.getLastActionCommandPosTo should be(Option(null))
   }
+  "isLastAPushCommand" should "true if last command is a push command" in {
+    val field1 = new Field()
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List(
+      PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastAPushCommand should be(true)
+  }
+  it should "false, if not" in {
+    val field1 = new Field()
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List(
+      MoveCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastAPushCommand should be(false)
+  }
+  it should "false, if stack is empty" in {
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List())
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastAPushCommand should be(false)
+  }
 }
 
 

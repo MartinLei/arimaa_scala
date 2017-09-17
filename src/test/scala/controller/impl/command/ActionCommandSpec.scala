@@ -81,4 +81,18 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     val actionCommand1 = new ActionCommand(List())
     actionCommand1.getLastCommandPosTo should be(Option(null))
   }
+  "isLastAPushCommand" should "true, if last command was a push command" in {
+    val actionCommand1 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.isLastAPushCommand should be(true)
+  }
+  it should "false, if not" in {
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.isLastAPushCommand should be(false)
+  }
+  it should "false, if empty" in {
+    val actionCommand1 = new ActionCommand(List())
+    actionCommand1.isLastAPushCommand should be(false)
+  }
+
+
 }
