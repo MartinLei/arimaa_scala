@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.{MoveCommand, PushCommand, TrapCommand}
+import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PushCommand, TrapCommand}
 import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -237,6 +237,38 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionCommand)
 
     actionManager.isLastAPushCommand should be(false)
+  }
+
+  "isLastCommandAChangePlayer" should "true, if last action is a changePlayerCommand" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List(ChangePlayerCommand(field)))
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastCommandAChangePlayer should be(true)
+  }
+  it should "false, if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
+      new Position(1, 2), new Position(1, 3))))
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastCommandAChangePlayer should be(false)
+  }
+  it should "false, if stack is emtpy" in {
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List())
+
+    actionManager.doAction(actionCommand)
+
+    actionManager.isLastCommandAChangePlayer should be(false)
   }
 }
 

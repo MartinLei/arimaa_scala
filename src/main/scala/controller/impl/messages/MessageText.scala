@@ -77,4 +77,8 @@ object MessageText {
   def undoWin(playerName: PlayerNameEnum): String = {
     playerName + " undo you WIN"
   }
+
+  def noTileMoved: String = {
+    "You have not move any tile"
+  }
 }

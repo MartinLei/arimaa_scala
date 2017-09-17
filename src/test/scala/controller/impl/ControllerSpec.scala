@@ -459,11 +459,22 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
 
   "changePlayer" should "change the Player" in {
-    val controller: ControllerTrait = new Controller()
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3))
     controller.changePlayer()
+
     controller.getActPlayerName should be(PlayerNameEnum.SILVER)
+
+    controller.moveTile(new Position(1, 7), new Position(1, 6))
     controller.changePlayer()
+
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
   it should "do nothing, if actual player not finish his move" in {

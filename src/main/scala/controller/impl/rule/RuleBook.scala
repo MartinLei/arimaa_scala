@@ -61,11 +61,13 @@ object RuleBook {
   def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): MessageType = {
 
     //TODO change player not after only a change command is on the stack
-
-    //TODO if action move is 3rd time repetitions
+    if (PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager))
+      return Message.noTileMoved
 
     if (PreChangePlayerCondition.isPushNotFinish(actionManager))
       return Message.pushNotFinish
+
+    //TODO if action move is 3rd time repetitions
 
     Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }

@@ -4,6 +4,7 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 object Message {
+
   def doMove(posFrom: Position, posTo: Position): MessageType = {
     MessageType(MessageText.doMove(posFrom, posTo), MessageEnum.MOVE)
   }
@@ -42,5 +43,9 @@ object Message {
 
   def changePlayer(playerName: PlayerNameEnum): MessageType = {
     MessageType(MessageText.changePlayer(playerName), MessageEnum.CHANGE_PLAYER)
+  }
+
+  def noTileMoved: MessageType = {
+    MessageType(MessageText.noTileMoved, MessageEnum.NO_TILE_MOVED)
   }
 }

@@ -6,7 +6,6 @@ import util.position.Position
 import scala.collection.mutable
 
 class ActionManager {
-
   var actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[String] = {
@@ -52,5 +51,13 @@ class ActionManager {
 
     val lastAction = actionStack.top
     lastAction.isLastAPushCommand
+  }
+
+  def isLastCommandAChangePlayer: Boolean = {
+    if (actionStack.isEmpty)
+      return false
+
+    val lastAction = actionStack.top
+    lastAction.isLastAChangePlayerCommand
   }
 }

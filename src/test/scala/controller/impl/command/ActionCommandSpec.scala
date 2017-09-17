@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.{MoveCommand, PushCommand}
+import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PushCommand}
 import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -81,7 +81,7 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     val actionCommand1 = new ActionCommand(List())
     actionCommand1.getLastCommandPosTo should be(Option(null))
   }
-  "isLastAPushCommand" should "true, if last command was a push command" in {
+  "isLastAPushCommand" should "true, if last command was a pushCommand" in {
     val actionCommand1 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
     actionCommand1.isLastAPushCommand should be(true)
   }
@@ -93,6 +93,17 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     val actionCommand1 = new ActionCommand(List())
     actionCommand1.isLastAPushCommand should be(false)
   }
-
+  "isLastAChangePlayerCommand" should "true, if last command was a changePlayerCommand" in {
+    val actionCommand1 = new ActionCommand(List(ChangePlayerCommand(field)))
+    actionCommand1.isLastAChangePlayerCommand should be(true)
+  }
+  it should "false, if not" in {
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    actionCommand1.isLastAChangePlayerCommand should be(false)
+  }
+  it should "false, if empty" in {
+    val actionCommand1 = new ActionCommand(List())
+    actionCommand1.isLastAChangePlayerCommand should be(false)
+  }
 
 }

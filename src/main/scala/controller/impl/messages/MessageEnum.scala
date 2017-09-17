@@ -15,6 +15,7 @@ object MessageEnum extends Enumeration {
 
   val TRAPPED: Value = Value("TRAPPED")
   val CHANGE_PLAYER: Value = Value("CHANGE_PLAYER")
+  val NO_TILE_MOVED: Value = Value("NO_TILE_MOVED")
 
   def isValid(element: RuleEnum): Boolean = {
     if (element.equals(MessageEnum.MOVE) || element.equals(MessageEnum.PUSH) || element.equals(MessageEnum.PULL)
