@@ -18,9 +18,9 @@ class PreConditionSpec extends FlatSpec with Matchers {
   }
 
   "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {
-    val field = new Field()
-
-    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val field = new Field(Set(), playerSilverTiles)
 
     PreCondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 7)) should be(true)
 
