@@ -9,7 +9,9 @@ import util.position.Position
 class PreConditionSpec extends FlatSpec with Matchers {
 
   "precondition" should "give a move message if its a valid move" in {
-    val field = new Field()
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager
 
     RuleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
@@ -52,6 +54,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
 
     PreCondition.isToPosNotFree(field, new Position(1, 3)) should be(false)
   }
+
 
   "isWrongRabbitMove" should "return true, if a rabbit gets moved back" in {
     val field = new Field()
@@ -99,7 +102,6 @@ class PreConditionSpec extends FlatSpec with Matchers {
 
     PreCondition.isTileFreeze(field, PlayerNameEnum.GOLD, new Position(4, 4)) should be(false)
   }
-
   "isTilePush" should "return true, if push tile is other player and surround by stronger other player tile" in {
     val field = new Field()
     field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 4))
@@ -254,5 +256,4 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isPosFromEmpty(field, new Position(1, 1)) should be(false)
     PreCondition.isPosFromEmpty(field, new Position(1, 8)) should be(false)
   }
-
 }
