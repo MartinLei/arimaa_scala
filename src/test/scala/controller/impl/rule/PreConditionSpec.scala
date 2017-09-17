@@ -47,13 +47,10 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isToPosNotFree(field, new Position(1, 8)) should be(true)
   }
   it should "false if not" in {
-    val field = new Field()
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    val field = new Field(Set(), Set())
 
     PreCondition.isToPosNotFree(field, new Position(1, 3)) should be(false)
   }
-
 
   "isWrongRabbitMove" should "return true, if a rabbit gets moved back" in {
     val field = new Field()
