@@ -1,6 +1,6 @@
-package controller.impl.rule
+package controller.impl.messages
 
-object RuleEnum extends Enumeration {
+object MessageEnum extends Enumeration {
   type RuleEnum = Value
   val NONE: Value = Value("NONE")
   val MOVE: Value = Value("MOVE")
@@ -17,8 +17,8 @@ object RuleEnum extends Enumeration {
   val CHANGE_PLAYER: Value = Value("CHANGE_PLAYER")
 
   def isValid(element: RuleEnum): Boolean = {
-    if (element.equals(RuleEnum.MOVE) || element.equals(RuleEnum.PUSH) || element.equals(RuleEnum.PULL)
-      || element.equals(RuleEnum.CHANGE_PLAYER))
+    if (element.equals(MessageEnum.MOVE) || element.equals(MessageEnum.PUSH) || element.equals(MessageEnum.PULL)
+      || element.equals(MessageEnum.CHANGE_PLAYER))
       return true
 
     false

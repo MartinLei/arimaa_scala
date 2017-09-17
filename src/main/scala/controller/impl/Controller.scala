@@ -4,8 +4,8 @@ import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
-import controller.impl.messages.MessageType
-import controller.impl.rule.{RuleBook, RuleEnum}
+import controller.impl.messages.{MessageEnum, MessageType}
+import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -40,9 +40,9 @@ class Controller extends ControllerTrait {
 
     val actPlayerName = field.actualPlayerName
     ruleComplaint.messageType match {
-      case RuleEnum.MOVE => commandList.+=(MoveCommand(field, actPlayerName, posFrom, posTo))
-      case RuleEnum.PUSH => commandList.+=(PushCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
-      case RuleEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
+      case MessageEnum.MOVE => commandList.+=(MoveCommand(field, actPlayerName, posFrom, posTo))
+      case MessageEnum.PUSH => commandList.+=(PushCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
+      case MessageEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
     }
 
     val postCommandList: List[CommandTrait] = RuleBook.postMoveCommand(field, posFrom, posTo)

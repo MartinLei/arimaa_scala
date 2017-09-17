@@ -1,10 +1,10 @@
 package controller.impl.messages
 
-import controller.impl.rule.RuleEnum
-import controller.impl.rule.RuleEnum.RuleEnum
+
+import controller.impl.messages.MessageEnum.RuleEnum
 
 case class MessageType(text: String, messageType: RuleEnum) {
   def isValid: Boolean = {
-    RuleEnum.isValid(messageType)
+    MessageEnum.isValid(messageType)
   }
 }
