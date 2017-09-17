@@ -466,6 +466,19 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.changePlayer()
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
+  it should "do nothing, if actual player not finish his move" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(5, 5), new Position(6, 5)) should
+      be(List(Message.doPush(new Position(5, 5), new Position(6, 5))))
+
+    controller.changePlayer() should be(List(Message.pushNotFinish))
+    controller.getActPlayerName should be(PlayerNameEnum.GOLD)
+  }
 
   "unDo" should "undo last move" in {
     val controller: ControllerTrait = new Controller()
