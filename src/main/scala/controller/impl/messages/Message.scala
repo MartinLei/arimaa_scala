@@ -23,7 +23,7 @@ object Message {
     "Respawn from dead " + Coordinate.posToCoordinate(pos)
   }
 
-  def getMessage(rule: RuleEnum, posFrom: Position, posTo: Position): String = {
+  def getMessage(rule: RuleEnum, posFrom: Position = new Position(1, 1), posTo: Position = new Position(1, 1)): String = {
     rule match {
       case RuleEnum.NONE => "NONE"
       case RuleEnum.MOVE => Message.doMove(posFrom, posTo)

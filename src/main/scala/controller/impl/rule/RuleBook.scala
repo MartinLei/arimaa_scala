@@ -61,6 +61,8 @@ object RuleBook {
     //TODO change player not after only a change command is on the stack
 
     //TODO isPushNotFinish
+    if (PreChangePlayerCondition.isPushNotFinish(actionManager))
+      return RuleEnum.PUSH_NOT_FINISH
 
     //TODO if action move is 3rd time repetitions
 

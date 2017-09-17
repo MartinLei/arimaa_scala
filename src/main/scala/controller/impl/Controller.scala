@@ -65,7 +65,7 @@ class Controller extends ControllerTrait {
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
     val changePlayerRuleComplaint: RuleEnum = RuleBook.isChangePlayerRuleComplaint(field, actionManager)
     if (!RuleEnum.isValid(changePlayerRuleComplaint))
-      return List("NO PLAYER CHANGE POSSIBLE")
+      return List(Message.getMessage(changePlayerRuleComplaint))
 
     val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
     commandList.+=(changePlayerCommand)
