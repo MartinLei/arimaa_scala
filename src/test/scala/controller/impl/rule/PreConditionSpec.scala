@@ -201,12 +201,11 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isTilePull(field, new Position(4, 5), new Position(4, 4), actionManager) should be(false)
   }
   it should "false, if posTo is not the last tile posFrom" in {
-    val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 7), new Position(4, 5))
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(4, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(4, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
