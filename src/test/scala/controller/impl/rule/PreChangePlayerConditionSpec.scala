@@ -49,8 +49,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
   }
   it should "true,if actionManager stack is empty" in {
     val actionManager = new ActionManager()
-    val action1 = new ActionCommand(List())
-    actionManager.doAction(action1)
 
     PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager) should be(true)
   }

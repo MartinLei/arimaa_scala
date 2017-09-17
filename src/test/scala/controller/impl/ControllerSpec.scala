@@ -419,6 +419,8 @@ class ControllerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
+
     controller.changePlayer() should be(
       List(
         MessageText.changePlayer(PlayerNameEnum.SILVER),
@@ -426,25 +428,33 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
   it should "silver win, if gold has no rabbits" in {
     val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(3, 4)))
+      new Tile(TileNameEnum.RABBIT, new Position(3, 2)))
     val playerSilverTiles = Set(
-      new Tile(TileNameEnum.CAMEL, new Position(3, 5)))
+      new Tile(TileNameEnum.CAMEL, new Position(3, 5)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(3, 2), new Position(3, 3)) should
+      be(List(
+        MessageText.doMove(new Position(3, 2), new Position(3, 3)),
+        MessageText.doTrap(new Position(3, 3))))
 
     controller.changePlayer() should be(
       List(
         MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.GOLD)))
+        MessageText.doWin(PlayerNameEnum.SILVER)))
   }
 
   "PassivePlayerCantMakeAMove" should "active player win, if passive player cant move any tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 5)),
       new Tile(TileNameEnum.DOG, new Position(2, 4)),
-      new Tile(TileNameEnum.DOG, new Position(1, 3)))
+      new Tile(TileNameEnum.DOG, new Position(1, 2)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 4)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3))
 
     controller.changePlayer() should be(
       List(
