@@ -2,6 +2,7 @@ package controller.impl.rule
 
 import controller.impl.command.impl.{TrapCommand, WinCommand}
 import controller.impl.command.{ActionManager, CommandTrait}
+import controller.impl.messages.{Message, MessageType}
 import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum
@@ -56,17 +57,16 @@ object RuleBook {
     commandList.toList
   }
 
-  def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): RuleEnum = {
+  def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): MessageType = {
 
     //TODO change player not after only a change command is on the stack
 
-    //TODO isPushNotFinish
-    if (PreChangePlayerCondition.isPushNotFinish(actionManager))
-      return RuleEnum.PUSH_NOT_FINISH
-
     //TODO if action move is 3rd time repetitions
 
-    RuleEnum.CHANGE_PLAYER
+    if (PreChangePlayerCondition.isPushNotFinish(actionManager))
+      return Message.pushNotFinishMessage
+
+    Message.changePlayerMessage(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }
 
   def winCommand(field: FieldTrait, actionManager: ActionManager): Option[CommandTrait] = {

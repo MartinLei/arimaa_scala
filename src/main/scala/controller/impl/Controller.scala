@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
-import controller.impl.messages.Message
+import controller.impl.messages.{Message, MessageType}
 import controller.impl.rule.RuleEnum.RuleEnum
 import controller.impl.rule.{RuleBook, RuleEnum}
 import model.FieldTrait
@@ -63,9 +63,9 @@ class Controller extends ControllerTrait {
 
   override def changePlayer(): List[String] = {
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
-    val changePlayerRuleComplaint: RuleEnum = RuleBook.isChangePlayerRuleComplaint(field, actionManager)
-    if (!RuleEnum.isValid(changePlayerRuleComplaint))
-      return List(Message.getMessage(changePlayerRuleComplaint))
+    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, actionManager)
+    if (!changePlayerRuleComplaint.isValid)
+      return List(changePlayerRuleComplaint.text)
 
     val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
     commandList.+=(changePlayerCommand)
