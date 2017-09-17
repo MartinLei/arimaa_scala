@@ -232,9 +232,6 @@ class ActionManagerSpec extends FlatSpec with Matchers {
   }
   it should "false, if stack is empty" in {
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List())
-
-    actionManager.doAction(actionCommand)
 
     actionManager.isLastAPushCommand should be(false)
   }
@@ -262,13 +259,34 @@ class ActionManagerSpec extends FlatSpec with Matchers {
 
     actionManager.isLastCommandAChangePlayer should be(false)
   }
-  it should "false, if stack is emtpy" in {
+  it should "false, if stack is empty" in {
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List())
+
+    actionManager.isLastCommandAChangePlayer should be(false)
+  }
+
+  "hasPlayerCommand" should "true if a player make some tile move" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
+      new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand)
 
-    actionManager.isLastCommandAChangePlayer should be(false)
+    actionManager.hasPlayerCommand should be(true)
+  }
+  it should "false , if not" in {
+    val actionManager = new ActionManager()
+    //TODO change if start tile position on stack
+
+    actionManager.hasPlayerCommand should be(false)
+  }
+  it should "false, if stack is empty" in {
+    val actionManager = new ActionManager()
+
+    actionManager.hasPlayerCommand should be(false)
   }
 }
 
