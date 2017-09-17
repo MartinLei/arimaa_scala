@@ -158,72 +158,81 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val actionManager = new ActionManager()
     actionManager.getLastActionCommandPosFrom should be(Option(null))
   }
+  "getLastActionCommandPosTo" should "give the last actions first push command posTo" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    actionManager.doAction(actionCommand1)
+    actionManager.doAction(actionCommand2)
+
+    actionManager.getLastActionCommandPosTo should be(Some(new Position(1, 3)))
+  }
+  it should "give the last actions first move command" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    actionManager.doAction(actionCommand1)
+    actionManager.doAction(actionCommand2)
+
+    actionManager.getLastActionCommandPosTo should be(Some(new Position(1, 3)))
+  }
+  it should "null if no push or move command action" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+
+    actionManager.doAction(actionCommand1)
+    actionManager.doAction(actionCommand2)
+
+    actionManager.getLastActionCommandPosTo should be(Option(null))
+  }
+  it should "null if empty" in {
+    val actionManager = new ActionManager()
+    actionManager.getLastActionCommandPosTo should be(Option(null))
+  }
   /*
-      "getLastActionCommandPosTo" should "give the last actions first push command posTo" in {
-        val field = new Field()
-        val actionManager = new ActionManager()
-        val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-        val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+        "isLastAPushCommand" should "true if last command is a push command" in {
+          val field = new Field()
+          val actionManager = new ActionManager()
+          val actionCommand = new ActionCommand(List(
+            PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
-        actionManager.doAction(actionCommand1)
-        actionManager.doAction(actionCommand2)
+          actionManager.doAction(actionCommand)
 
-        actionManager.getLastActionCommandPosTo should be(Some(new Position(1, 4)))
-      }
-      it should "give the last actions first move command" in {
-        val field = new Field()
-        val actionManager = new ActionManager()
-        val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-        val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+          actionManager.isLastAPushCommand should be(true)
+        }
+        it should "false, if not" in {
+          val field = new Field()
+          val actionManager = new ActionManager()
+          val actionCommand = new ActionCommand(List(
+            MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
-        actionManager.doAction(actionCommand1)
-        actionManager.doAction(actionCommand2)
+          actionManager.doAction(actionCommand)
 
-        actionManager.getLastActionCommandPosTo should be(Some(new Position(1, 4)))
-      }
-      it should "null if no push or move command action" in {
-        val field = new Field()
-        val actionManager = new ActionManager()
-        val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-        val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+          actionManager.isLastAPushCommand should be(false)
+        }
+        it should "false, if stack is empty" in {
+          val actionManager = new ActionManager()
+          val actionCommand = new ActionCommand(List())
 
-        actionManager.doAction(actionCommand1)
-        actionManager.doAction(actionCommand2)
+          actionManager.doAction(actionCommand)
 
-        actionManager.getLastActionCommandPosTo should be(Option(null))
-      }
-      it should "null if empty" in {
-        val actionManager = new ActionManager()
-        actionManager.getLastActionCommandPosTo should be(Option(null))
-      }
-      "isLastAPushCommand" should "true if last command is a push command" in {
-        val field = new Field()
-        val actionManager = new ActionManager()
-        val actionCommand = new ActionCommand(List(
-          PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-
-        actionManager.doAction(actionCommand)
-
-        actionManager.isLastAPushCommand should be(true)
-      }
-      it should "false, if not" in {
-        val field = new Field()
-        val actionManager = new ActionManager()
-        val actionCommand = new ActionCommand(List(
-          MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-
-        actionManager.doAction(actionCommand)
-
-        actionManager.isLastAPushCommand should be(false)
-      }
-      it should "false, if stack is empty" in {
-        val actionManager = new ActionManager()
-        val actionCommand = new ActionCommand(List())
-
-        actionManager.doAction(actionCommand)
-
-        actionManager.isLastAPushCommand should be(false)
-      } */
+          actionManager.isLastAPushCommand should be(false)
+        } */
 }
 
 
