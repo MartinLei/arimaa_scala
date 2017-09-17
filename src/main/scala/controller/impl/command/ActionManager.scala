@@ -60,4 +60,16 @@ class ActionManager {
     val lastAction = actionStack.top
     lastAction.isLastAChangePlayerCommand
   }
+
+  def hasPlayerCommand: Boolean = {
+    if (actionStack.isEmpty)
+      return false
+
+    val lastAction = actionStack.top
+    if (lastAction.isLastAChangePlayerCommand)
+      return false
+
+    true
+  }
+
 }

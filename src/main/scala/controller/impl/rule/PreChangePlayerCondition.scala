@@ -12,6 +12,9 @@ object PreChangePlayerCondition {
   }
 
   def isNoTileMovedFromPlayer(actionManager: ActionManager): Boolean = {
+    if (!actionManager.hasPlayerCommand)
+      return true
+
     actionManager.isLastCommandAChangePlayer
   }
 }
