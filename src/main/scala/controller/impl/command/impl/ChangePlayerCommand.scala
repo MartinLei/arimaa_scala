@@ -1,7 +1,7 @@
 package controller.impl.command.impl
 
 import controller.impl.command.CommandTrait
-import controller.impl.messages.Message
+import controller.impl.messages.MessageText
 import model.FieldTrait
 
 case class ChangePlayerCommand(field: FieldTrait) extends CommandTrait {
@@ -11,7 +11,7 @@ case class ChangePlayerCommand(field: FieldTrait) extends CommandTrait {
 
   private def changePlayer(): String = {
     field.changePlayer()
-    Message.changePlayer(field.actualPlayerName)
+    MessageText.changePlayer(field.actualPlayerName)
   }
 
   override def undoCommand(): String = {

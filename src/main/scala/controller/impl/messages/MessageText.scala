@@ -5,7 +5,7 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.Coordinate
 import util.position.Position
 
-object Message {
+object MessageText {
   def doMove(posFrom: Position, posTo: Position): String = {
     "Move " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
@@ -39,7 +39,7 @@ object Message {
   }
 
   def pushNotFinishMessage: MessageType = {
-    MessageType(Message.pushNotFinish, RuleEnum.PUSH_NOT_FINISH)
+    MessageType(MessageText.pushNotFinish, RuleEnum.PUSH_NOT_FINISH)
   }
 
   def freezeTile: String = {
@@ -63,7 +63,7 @@ object Message {
   }
 
   def posToNotFreeMessage(pos: Position): MessageType = {
-    MessageType(Message.wrongPosTo(pos), RuleEnum.POS_TO_NOT_FREE)
+    MessageType(MessageText.wrongPosTo(pos), RuleEnum.POS_TO_NOT_FREE)
   }
 
   def posFromEmpty(pos: Position): String = {
@@ -71,7 +71,7 @@ object Message {
   }
 
   def posFromEmptyMessage(pos: Position): MessageType = {
-    MessageType(Message.posFromEmpty(pos), RuleEnum.POS_FROM_EMPTY)
+    MessageType(MessageText.posFromEmpty(pos), RuleEnum.POS_FROM_EMPTY)
   }
 
   def emptyStack: String = {

@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.messages.Message
+import controller.impl.messages.MessageText
 import util.position.Position
 
 import scala.collection.mutable
@@ -16,7 +16,7 @@ class ActionManager {
 
   def undoAction(): List[String] = {
     if (actionStack.isEmpty)
-      return List(Message.emptyStack)
+      return List(MessageText.emptyStack)
 
     val lastAction = actionStack.pop()
     lastAction.undoAction()

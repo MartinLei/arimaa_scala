@@ -1,6 +1,6 @@
 package controller.impl.command.impl
 
-import controller.impl.messages.Message
+import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -14,7 +14,7 @@ class PushCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    pushCommand.doCommand() should be(Message.doPush(new Position(1, 2), new Position(1, 3)))
+    pushCommand.doCommand() should be(MessageText.doPush(new Position(1, 2), new Position(1, 3)))
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
@@ -23,7 +23,7 @@ class PushCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
-    pushCommand.undoCommand() should be(Message.undoPush(new Position(1, 2), new Position(1, 3)))
+    pushCommand.undoCommand() should be(MessageText.undoPush(new Position(1, 2), new Position(1, 3)))
 
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)

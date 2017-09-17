@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.command.impl.{MoveCommand, PushCommand, TrapCommand}
-import controller.impl.messages.Message
+import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -26,8 +26,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
 
   "doAction" should "do the action" in {
     val doMessageListShould1 = List(
-      Message.doMove(new Position(1, 2), new Position(1, 3)),
-      Message.doMove(new Position(2, 2), new Position(2, 3)))
+      MessageText.doMove(new Position(1, 2), new Position(1, 3)),
+      MessageText.doMove(new Position(2, 2), new Position(2, 3)))
     val doMessageList1 = globalActionManager.doAction(actionGlobal1)
 
     doMessageList1 shouldEqual doMessageListShould1
@@ -37,8 +37,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
     val doMessageListShould2 = List(
-      Message.doMove(new Position(1, 3), new Position(1, 4)),
-      Message.doMove(new Position(2, 3), new Position(2, 4)))
+      MessageText.doMove(new Position(1, 3), new Position(1, 4)),
+      MessageText.doMove(new Position(2, 3), new Position(2, 4)))
     val doMessageList2 = globalActionManager.doAction(actionGlobal2)
 
     doMessageList2 shouldEqual doMessageListShould2
@@ -50,8 +50,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
 
   "undoAction" should "undo the action" in {
     val undoMessageListShould1 = List(
-      Message.undoMove(new Position(2, 3), new Position(2, 4)),
-      Message.undoMove(new Position(1, 3), new Position(1, 4)))
+      MessageText.undoMove(new Position(2, 3), new Position(2, 4)),
+      MessageText.undoMove(new Position(1, 3), new Position(1, 4)))
 
     val undoMessageList1 = globalActionManager.undoAction()
     undoMessageList1 shouldEqual undoMessageListShould1
@@ -61,8 +61,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(2, 4)) should be(TileNameEnum.NONE)
 
     val undoMessageListShould2 = List(
-      Message.undoMove(new Position(2, 2), new Position(2, 3)),
-      Message.undoMove(new Position(1, 2), new Position(1, 3)))
+      MessageText.undoMove(new Position(2, 2), new Position(2, 3)),
+      MessageText.undoMove(new Position(1, 2), new Position(1, 3)))
 
     val undoMessageList2 = globalActionManager.undoAction()
 
@@ -72,7 +72,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
 
-    globalActionManager.undoAction() shouldEqual List(Message.emptyStack)
+    globalActionManager.undoAction() shouldEqual List(MessageText.emptyStack)
 
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(2, 2)) should be(TileNameEnum.HORSE)

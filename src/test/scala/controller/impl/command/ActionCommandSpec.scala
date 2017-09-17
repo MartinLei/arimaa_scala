@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.command.impl.{MoveCommand, PushCommand}
-import controller.impl.messages.Message
+import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -16,8 +16,8 @@ class ActionCommandSpec extends FlatSpec with Matchers {
 
   "doAction" should "execute all commands" in {
     val commandMessageListShould = List(
-      Message.doMove(new Position(1, 2), new Position(1, 3)),
-      Message.doMove(new Position(2, 2), new Position(2, 3)))
+      MessageText.doMove(new Position(1, 2), new Position(1, 3)),
+      MessageText.doMove(new Position(2, 2), new Position(2, 3)))
 
     val commandMessageList = actionCommand.doAction()
 
@@ -34,8 +34,8 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.HORSE)
 
     val undoMessageListShould = List(
-      Message.undoMove(new Position(2, 2), new Position(2, 3)),
-      Message.undoMove(new Position(1, 2), new Position(1, 3)))
+      MessageText.undoMove(new Position(2, 2), new Position(2, 3)),
+      MessageText.undoMove(new Position(1, 2), new Position(1, 3)))
 
     val undoMessageList = actionCommand.undoAction()
     undoMessageList shouldEqual undoMessageListShould
