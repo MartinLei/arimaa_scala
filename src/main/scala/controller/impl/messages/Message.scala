@@ -49,6 +49,10 @@ object Message {
     "You must first finish your push"
   }
 
+  def pushNotFinishMessage: MessageType = {
+    MessageType(Message.pushNotFinish, RuleEnum.PUSH_NOT_FINISH)
+  }
+
   def freezeTile: String = {
     "You can`t move its freeze"
   }
@@ -87,6 +91,10 @@ object Message {
 
   def changePlayer(playerName: PlayerNameEnum): String = {
     playerName + " your turn"
+  }
+
+  def changePlayerMessage(playerName: PlayerNameEnum): MessageType = {
+    MessageType(changePlayer(playerName), RuleEnum.CHANGE_PLAYER)
   }
 
   def doWin(playerName: PlayerNameEnum): String = {
