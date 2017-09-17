@@ -27,9 +27,9 @@ class PreConditionSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 7)) should be(TileNameEnum.RABBIT)
   }
   it should "false if not" in {
-    val field = new Field()
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
 
     PreCondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
 
@@ -37,14 +37,13 @@ class PreConditionSpec extends FlatSpec with Matchers {
   }
 
   "isToPosNotFree" should "return true, if posTo is not free" in {
-    val field = new Field()
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     PreCondition.isToPosNotFree(field, new Position(1, 2)) should be(true)
-
-    field.getTileName(PlayerNameEnum.SILVER, new Position(1, 8)) should be(TileNameEnum.RABBIT)
-
     PreCondition.isToPosNotFree(field, new Position(1, 8)) should be(true)
   }
   it should "false if not" in {
