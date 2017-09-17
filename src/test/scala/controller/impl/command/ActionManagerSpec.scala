@@ -2,22 +2,25 @@ package controller.impl.command
 
 import controller.impl.command.impl.{MoveCommand, PushCommand, TrapCommand}
 import controller.impl.messages.Message
-import model.impl.{Field, PlayerNameEnum, TileNameEnum}
+import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
 class ActionManagerSpec extends FlatSpec with Matchers {
-  val globalField = new Field()
+  val playerGoldTiles = Set(
+    new Tile(TileNameEnum.RABBIT, new Position(1, 2)),
+    new Tile(TileNameEnum.HORSE, new Position(2, 2)))
+  val globalField = new Field(playerGoldTiles, Set())
 
-  val commandList1 = List(
+  val commandGlobal1 = List(
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
-  val actionCommand1 = new ActionCommand(commandList1)
+  val actionGlobal1 = new ActionCommand(commandGlobal1)
 
-  val commandList2 = List(
+  val commandGlobal2 = List(
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4)),
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4)))
-  val actionCommand2 = new ActionCommand(commandList2)
+  val actionGlobal2 = new ActionCommand(commandGlobal2)
 
   val globalActionManager = new ActionManager()
 
@@ -25,7 +28,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val doMessageListShould1 = List(
       Message.doMove(new Position(1, 2), new Position(1, 3)),
       Message.doMove(new Position(2, 2), new Position(2, 3)))
-    val doMessageList1 = globalActionManager.doAction(actionCommand1)
+    val doMessageList1 = globalActionManager.doAction(actionGlobal1)
 
     doMessageList1 shouldEqual doMessageListShould1
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
@@ -36,7 +39,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val doMessageListShould2 = List(
       Message.doMove(new Position(1, 3), new Position(1, 4)),
       Message.doMove(new Position(2, 3), new Position(2, 4)))
-    val doMessageList2 = globalActionManager.doAction(actionCommand2)
+    val doMessageList2 = globalActionManager.doAction(actionGlobal2)
 
     doMessageList2 shouldEqual doMessageListShould2
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
@@ -92,7 +95,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val field = new Field()
     val actionManager = new ActionManager()
     val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(commandList2)
+    val actionCommand2 = new ActionCommand(commandGlobal2)
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
