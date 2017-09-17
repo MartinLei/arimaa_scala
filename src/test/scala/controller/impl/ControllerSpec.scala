@@ -178,9 +178,11 @@ class ControllerSpec extends FlatSpec with Matchers {
   it should "remove tile from trap, if its now not surround by own tile" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.HORSE, new Position(2, 3)),
-      new Tile(TileNameEnum.CAT, new Position(3, 2)))
+      new Tile(TileNameEnum.CAT, new Position(3, 2)),
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
     val playerSilverTiles = Set(
-      new Tile(TileNameEnum.CAMEL, new Position(2, 4)))
+      new Tile(TileNameEnum.CAMEL, new Position(2, 4)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
 
     controller.moveTile(new Position(3, 2), new Position(3, 3))
