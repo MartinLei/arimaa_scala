@@ -60,7 +60,6 @@ object RuleBook {
 
   def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): MessageType = {
 
-    //TODO change player not after only a change command is on the stack
     if (PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager))
       return Message.noTileMoved
 
