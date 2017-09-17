@@ -103,12 +103,11 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(true)
   }
   it should "false, if posTo is occupied" in {
-    val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(5, 2), new Position(5, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.ELEPHANT)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.ELEPHANT, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 4)) should be(false)
   }
