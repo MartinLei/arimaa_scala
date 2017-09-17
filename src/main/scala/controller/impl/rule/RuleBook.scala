@@ -2,7 +2,7 @@ package controller.impl.rule
 
 import controller.impl.command.impl.{TrapCommand, WinCommand}
 import controller.impl.command.{ActionManager, CommandTrait}
-import controller.impl.messages.{MessageText, MessageType}
+import controller.impl.messages.{Message, MessageType}
 import model.FieldTrait
 import model.impl.PlayerNameEnum
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -16,30 +16,30 @@ object RuleBook {
                           playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageType = {
 
     if (PreCondition.isPosFromEmpty(field, posFrom))
-      return MessageText.posFromEmptyMessage(posFrom)
+      return Message.posFromEmptyMessage(posFrom)
 
     if (PreCondition.isToPosNotFree(field, posTo))
-      return MessageText.posToNotFreeMessage(posTo)
+      return Message.posToNotFreeMessage(posTo)
 
     if (PreCondition.isPushNotFinishWithPosTo(field, posTo, actionManager))
-      return MessageText.pushNotFinishMessage
+      return Message.pushNotFinishMessage
 
     if (PreCondition.isTilePush(field, playerName, posFrom, posTo))
-      return MessageText.doPushMessage(posFrom, posTo)
+      return Message.doPushMessage(posFrom, posTo)
 
     if (PreCondition.isTilePull(field, posFrom, posTo, actionManager))
-      return MessageText.doPullMessage(posFrom, posTo)
+      return Message.doPullMessage(posFrom, posTo)
 
     if (PreCondition.isPosFromPosNotOwn(field, playerName, posFrom))
-      return MessageText.posFromNotOwnMessage(posFrom)
+      return Message.posFromNotOwnMessage(posFrom)
 
     if (PreCondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
-      return MessageText.wrongRabbitMoveMessage
+      return Message.wrongRabbitMoveMessage
 
     if (PreCondition.isTileFreeze(field, playerName, posFrom))
-      return MessageText.tileFreezeMessage
+      return Message.tileFreezeMessage
 
-    MessageText.doMoveMessage(posFrom, posTo)
+    Message.doMoveMessage(posFrom, posTo)
   }
 
   def postMoveCommand(field: FieldTrait, posFrom: Position, posTo: Position): List[CommandTrait] = {
@@ -65,9 +65,9 @@ object RuleBook {
     //TODO if action move is 3rd time repetitions
 
     if (PreChangePlayerCondition.isPushNotFinish(actionManager))
-      return MessageText.pushNotFinishMessage
+      return Message.pushNotFinishMessage
 
-    MessageText.changePlayerMessage(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
+    Message.changePlayerMessage(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }
 
   def winCommand(field: FieldTrait, actionManager: ActionManager): Option[CommandTrait] = {
