@@ -128,13 +128,11 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isTilePush(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5)) should be(false)
   }
   it should "be null if not" in {
-    val field = new Field()
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
 
     PreCondition.isPosFromPosNotOwn(field, PlayerNameEnum.GOLD, new Position(1, 2)) should be(false)
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
   }
 
   "isPushNotFinishWithPosTo" should "true, if last move was a push and posTo is not the old pos from push tile" in {
