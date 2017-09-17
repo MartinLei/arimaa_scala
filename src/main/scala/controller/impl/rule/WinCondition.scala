@@ -8,6 +8,7 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 object WinCondition {
+
   def winByKillAllOtherRabbits(field: FieldTrait): PlayerNameEnum = {
     val actPlayerName = field.actualPlayerName
     val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)

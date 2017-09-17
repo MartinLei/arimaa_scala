@@ -24,6 +24,13 @@ class WinConditionSpec extends FlatSpec with Matchers {
 
     WinCondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.SILVER)
   }
+  it should "passive player, if active player remove own rabbit" in {
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 2)))
+    val field = new Field(Set(), playerSilverTiles)
+
+    WinCondition.winByKillAllOtherRabbits(field) should be(PlayerNameEnum.SILVER)
+  }
   it should "NONE if gold and silver has a rabbit" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
