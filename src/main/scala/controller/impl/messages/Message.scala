@@ -1,7 +1,6 @@
 package controller.impl.messages
 
 import controller.impl.rule.RuleEnum
-import controller.impl.rule.RuleEnum.RuleEnum
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.Coordinate
 import util.position.Position
@@ -9,6 +8,10 @@ import util.position.Position
 object Message {
   def doMove(posFrom: Position, posTo: Position): String = {
     "Move " + Coordinate.moveToCoordinate(posFrom, posTo)
+  }
+
+  def doMoveMessage(posFrom: Position, posTo: Position): MessageType = {
+    MessageType(doMove(posFrom, posTo), RuleEnum.MOVE)
   }
 
   def undoMove(posFrom: Position, posTo: Position): String = {
@@ -23,26 +26,12 @@ object Message {
     "Respawn from dead " + Coordinate.posToCoordinate(pos)
   }
 
-  def getMessage(rule: RuleEnum, posFrom: Position = new Position(1, 1), posTo: Position = new Position(1, 1)): String = {
-    rule match {
-      case RuleEnum.NONE => "NONE"
-      case RuleEnum.MOVE => Message.doMove(posFrom, posTo)
-      case RuleEnum.PUSH => Message.doPush(posFrom, posTo)
-      case RuleEnum.POS_FROM_NOT_OWN => Message.wrongPosFrom(posFrom)
-      case RuleEnum.TO_POS_NOT_FREE => Message.wrongPosTo(posTo)
-      case RuleEnum.WRONG_RABBIT_MOVE => Message.wrongRabbitMove
-      case RuleEnum.TILE_FREEZE => Message.freezeTile
-      case RuleEnum.PUSH_NOT_FINISH => Message.pushNotFinish
-      case RuleEnum.POS_FROM_EMPTY => Message.posFromEmpty(posFrom)
-
-      case RuleEnum.PULL => Message.doPull(posFrom, posTo)
-      case RuleEnum.TRAPPED => Message.doTrap(posFrom)
-      case _ => "NONE"
-    }
-  }
-
   def doPush(posFrom: Position, posTo: Position): String = {
     "Push to " + Coordinate.moveToCoordinate(posFrom, posTo)
+  }
+
+  def doPushMessage(posFrom: Position, posTo: Position): MessageType = {
+    MessageType(doPush(posFrom, posTo), RuleEnum.PUSH)
   }
 
   def pushNotFinish: String = {
@@ -57,16 +46,32 @@ object Message {
     "You can`t move its freeze"
   }
 
+  def tileFreezeMessage: MessageType = {
+    MessageType(freezeTile, RuleEnum.TILE_FREEZE)
+  }
+
   def wrongPosFrom(pos: Position): String = {
     Coordinate.posToCoordinate(pos) + " is not your tile"
+  }
+
+  def posFromNotOwnMessage(pos: Position): MessageType = {
+    MessageType(wrongPosFrom(pos), RuleEnum.POS_FROM_NOT_OWN)
   }
 
   def wrongPosTo(pos: Position): String = {
     Coordinate.posToCoordinate(pos) + " is occupied"
   }
 
+  def posToNotFreeMessage(pos: Position): MessageType = {
+    MessageType(Message.wrongPosTo(pos), RuleEnum.POS_TO_NOT_FREE)
+  }
+
   def posFromEmpty(pos: Position): String = {
     Coordinate.posToCoordinate(pos) + " is empty"
+  }
+
+  def posFromEmptyMessage(pos: Position): MessageType = {
+    MessageType(Message.posFromEmpty(pos), RuleEnum.POS_FROM_EMPTY)
   }
 
   def emptyStack: String = {
@@ -77,12 +82,20 @@ object Message {
     "You can`t move a Rabbit backwards"
   }
 
+  def wrongRabbitMoveMessage: MessageType = {
+    MessageType(wrongRabbitMove, RuleEnum.WRONG_RABBIT_MOVE)
+  }
+
   def undoPush(posFrom: Position, posTo: Position): String = {
     "Push back to " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
 
   def doPull(posFrom: Position, posTo: Position): String = {
     "Pull to " + Coordinate.moveToCoordinate(posFrom, posTo)
+  }
+
+  def doPullMessage(posFrom: Position, posTo: Position): MessageType = {
+    MessageType(doPull(posFrom, posTo), RuleEnum.PULL)
   }
 
   def undoPull(posFrom: Position, posTo: Position): String = {

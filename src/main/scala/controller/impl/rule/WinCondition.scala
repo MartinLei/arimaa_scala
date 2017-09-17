@@ -1,7 +1,7 @@
 package controller.impl.rule
 
 import controller.impl.command.ActionManager
-import controller.impl.rule.RuleEnum.RuleEnum
+import controller.impl.messages.MessageType
 import model.FieldTrait
 import model.impl.PlayerNameEnum
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -54,8 +54,8 @@ object WinCondition {
   private def hasPossibleMove(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val possiblePosTo = Position.getSurround(posFrom)
     val countPossiblePosTo: Int = possiblePosTo.count(posTo => {
-      val ruleComplaint: RuleEnum = RuleBook.isMoveRuleComplaint(field, actionManager, playerName, posFrom, posTo)
-      RuleEnum.isValid(ruleComplaint)
+      val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, actionManager, playerName, posFrom, posTo)
+      ruleComplaint.isValid
     })
 
     countPossiblePosTo > 0

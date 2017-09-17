@@ -4,8 +4,7 @@ import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
-import controller.impl.messages.{Message, MessageType}
-import controller.impl.rule.RuleEnum.RuleEnum
+import controller.impl.messages.MessageType
 import controller.impl.rule.{RuleBook, RuleEnum}
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -33,14 +32,14 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val actualPlayerName = field.actualPlayerName
-    val ruleComplaint: RuleEnum = RuleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
-    if (!RuleEnum.isValid(ruleComplaint))
-      return List(Message.getMessage(ruleComplaint, posFrom, posTo))
+    val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
+    if (!ruleComplaint.isValid)
+      return List(ruleComplaint.text)
 
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
 
     val actPlayerName = field.actualPlayerName
-    ruleComplaint match {
+    ruleComplaint.messageType match {
       case RuleEnum.MOVE => commandList.+=(MoveCommand(field, actPlayerName, posFrom, posTo))
       case RuleEnum.PUSH => commandList.+=(PushCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
       case RuleEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))

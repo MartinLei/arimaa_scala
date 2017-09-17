@@ -2,6 +2,7 @@ package controller.impl.rule
 
 import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.command.{ActionCommand, ActionManager}
+import controller.impl.messages.Message
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -14,7 +15,9 @@ class PreConditionSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager
 
-    RuleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)) should be(RuleEnum.MOVE)
+    RuleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD,
+      new Position(1, 2), new Position(1, 3)) should
+      be(Message.doMoveMessage(new Position(1, 2), new Position(1, 3)))
   }
 
   "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {

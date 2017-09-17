@@ -3,7 +3,6 @@ package controller.impl.rule
 import controller.impl.command.impl.{TrapCommand, WinCommand}
 import controller.impl.command.{ActionManager, CommandTrait}
 import controller.impl.messages.{Message, MessageType}
-import controller.impl.rule.RuleEnum.RuleEnum
 import model.FieldTrait
 import model.impl.PlayerNameEnum
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -13,32 +12,34 @@ import scala.collection.mutable.ListBuffer
 
 object RuleBook {
 
-  def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position, posTo: Position): RuleEnum = {
+  def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager,
+                          playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageType = {
+
     if (PreCondition.isPosFromEmpty(field, posFrom))
-      return RuleEnum.POS_FROM_EMPTY
+      return Message.posFromEmptyMessage(posFrom)
 
     if (PreCondition.isToPosNotFree(field, posTo))
-      return RuleEnum.TO_POS_NOT_FREE
+      return Message.posToNotFreeMessage(posTo)
 
     if (PreCondition.isPushNotFinishWithPosTo(field, posTo, actionManager))
-      return RuleEnum.PUSH_NOT_FINISH
+      return Message.pushNotFinishMessage
 
     if (PreCondition.isTilePush(field, playerName, posFrom, posTo))
-      return RuleEnum.PUSH
+      return Message.doPushMessage(posFrom, posTo)
 
     if (PreCondition.isTilePull(field, posFrom, posTo, actionManager))
-      return RuleEnum.PULL
+      return Message.doPullMessage(posFrom, posTo)
 
     if (PreCondition.isPosFromPosNotOwn(field, playerName, posFrom))
-      return RuleEnum.POS_FROM_NOT_OWN
+      return Message.posFromNotOwnMessage(posFrom)
 
     if (PreCondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
-      return RuleEnum.WRONG_RABBIT_MOVE
+      return Message.wrongRabbitMoveMessage
 
     if (PreCondition.isTileFreeze(field, playerName, posFrom))
-      return RuleEnum.TILE_FREEZE
+      return Message.tileFreezeMessage
 
-    RuleEnum.MOVE
+    Message.doMoveMessage(posFrom, posTo)
   }
 
   def postMoveCommand(field: FieldTrait, posFrom: Position, posTo: Position): List[CommandTrait] = {
