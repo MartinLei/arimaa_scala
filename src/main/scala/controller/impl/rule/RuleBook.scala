@@ -16,30 +16,30 @@ object RuleBook {
                           playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageType = {
 
     if (PreCondition.isPosFromEmpty(field, posFrom))
-      return Message.posFromEmptyMessage(posFrom)
+      return Message.posFromEmpty(posFrom)
 
     if (PreCondition.isToPosNotFree(field, posTo))
-      return Message.posToNotFreeMessage(posTo)
+      return Message.posToNotFree(posTo)
 
     if (PreCondition.isPushNotFinishWithPosTo(field, posTo, actionManager))
-      return Message.pushNotFinishMessage
+      return Message.pushNotFinish
 
     if (PreCondition.isTilePush(field, playerName, posFrom, posTo))
-      return Message.doPushMessage(posFrom, posTo)
+      return Message.doPush(posFrom, posTo)
 
     if (PreCondition.isTilePull(field, posFrom, posTo, actionManager))
-      return Message.doPullMessage(posFrom, posTo)
+      return Message.doPull(posFrom, posTo)
 
     if (PreCondition.isPosFromPosNotOwn(field, playerName, posFrom))
-      return Message.posFromNotOwnMessage(posFrom)
+      return Message.posFromNotOwn(posFrom)
 
     if (PreCondition.isWrongRabbitMove(field, playerName, posFrom, posTo))
-      return Message.wrongRabbitMoveMessage
+      return Message.wrongRabbitMove
 
     if (PreCondition.isTileFreeze(field, playerName, posFrom))
-      return Message.tileFreezeMessage
+      return Message.tileFreeze
 
-    Message.doMoveMessage(posFrom, posTo)
+    Message.doMove(posFrom, posTo)
   }
 
   def postMoveCommand(field: FieldTrait, posFrom: Position, posTo: Position): List[CommandTrait] = {
@@ -65,9 +65,9 @@ object RuleBook {
     //TODO if action move is 3rd time repetitions
 
     if (PreChangePlayerCondition.isPushNotFinish(actionManager))
-      return Message.pushNotFinishMessage
+      return Message.pushNotFinish
 
-    Message.changePlayerMessage(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
+    Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }
 
   def winCommand(field: FieldTrait, actionManager: ActionManager): Option[CommandTrait] = {

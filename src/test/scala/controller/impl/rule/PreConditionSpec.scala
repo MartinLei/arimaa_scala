@@ -17,7 +17,7 @@ class PreConditionSpec extends FlatSpec with Matchers {
 
     RuleBook.isMoveRuleComplaint(field, actionManager, PlayerNameEnum.GOLD,
       new Position(1, 2), new Position(1, 3)) should
-      be(Message.doMoveMessage(new Position(1, 2), new Position(1, 3)))
+      be(Message.doMove(new Position(1, 2), new Position(1, 3)))
   }
 
   "isPosFromNotOwn" should "return true, if tile on posFrom is not own" in {

@@ -5,6 +5,7 @@ import util.Coordinate
 import util.position.Position
 
 object MessageText {
+
   def doMove(posFrom: Position, posTo: Position): String = {
     "Move " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
@@ -41,7 +42,6 @@ object MessageText {
     Coordinate.posToCoordinate(pos) + " is occupied"
   }
 
-
   def posFromEmpty(pos: Position): String = {
     Coordinate.posToCoordinate(pos) + " is empty"
   }
@@ -61,7 +61,6 @@ object MessageText {
   def doPull(posFrom: Position, posTo: Position): String = {
     "Pull to " + Coordinate.moveToCoordinate(posFrom, posTo)
   }
-
 
   def undoPull(posFrom: Position, posTo: Position): String = {
     "Pull back to " + Coordinate.moveToCoordinate(posFrom, posTo)
