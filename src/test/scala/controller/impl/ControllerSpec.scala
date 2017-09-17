@@ -490,6 +490,28 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.changePlayer() should be(List(MessageText.pushNotFinish))
     controller.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
+  it should "do nothing, if first move of game not move any tile" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.changePlayer() should be(List(MessageText.noTileMoved))
+    controller.getActPlayerName should be(PlayerNameEnum.GOLD)
+  }
+  it should "do nothing, if actual player not move any tile" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+    controller.changePlayer() should be(List(MessageText.noTileMoved))
+    controller.getActPlayerName should be(PlayerNameEnum.SILVER)
+  }
 
   "unDo" should "undo last move" in {
     val controller: ControllerTrait = new Controller()

@@ -47,6 +47,13 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
 
     PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager) should be(true)
   }
+  it should "true,if actionManager stack is empty" in {
+    val actionManager = new ActionManager()
+    val action1 = new ActionCommand(List())
+    actionManager.doAction(action1)
+
+    PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager) should be(true)
+  }
   it should "false, if not" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
@@ -58,4 +65,5 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
 
     PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager) should be(false)
   }
+
 }
