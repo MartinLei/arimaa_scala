@@ -381,8 +381,12 @@ class ControllerSpec extends FlatSpec with Matchers {
 
   "RabbitReachOtherSide" should "gold win, if a rabbit reach the other side" in {
     val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
-    val controller = new Controller(playerGoldTiles, Set())
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 7), new Position(1, 8))
 
     controller.changePlayer() should
       be(List(
@@ -390,9 +394,13 @@ class ControllerSpec extends FlatSpec with Matchers {
         MessageText.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if a rabbit reach the other side" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
-    val controller = new Controller(Set(), playerSilverTiles)
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
 
     controller.changePlayer() should
       be(List(
@@ -401,10 +409,12 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
   it should "actual player win, if both player rabbit reach the other side" in {
     val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+      new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
     val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 7), new Position(1, 8))
 
     controller.changePlayer() should
       be(List(
