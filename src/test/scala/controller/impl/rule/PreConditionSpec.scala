@@ -149,27 +149,25 @@ class PreConditionSpec extends FlatSpec with Matchers {
     PreCondition.isPushNotFinishWithPosTo(field, new Position(1, 2), actionManager) should be(true)
   }
   it should "false , if not" in {
-    val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(2, 2), new Position(5, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(5, 7), new Position(5, 5))
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(5, 4)) should be(TileNameEnum.HORSE)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(5, 5)) should be(TileNameEnum.CAMEL)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(5, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(5, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
-    val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(6, 5))))
+    val action = new ActionCommand(List(PushCommand(field, PlayerNameEnum.SILVER, new Position(5, 5), new Position(6, 5))))
     actionManager.doAction(action)
 
     PreCondition.isPushNotFinishWithPosTo(field, new Position(5, 5), actionManager) should be(false)
   }
 
   "isTilePull" should "pull the other player tile on the old posFrom last move figures own player" in {
-    val field = new Field()
-    field.changeTilePos(PlayerNameEnum.GOLD, new Position(4, 2), new Position(4, 4))
-    field.changeTilePos(PlayerNameEnum.SILVER, new Position(2, 7), new Position(4, 5))
-
-    field.getTileName(PlayerNameEnum.GOLD, new Position(4, 4)) should be(TileNameEnum.CAMEL)
-    field.getTileName(PlayerNameEnum.SILVER, new Position(4, 5)) should be(TileNameEnum.HORSE)
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.CAMEL, new Position(4, 4)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.HORSE, new Position(4, 5)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
     val action = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(4, 4), new Position(5, 4))))
