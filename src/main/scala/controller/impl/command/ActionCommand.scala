@@ -5,7 +5,7 @@ import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
-class ActionCommand(commandList: List[CommandTrait]) {
+case class ActionCommand(commandList: List[CommandTrait]) {
 
   def doAction(): List[String] = {
     var doMessageList: ListBuffer[String] = ListBuffer()

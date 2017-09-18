@@ -48,7 +48,7 @@ class Controller extends ControllerTrait {
     val postCommandList: List[CommandTrait] = RuleBook.postMoveCommand(field, posFrom, posTo)
     commandList.++=(postCommandList)
 
-    val action = new ActionCommand(commandList.toList)
+    val action = ActionCommand(commandList.toList)
     actionManager.doAction(action)
   }
 
@@ -75,7 +75,7 @@ class Controller extends ControllerTrait {
       commandList.+=(winCommand)
     }
 
-    val action = new ActionCommand(commandList.toList)
+    val action = ActionCommand(commandList.toList)
     actionManager.doAction(action)
   }
 
