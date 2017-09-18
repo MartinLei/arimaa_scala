@@ -66,9 +66,8 @@ object RuleBook {
     if (PreChangePlayerCondition.isPushNotFinish(actionManager))
       return Message.pushNotFinish
 
-    //TODO if action move is 3rd time repetitions
-    //    if(PreChangePlayerCondition.isMoveThirdTimeRepetition)
-    //    return Message.thirdTimeRepetition
+    if (PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager))
+      return Message.thirdTimeRepetition
 
     Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }

@@ -538,6 +538,40 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.changePlayer() should be(List(MessageText.noTileMoved))
     controller.getActPlayerName should be(PlayerNameEnum.SILVER)
   }
+  it should "do nothing, if actual move is third time repetition" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)),
+      new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
+    val controller = new Controller(playerGoldTiles, playerSilverTiles)
+
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+    controller.moveTile(new Position(8, 8), new Position(8, 7))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
+
+    controller.moveTile(new Position(1, 2), new Position(1, 1))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+    controller.moveTile(new Position(8, 7), new Position(8, 6))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
+
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+    controller.moveTile(new Position(8, 6), new Position(8, 5))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
+
+    controller.moveTile(new Position(1, 2), new Position(1, 1))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+    controller.moveTile(new Position(8, 5), new Position(8, 4))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
+
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
+    controller.changePlayer() should be(List(MessageText.thirdTimeRepetition))
+
+    controller.moveTile(new Position(1, 2), new Position(1, 3))
+    controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
+  }
 
   "unDo" should "undo last move" in {
     val controller: ControllerTrait = new Controller()
