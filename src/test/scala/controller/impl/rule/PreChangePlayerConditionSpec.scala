@@ -77,7 +77,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
     val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
@@ -85,19 +84,24 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
     actionManager.doAction(actionGold1)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver1)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold2)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver2)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold3)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver3)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold4)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver4)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold5)
 
     PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(true)
-
-    actionManager.doAction(actionGold6)
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(false)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -111,7 +115,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
@@ -120,14 +123,21 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
     actionManager.doAction(actionGold1)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver1)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold2)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver2)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold3)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver3)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionGold4)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
     actionManager.doAction(actionSilver4)
-    actionManager.doAction(actionGold5)
+    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
 
     actionManager.doAction(actionGold6)
     PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(false)

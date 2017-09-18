@@ -568,7 +568,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.moveTile(new Position(1, 1), new Position(1, 2))
     controller.changePlayer() should be(List(MessageText.thirdTimeRepetition))
-
+    print(controller.getFieldAsString)
     controller.moveTile(new Position(1, 2), new Position(1, 3))
     controller.changePlayer() should be(List(MessageText.changePlayer(PlayerNameEnum.SILVER)))
   }
