@@ -80,12 +80,18 @@ class ActionManager {
 
     if (!hasPlayerCommand)
       return false
+    val actionStackSize = actionStack.size - 1
+    val actionFirstForward = actionStack.lift(actionStackSize)
+    val actionSecondForward = actionStack.lift(actionStackSize - 8)
+    val actionThirdForward = actionStack.lift(actionStackSize - 16)
 
-    val lastAction = actionStack.top
-    actionRepetitionCount(lastAction) >= 3
+    val actionFirstBackward = actionStack.lift(actionStackSize - 4)
+    val actionSecondBackward = actionStack.lift(actionStackSize - 12)
+
+    val forwardCondition = actionFirstForward.equals(actionSecondForward) && actionSecondForward.equals(actionThirdForward)
+    val backwardCondition = actionFirstBackward.equals(actionSecondBackward)
+    forwardCondition && backwardCondition
   }
 
-  private def actionRepetitionCount(actionPattern: ActionCommand): Int = {
-    actionStack.count(action => action.equals(actionPattern))
-  }
+
 }
