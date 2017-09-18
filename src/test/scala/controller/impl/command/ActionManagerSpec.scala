@@ -339,7 +339,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(2, 1))))
+    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
     val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
@@ -363,6 +364,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionSilver4)
     actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
 
+    actionManager.doAction(actionGold5)
     actionManager.doAction(actionGold6)
     actionManager.isLastActionThirdTimeRepetition should be(false)
   }

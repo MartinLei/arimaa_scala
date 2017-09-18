@@ -73,7 +73,7 @@ class ActionManager {
     true
   }
 
-
+  //TODO refactor
   def isLastActionThirdTimeRepetition: Boolean = {
     if (actionStack.isEmpty)
       return false
