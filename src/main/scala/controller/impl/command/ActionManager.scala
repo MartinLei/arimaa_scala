@@ -73,11 +73,21 @@ class ActionManager {
     true
   }
 
+
   def isLastActionThirdTimeRepetition: Boolean = {
     if (actionStack.isEmpty)
       return false
 
+    if (!hasPlayerCommand)
+      return false
 
+    val lastAction = actionStack.top
+    val repetitionCount: Int = actionRepetitionCount(lastAction)
+    println("REEEEEEEEEEEEEEEEEEEEEEP " + repetitionCount)
     false
+  }
+
+  private def actionRepetitionCount(actionPattern: ActionCommand): Int = {
+    actionStack.count(action => action.equals(actionPattern))
   }
 }
