@@ -5,6 +5,9 @@ import util.Coordinate
 import util.position.Position
 
 object MessageText {
+  def thirdTimeRepetition: String = {
+    "Your hole move is the 3th time of appearance"
+  }
 
   def doMove(posFrom: Position, posTo: Position): String = {
     "Move " + Coordinate.moveToCoordinate(posFrom, posTo)

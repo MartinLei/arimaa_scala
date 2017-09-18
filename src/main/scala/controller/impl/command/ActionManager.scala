@@ -1,11 +1,13 @@
 package controller.impl.command
 
 import controller.impl.messages.MessageText
+import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 import scala.collection.mutable
 
 class ActionManager {
+
   var actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[String] = {
@@ -72,4 +74,11 @@ class ActionManager {
     true
   }
 
+  def isActionThirdTimeRepetition(playerName: PlayerNameEnum): Boolean = {
+    if (actionStack.isEmpty)
+      return false
+
+
+    false
+  }
 }

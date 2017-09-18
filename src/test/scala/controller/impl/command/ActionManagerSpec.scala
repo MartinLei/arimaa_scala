@@ -288,6 +288,98 @@ class ActionManagerSpec extends FlatSpec with Matchers {
 
     actionManager.hasPlayerCommand should be(false)
   }
+  "isActionThirdTimeRepetition" should "true if action from player is third time repetition" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionManager = new ActionManager()
+    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold6 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    val actionSilver1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+
+    actionManager.doAction(actionGold1)
+    actionManager.doAction(actionSilver1)
+    actionManager.doAction(actionGold2)
+    actionManager.doAction(actionSilver2)
+    actionManager.doAction(actionGold3)
+    actionManager.doAction(actionSilver3)
+    actionManager.doAction(actionGold4)
+    actionManager.doAction(actionSilver4)
+    actionManager.doAction(actionGold5)
+
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(true)
+
+    actionManager.doAction(actionGold6)
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+  }
+  it should "false, if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionManager = new ActionManager()
+    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold6 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    val actionSilver1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+
+    actionManager.doAction(actionGold1)
+    actionManager.doAction(actionSilver1)
+    actionManager.doAction(actionGold2)
+    actionManager.doAction(actionSilver2)
+    actionManager.doAction(actionGold3)
+    actionManager.doAction(actionSilver3)
+    actionManager.doAction(actionGold4)
+    actionManager.doAction(actionSilver4)
+    actionManager.doAction(actionGold5)
+
+    actionManager.doAction(actionGold6)
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+  }
+  it should "false, if action stack is empty" in {
+    val actionManager = new ActionManager()
+
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+  }
+  it should "false, if given player have actions on stack" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionManager = new ActionManager()
+    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    actionManager.doAction(actionGold1)
+
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.SILVER) should be(false)
+  }
+  it should "false, if player is NONE" in {
+    val actionManager = new ActionManager()
+
+    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.NONE) should be(false)
+  }
+
 }
 
 

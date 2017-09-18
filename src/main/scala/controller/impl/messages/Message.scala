@@ -4,6 +4,9 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 object Message {
+  def thirdTimeRepetition: MessageType = {
+    MessageType(MessageText.thirdTimeRepetition, MessageEnum.THIRD_TIME_REPETITION)
+  }
 
   def doMove(posFrom: Position, posTo: Position): MessageType = {
     MessageType(MessageText.doMove(posFrom, posTo), MessageEnum.MOVE)
