@@ -82,9 +82,7 @@ class ActionManager {
       return false
 
     val lastAction = actionStack.top
-    val repetitionCount: Int = actionRepetitionCount(lastAction)
-    println("REEEEEEEEEEEEEEEEEEEEEEP " + repetitionCount)
-    false
+    actionRepetitionCount(lastAction) >= 3
   }
 
   private def actionRepetitionCount(actionPattern: ActionCommand): Int = {
