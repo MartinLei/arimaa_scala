@@ -15,12 +15,12 @@ class ActionManagerSpec extends FlatSpec with Matchers {
   val commandGlobal1 = List(
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(2, 2), new Position(2, 3)))
-  val actionGlobal1 = new ActionCommand(commandGlobal1)
+  val actionGlobal1 = ActionCommand(commandGlobal1)
 
   val commandGlobal2 = List(
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4)),
     MoveCommand(globalField, PlayerNameEnum.GOLD, new Position(2, 3), new Position(2, 4)))
-  val actionGlobal2 = new ActionCommand(commandGlobal2)
+  val actionGlobal2 = ActionCommand(commandGlobal2)
 
   val globalActionManager = new ActionManager()
 
@@ -86,8 +86,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, Set())
 
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -100,8 +100,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -118,8 +118,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -132,8 +132,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -146,8 +146,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -165,8 +165,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -179,8 +179,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -193,8 +193,8 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = new ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
+    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
+    val actionCommand2 = ActionCommand(List(TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 2))))
 
     actionManager.doAction(actionCommand1)
     actionManager.doAction(actionCommand2)
@@ -211,7 +211,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List(
+    val actionCommand = ActionCommand(List(
       PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand)
@@ -223,7 +223,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List(
+    val actionCommand = ActionCommand(List(
       MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand)
@@ -241,7 +241,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List(ChangePlayerCommand(field)))
+    val actionCommand = ActionCommand(List(ChangePlayerCommand(field)))
 
     actionManager.doAction(actionCommand)
 
@@ -252,7 +252,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
+    val actionCommand = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
       new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand)
@@ -270,7 +270,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
     val actionManager = new ActionManager()
-    val actionCommand = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
+    val actionCommand = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD,
       new Position(1, 2), new Position(1, 3))))
 
     actionManager.doAction(actionCommand)
@@ -296,17 +296,17 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
-    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold5 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold6 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
-    val actionSilver1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
-    val actionSilver2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
-    val actionSilver3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
-    val actionSilver4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+    val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
     actionManager.doAction(actionGold1)
     actionManager.doAction(actionSilver1)
@@ -331,17 +331,17 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
-    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
-    val actionGold5 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
-    val actionGold6 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+    val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
-    val actionSilver1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
-    val actionSilver2 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
-    val actionSilver3 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
-    val actionSilver4 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+    val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
     actionManager.doAction(actionGold1)
     actionManager.doAction(actionSilver1)
@@ -369,7 +369,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val actionManager = new ActionManager()
-    val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     actionManager.doAction(actionGold1)
 
     actionManager.isLastActionThirdTimeRepetition should be(false)
