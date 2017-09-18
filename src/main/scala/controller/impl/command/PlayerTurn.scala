@@ -6,6 +6,10 @@ import model.impl.PlayerNameEnum.PlayerNameEnum
 import scala.collection.mutable
 
 case class PlayerTurn(name: PlayerNameEnum) {
+  def isActionStackEmpty: Boolean = {
+    actionStack.isEmpty
+  }
+
   private val actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[String] = {

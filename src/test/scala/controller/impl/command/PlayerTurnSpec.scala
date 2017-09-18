@@ -41,4 +41,22 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
     val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
     playerTurn.undoAction should be(List(MessageText.emptyStack))
   }
+
+  "isActionStackEmpty" should "true if stack is empty" in {
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn.isActionStackEmpty should be(true)
+  }
+  it should "false if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+
+    playerTurn.doAction(ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))) should
+      be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
+
+    playerTurn.isActionStackEmpty should be(false)
+  }
 }
+
