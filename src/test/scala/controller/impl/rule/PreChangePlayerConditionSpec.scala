@@ -94,10 +94,10 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionSilver4)
     actionManager.doAction(actionGold5)
 
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager, PlayerNameEnum.GOLD) should be(true)
+    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(true)
 
     actionManager.doAction(actionGold6)
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager, PlayerNameEnum.GOLD) should be(false)
+    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(false)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -130,6 +130,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionGold5)
 
     actionManager.doAction(actionGold6)
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager, PlayerNameEnum.GOLD) should be(false)
+    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(false)
   }
 }

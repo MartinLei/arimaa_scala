@@ -1,7 +1,6 @@
 package controller.impl.command
 
 import controller.impl.messages.MessageText
-import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 import scala.collection.mutable
@@ -74,7 +73,7 @@ class ActionManager {
     true
   }
 
-  def isActionThirdTimeRepetition(playerName: PlayerNameEnum): Boolean = {
+  def isLastActionThirdTimeRepetition: Boolean = {
     if (actionStack.isEmpty)
       return false
 

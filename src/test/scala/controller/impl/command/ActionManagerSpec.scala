@@ -318,10 +318,10 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionSilver4)
     actionManager.doAction(actionGold5)
 
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(true)
+    actionManager.isLastActionThirdTimeRepetition should be(true)
 
     actionManager.doAction(actionGold6)
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+    actionManager.isLastActionThirdTimeRepetition should be(false)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -354,12 +354,12 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     actionManager.doAction(actionGold5)
 
     actionManager.doAction(actionGold6)
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+    actionManager.isLastActionThirdTimeRepetition should be(false)
   }
   it should "false, if action stack is empty" in {
     val actionManager = new ActionManager()
 
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.GOLD) should be(false)
+    actionManager.isLastActionThirdTimeRepetition should be(false)
   }
   it should "false, if given player have actions on stack" in {
     val playerGoldTiles = Set(
@@ -372,12 +372,12 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     val actionGold1 = new ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     actionManager.doAction(actionGold1)
 
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.SILVER) should be(false)
+    actionManager.isLastActionThirdTimeRepetition should be(false)
   }
   it should "false, if player is NONE" in {
     val actionManager = new ActionManager()
 
-    actionManager.isActionThirdTimeRepetition(PlayerNameEnum.NONE) should be(false)
+    actionManager.isLastActionThirdTimeRepetition should be(false)
   }
 
 }
