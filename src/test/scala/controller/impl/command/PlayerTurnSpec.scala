@@ -37,4 +37,8 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
     playerTurn.undoAction should
       be(List(MessageText.undoMove(new Position(1, 1), new Position(1, 2))))
   }
+  it should "return empty message if its empty" in {
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn.undoAction should be(List(MessageText.emptyStack))
+  }
 }

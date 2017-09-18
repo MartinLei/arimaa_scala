@@ -1,17 +1,23 @@
 package controller.impl.command
 
+import controller.impl.messages.MessageText
 import model.impl.PlayerNameEnum.PlayerNameEnum
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable
 
 case class PlayerTurn(name: PlayerNameEnum) {
-  private var actionList: ListBuffer[ActionCommand] = ListBuffer()
+  private val actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
 
   def doAction(action: ActionCommand): List[String] = {
-    actionList.+=(action)
+    actionStack.push(action)
     action.doAction()
   }
-  def undoAction: List[String] ={
 
+  def undoAction: List[String] = {
+    if (actionStack.isEmpty)
+      return List(MessageText.emptyStack)
+
+    val lastAction = actionStack.pop()
+    lastAction.undoAction()
   }
 }
