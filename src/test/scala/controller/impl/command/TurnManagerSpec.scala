@@ -11,7 +11,6 @@ class TurnManagerSpec extends FlatSpec with Matchers {
   "addTurn" should "add it to stack" in {
     val turnManager = new TurnManager
     turnManager.addTurn(PlayerNameEnum.GOLD)
-
   }
 
   "doAction" should "add it to last turn and execute action" in {
@@ -41,6 +40,8 @@ class TurnManagerSpec extends FlatSpec with Matchers {
       be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
     turnManager.undoAction should
       be(List(MessageText.undoMove(new Position(1, 1), new Position(1, 2))))
+    turnManager.undoAction should
+      be(List(MessageText.emptyStack))
   }
 
 }

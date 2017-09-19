@@ -21,11 +21,16 @@ class TurnManager {
   def undoAction(): List[String] = {
     if (playerStack.isEmpty)
       return List(MessageText.emptyStack)
+
     var lastPlayer = playerStack.top
     if (lastPlayer.isActionStackEmpty) {
       playerStack.pop()
+      if (playerStack.isEmpty)
+        return List(MessageText.emptyStack)
+
       lastPlayer = playerStack.top
     }
+
     lastPlayer.undoAction
   }
 
