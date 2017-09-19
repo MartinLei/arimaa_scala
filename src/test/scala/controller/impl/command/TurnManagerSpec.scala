@@ -43,6 +43,41 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.undoAction should
       be(List(MessageText.emptyStack))
   }
+  it should "be next player if actual player stack is empty" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionCommand1 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionCommand2 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.doAction(actionCommand1) should
+      be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
+
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+
+    turnManager.doAction(actionCommand2) should
+      be(List(MessageText.doMove(new Position(8, 8), new Position(8, 7))))
+
+    turnManager.undoAction should
+      be(List(MessageText.undoMove(new Position(8, 8), new Position(8, 7))))
+
+    turnManager.undoAction should
+      be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
+
+    turnManager.doAction(actionCommand1) should
+      be(List(MessageText.undoMove(new Position(1, 1), new Position(1, 2))))
+
+    turnManager.undoAction should
+      be(List(MessageText.emptyStack))
+  }
   "getActualPlayerLastActionPosFrom" should "get the players last action pos From" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)),

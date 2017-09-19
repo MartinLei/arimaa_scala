@@ -55,17 +55,20 @@ class TurnManager {
     if (playerStack.isEmpty)
       return List(MessageText.emptyStack)
 
-    var lastPlayer = playerStack.top
-    if (lastPlayer.isActionStackEmpty) {
-      playerStack.pop()
-      if (playerStack.isEmpty)
-        return List(MessageText.emptyStack)
+    val lastPlayer = playerStack.top
 
-      lastPlayer = playerStack.top
-    }
+    if (!lastPlayer.isActionStackEmpty)
+      return lastPlayer.undoAction
 
-    lastPlayer.undoAction
+    playerStack.pop()
+    if (playerStack.isEmpty)
+      return List(MessageText.emptyStack)
+
+    val newLastPlayer = playerStack.top
+    List(MessageText.changePlayer(newLastPlayer.name))
   }
 
 
 }
+
+
