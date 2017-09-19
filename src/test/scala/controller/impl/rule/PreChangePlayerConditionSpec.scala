@@ -69,14 +69,13 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(false)
   }
 
-  /*"isMoveThirdTimeRepetition" should "true, if the move is the 3th time of repetition in players game" in {
+  "isMoveThirdTimeRepetition" should "true, if the move is the 3th time of repetition in players game" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(1, 1)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(8, 8)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    val actionManager = new ActionManager()
     val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
@@ -88,25 +87,28 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
     val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
-    actionManager.doAction(actionGold1)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver1)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold2)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver2)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold3)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver3)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold4)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver4)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold5)
+    val turnManager = new TurnManager()
 
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(true)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold1)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver1)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold2)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver2)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold3)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver3)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold4)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver4)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold5)
+
+    PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(true)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -115,7 +117,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.DOG, new Position(8, 8)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    val actionManager = new ActionManager()
     val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
@@ -127,24 +128,27 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
     val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
 
-    actionManager.doAction(actionGold1)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver1)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold2)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver2)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold3)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver3)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionGold4)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
-    actionManager.doAction(actionSilver4)
-    actionManager.doAction(ActionCommand(List(ChangePlayerCommand(field))))
+    val turnManager = new TurnManager()
 
-    actionManager.doAction(actionGold6)
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager) should be(false)
-  }*/
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold1)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver1)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold2)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver2)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold3)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver3)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold4)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver4)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.doAction(actionGold6)
+    PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(false)
+  }
 }

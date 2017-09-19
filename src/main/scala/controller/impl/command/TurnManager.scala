@@ -7,6 +7,10 @@ import util.position.Position
 import scala.collection.mutable
 
 class TurnManager {
+  def isLastActionThirdTimeRepetition: Boolean = {
+    false
+  }
+
   def isTurnEmpty: Boolean = {
     if (playerStack.isEmpty)
       return true

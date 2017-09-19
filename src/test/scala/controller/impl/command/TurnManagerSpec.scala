@@ -180,6 +180,93 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.isTurnEmpty should be(false)
   }
 
+  "isLastActionThirdTimeRepetition" should "true, if the move is the 3th time of repetition in players game" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+
+    val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+
+    val turnManager = new TurnManager()
+
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold1)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver1)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold2)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver2)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold3)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver3)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold4)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver4)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold5)
+
+    turnManager.isLastActionThirdTimeRepetition should be(true)
+  }
+  it should "false, if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.DOG, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val actionGold1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+    val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
+    val actionSilver2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 7), new Position(8, 6))))
+    val actionSilver3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 6), new Position(8, 5))))
+    val actionSilver4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 5), new Position(8, 4))))
+
+    val turnManager = new TurnManager()
+
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold1)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver1)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold2)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver2)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold3)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver3)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionGold4)
+    turnManager.addTurn(PlayerNameEnum.SILVER)
+    turnManager.doAction(actionSilver4)
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.doAction(actionGold6)
+    turnManager.isLastActionThirdTimeRepetition should be(false)
+  }
+  it should "false, if stack is empty" in {
+    val turnManager = new TurnManager()
+    turnManager.isLastActionThirdTimeRepetition should be(false)
+  }
+
 }
 
 
