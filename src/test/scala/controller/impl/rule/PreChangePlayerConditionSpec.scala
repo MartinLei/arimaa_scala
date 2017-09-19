@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PushCommand}
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.command.{ActionCommand, TurnManager}
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -45,17 +45,13 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
 
-    val action1 = ActionCommand(List(ChangePlayerCommand(field)))
-
     val turnManager = new TurnManager()
     turnManager.addTurn(PlayerNameEnum.GOLD)
-    turnManager.doAction(action1)
 
     PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
   }
   it should "true,if stack is empty" in {
     val turnManager = new TurnManager()
-    turnManager.addTurn(PlayerNameEnum.GOLD)
 
     PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
   }
