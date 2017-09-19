@@ -72,7 +72,7 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.undoAction should
       be(List(MessageText.changePlayer(PlayerNameEnum.GOLD)))
 
-    turnManager.doAction(actionCommand1) should
+    turnManager.undoAction() should
       be(List(MessageText.undoMove(new Position(1, 1), new Position(1, 2))))
 
     turnManager.undoAction should
