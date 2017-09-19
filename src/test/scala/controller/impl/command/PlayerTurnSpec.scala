@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.MoveCommand
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -92,6 +92,30 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
 
     playerTurn.getLastActionPosFrom should be(Option(null))
   }
+  "isLastAPushCommand" should "true, if last command was a pushCommand" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn.doAction(ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    playerTurn.isLastAPushCommand should be(true)
+  }
+  it should "false, if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    playerTurn.isLastAPushCommand should be(false)
+  }
+  it should "false, if stack empty" in {
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+
+    playerTurn.isLastAPushCommand should be(false)
+  }
+
 }
 
 

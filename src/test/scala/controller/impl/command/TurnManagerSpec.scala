@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.{MoveCommand, TrapCommand}
+import controller.impl.command.impl.{MoveCommand, PushCommand, TrapCommand}
 import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
@@ -91,7 +91,34 @@ class TurnManagerSpec extends FlatSpec with Matchers {
 
     turnManager.getActualPlayerLastActionPosFrom should be(Option(null))
   }
+  "isLastAPushCommand" should "true if last command is a push command" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionCommand = ActionCommand(List(
+      PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionCommand)
+
+    turnManager.isLastAPushCommand should be(true)
+  }
+  it should "false, if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionManager = new ActionManager()
+    val actionCommand = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionCommand)
+
+    turnManager.isLastAPushCommand should be(false)
+  }
 }
 
 

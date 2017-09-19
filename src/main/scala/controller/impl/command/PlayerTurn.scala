@@ -7,6 +7,14 @@ import util.position.Position
 import scala.collection.mutable
 
 case class PlayerTurn(name: PlayerNameEnum) {
+  def isLastAPushCommand: Boolean = {
+    if (actionStack.isEmpty)
+      return false
+    val lastAction = actionStack.last
+
+    lastAction.isLastAPushCommand
+  }
+
 
   def getLastActionPosFrom: Option[Position] = {
     if (actionStack.isEmpty)
