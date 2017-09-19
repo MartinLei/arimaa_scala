@@ -108,10 +108,9 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
     val field = new Field(playerGoldTiles, Set())
-    val actionManager = new ActionManager()
+
     val actionCommand = ActionCommand(List(
       MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-
 
     val turnManager = new TurnManager
     turnManager.addTurn(PlayerNameEnum.GOLD)
@@ -119,6 +118,33 @@ class TurnManagerSpec extends FlatSpec with Matchers {
 
     turnManager.isLastAPushCommand should be(false)
   }
+
+  "isTurnEmpty" should "true if player has no actions" in {
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.isTurnEmpty should be(true)
+  }
+  it should "true if stack empty" in {
+    val turnManager = new TurnManager
+
+    turnManager.isTurnEmpty should be(true)
+  }
+  it should "false if not" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
+    val field = new Field(playerGoldTiles, Set())
+
+    val actionCommand = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
+
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionCommand)
+
+    turnManager.isTurnEmpty should be(false)
+  }
+
 }
 
 

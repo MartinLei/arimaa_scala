@@ -18,6 +18,7 @@ object PreChangePlayerCondition {
           return true
 
         turnManager.isLastCommandAChangePlayer
-     */ false
+     */
+    turnManager.isTurnEmpty
   }
 }

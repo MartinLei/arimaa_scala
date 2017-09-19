@@ -7,6 +7,14 @@ import util.position.Position
 import scala.collection.mutable
 
 class TurnManager {
+  def isTurnEmpty: Boolean = {
+    if (playerStack.isEmpty)
+      return true
+
+    val lastPlayer = playerStack.top
+    lastPlayer.isActionStackEmpty
+  }
+
   def isLastAPushCommand: Boolean = {
     if (playerStack.isEmpty)
       return false
