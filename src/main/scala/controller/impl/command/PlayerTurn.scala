@@ -10,7 +10,7 @@ case class PlayerTurn(name: PlayerNameEnum) {
   def isLastAPushCommand: Boolean = {
     if (actionStack.isEmpty)
       return false
-    val lastAction = actionStack.last
+    val lastAction = actionStack.top
 
     lastAction.isLastAPushCommand
   }
@@ -19,7 +19,7 @@ case class PlayerTurn(name: PlayerNameEnum) {
   def getLastActionPosFrom: Option[Position] = {
     if (actionStack.isEmpty)
       return Option(null)
-    val lastAction = actionStack.last
+    val lastAction = actionStack.top
 
     lastAction.getLastCommandPosFrom
   }
@@ -27,7 +27,7 @@ case class PlayerTurn(name: PlayerNameEnum) {
   def getLastActionPosTo: Option[Position] = {
     if (actionStack.isEmpty)
       return Option(null)
-    val lastAction = actionStack.last
+    val lastAction = actionStack.top
 
     lastAction.getLastCommandPosTo
   }
