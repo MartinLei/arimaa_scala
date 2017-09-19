@@ -309,9 +309,9 @@ class FieldSpec extends FlatSpec with Matchers {
   "changePlayer" should "change player form gold to silver" in {
     val field = new Field()
     field.actualPlayerName should be(PlayerNameEnum.GOLD)
-    field.changePlayer()
+    field.changePlayer() should be(PlayerNameEnum.SILVER)
     field.actualPlayerName should be(PlayerNameEnum.SILVER)
-    field.changePlayer()
+    field.changePlayer() should be(PlayerNameEnum.GOLD)
     field.actualPlayerName should be(PlayerNameEnum.GOLD)
   }
 

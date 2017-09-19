@@ -218,8 +218,9 @@ class Field() extends FieldTrait {
     }
   }
 
-  override def changePlayer(): Unit = {
+  override def changePlayer(): PlayerNameEnum = {
     actualPlayerName = PlayerNameEnum.getInvertPlayer(actualPlayerName)
+    actualPlayerName
   }
 
   override def hasNoRabbits(playerName: PlayerNameEnum): Boolean = playerName match {

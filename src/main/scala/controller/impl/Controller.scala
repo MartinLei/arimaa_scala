@@ -62,22 +62,21 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): List[String] = {
-    var commandList: ListBuffer[CommandTrait] = ListBuffer()
     val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
       return List(changePlayerRuleComplaint.text)
 
-    val nextPlayer = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
-    turnManager.addTurn(nextPlayer)
-
     val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
     if (winCommandOption.isDefined) {
       val winCommand = winCommandOption.get
-      commandList.+=(winCommand)
+      val action = ActionCommand(List(winCommand))
+      return turnManager.doAction(action)
     }
 
-    val action = ActionCommand(commandList.toList)
-    turnManager.doAction(action)
+
+    val nextPlayer = field.changePlayer()
+    List(turnManager.addTurn(nextPlayer))
+
   }
 
 }
