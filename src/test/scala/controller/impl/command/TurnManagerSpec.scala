@@ -10,7 +10,7 @@ class TurnManagerSpec extends FlatSpec with Matchers {
 
   "addTurn" should "add it to stack" in {
     val turnManager = new TurnManager
-    turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.addTurn(PlayerNameEnum.GOLD) should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
   }
 
   "doAction" should "add it to last turn and execute action" in {

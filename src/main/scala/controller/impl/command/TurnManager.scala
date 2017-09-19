@@ -41,8 +41,9 @@ class TurnManager {
 
   var playerStack: mutable.ArrayStack[PlayerTurn] = mutable.ArrayStack()
 
-  def addTurn(playerName: PlayerNameEnum): Any = {
+  def addTurn(playerName: PlayerNameEnum): String = {
     playerStack.push(PlayerTurn(playerName))
+    MessageText.changePlayer(playerName)
   }
 
   def doAction(action: ActionCommand): List[String] = {

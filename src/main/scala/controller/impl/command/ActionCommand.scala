@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PushCommand}
+import controller.impl.command.impl.{MoveCommand, PushCommand}
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
@@ -70,11 +70,4 @@ case class ActionCommand(commandList: List[CommandTrait]) {
     lastCommand.isInstanceOf[PushCommand]
   }
 
-  def isLastAChangePlayerCommand: Boolean = {
-    if (commandList.isEmpty)
-      return false
-
-    val lastCommand = commandList.head
-    lastCommand.isInstanceOf[ChangePlayerCommand]
-  }
 }

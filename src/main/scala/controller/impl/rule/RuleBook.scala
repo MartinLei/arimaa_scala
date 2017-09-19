@@ -66,6 +66,7 @@ object RuleBook {
     if (PreChangePlayerCondition.isPushNotFinish(turnManager))
       return Message.pushNotFinish
 
+    //TODO
     if (PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager))
       return Message.thirdTimeRepetition
 

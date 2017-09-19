@@ -2,7 +2,7 @@ package controller.impl
 
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
-import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
+import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
 import controller.impl.messages.{MessageEnum, MessageType}
 import controller.impl.rule.RuleBook
@@ -67,8 +67,8 @@ class Controller extends ControllerTrait {
     if (!changePlayerRuleComplaint.isValid)
       return List(changePlayerRuleComplaint.text)
 
-    val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
-    commandList.+=(changePlayerCommand)
+    val nextPlayer = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
+    turnManager.addTurn(nextPlayer)
 
     val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
     if (winCommandOption.isDefined) {
