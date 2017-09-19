@@ -18,6 +18,7 @@ class Controller extends ControllerTrait {
   private val logger = Logger[Controller]
   private var field: FieldTrait = new Field()
   private val turnManager = new TurnManager
+  turnManager.addTurn(PlayerNameEnum.GOLD)
 
   def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
     this()
