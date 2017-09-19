@@ -3,7 +3,7 @@ package controller.impl
 import com.typesafe.scalalogging.Logger
 import controller.ControllerTrait
 import controller.impl.command.impl.{ChangePlayerCommand, MoveCommand, PullCommand, PushCommand}
-import controller.impl.command.{ActionCommand, ActionManager, CommandTrait}
+import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
 import controller.impl.messages.{MessageEnum, MessageType}
 import controller.impl.rule.RuleBook
 import model.FieldTrait
@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
 class Controller extends ControllerTrait {
   private val logger = Logger[Controller]
   private var field: FieldTrait = new Field()
-  private val actionManager = new ActionManager
+  private val turnManager = new TurnManager
 
   def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
     this()
@@ -32,7 +32,7 @@ class Controller extends ControllerTrait {
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val actualPlayerName = field.actualPlayerName
-    val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, actionManager, actualPlayerName, posFrom, posTo)
+    val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, turnManager, actualPlayerName, posFrom, posTo)
     if (!ruleComplaint.isValid)
       return List(ruleComplaint.text)
 
@@ -49,11 +49,11 @@ class Controller extends ControllerTrait {
     commandList.++=(postCommandList)
 
     val action = ActionCommand(commandList.toList)
-    actionManager.doAction(action)
+    turnManager.doAction(action)
   }
 
   override def moveTileUndo(): List[String] = {
-    actionManager.undoAction()
+    turnManager.undoAction()
   }
 
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
@@ -62,21 +62,21 @@ class Controller extends ControllerTrait {
 
   override def changePlayer(): List[String] = {
     var commandList: ListBuffer[CommandTrait] = ListBuffer()
-    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, actionManager)
+    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
       return List(changePlayerRuleComplaint.text)
 
     val changePlayerCommand: CommandTrait = ChangePlayerCommand(field)
     commandList.+=(changePlayerCommand)
 
-    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, actionManager)
+    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
     if (winCommandOption.isDefined) {
       val winCommand = winCommandOption.get
       commandList.+=(winCommand)
     }
 
     val action = ActionCommand(commandList.toList)
-    actionManager.doAction(action)
+    turnManager.doAction(action)
   }
 
 }

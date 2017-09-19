@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.ActionManager
+import controller.impl.command.TurnManager
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -87,9 +87,11 @@ class WinConditionSpec extends FlatSpec with Matchers {
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 4)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
-    val actionManager = new ActionManager()
 
-    WinCondition.winByPassivePlayerCantMove(field, actionManager) should be(PlayerNameEnum.GOLD)
+    val turnManager = new TurnManager()
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    WinCondition.winByPassivePlayerCantMove(field, turnManager) should be(PlayerNameEnum.GOLD)
   }
   it should "NONE if not" in {
     val playerGoldTiles = Set(
@@ -97,9 +99,11 @@ class WinConditionSpec extends FlatSpec with Matchers {
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
-    val actionManager = new ActionManager()
 
-    WinCondition.winByPassivePlayerCantMove(field, actionManager) should be(PlayerNameEnum.NONE)
+    val turnManager = new TurnManager()
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    WinCondition.winByPassivePlayerCantMove(field, turnManager) should be(PlayerNameEnum.NONE)
   }
 
 }

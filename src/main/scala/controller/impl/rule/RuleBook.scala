@@ -1,7 +1,7 @@
 package controller.impl.rule
 
 import controller.impl.command.impl.{TrapCommand, WinCommand}
-import controller.impl.command.{ActionManager, CommandTrait}
+import controller.impl.command.{CommandTrait, TurnManager}
 import controller.impl.messages.{Message, MessageType}
 import model.FieldTrait
 import model.impl.PlayerNameEnum
@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
 
 object RuleBook {
 
-  def isMoveRuleComplaint(field: FieldTrait, actionManager: ActionManager,
+  def isMoveRuleComplaint(field: FieldTrait, turnManager: TurnManager,
                           playerName: PlayerNameEnum, posFrom: Position, posTo: Position): MessageType = {
 
     if (PreCondition.isPosFromEmpty(field, posFrom))
@@ -21,13 +21,13 @@ object RuleBook {
     if (PreCondition.isToPosNotFree(field, posTo))
       return Message.posToNotFree(posTo)
 
-    if (PreCondition.isPushNotFinishWithPosTo(field, posTo, actionManager))
+    if (PreCondition.isPushNotFinishWithPosTo(field, posTo, turnManager))
       return Message.pushNotFinish
 
     if (PreCondition.isTilePush(field, playerName, posFrom, posTo))
       return Message.doPush(posFrom, posTo)
 
-    if (PreCondition.isTilePull(field, posFrom, posTo, actionManager))
+    if (PreCondition.isTilePull(field, posFrom, posTo, turnManager))
       return Message.doPull(posFrom, posTo)
 
     if (PreCondition.isPosFromPosNotOwn(field, playerName, posFrom))
@@ -58,21 +58,21 @@ object RuleBook {
     commandList.toList
   }
 
-  def isChangePlayerRuleComplaint(field: FieldTrait, actionManager: ActionManager): MessageType = {
+  def isChangePlayerRuleComplaint(field: FieldTrait, turnManager: TurnManager): MessageType = {
 
-    if (PreChangePlayerCondition.isNoTileMovedFromPlayer(actionManager))
+    if (PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager))
       return Message.noTileMoved
 
-    if (PreChangePlayerCondition.isPushNotFinish(actionManager))
+    if (PreChangePlayerCondition.isPushNotFinish(turnManager))
       return Message.pushNotFinish
 
-    if (PreChangePlayerCondition.isMoveThirdTimeRepetition(actionManager))
+    if (PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager))
       return Message.thirdTimeRepetition
 
     Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }
 
-  def winCommand(field: FieldTrait, actionManager: ActionManager): Option[CommandTrait] = {
+  def winCommand(field: FieldTrait, turnManager: TurnManager): Option[CommandTrait] = {
     val winPlayerNameRabbitOnOtherSide = WinCondition.winByRabbitOnOtherSide(field)
     if (!winPlayerNameRabbitOnOtherSide.equals(PlayerNameEnum.NONE))
       return Option(WinCommand(field, winPlayerNameRabbitOnOtherSide))
@@ -81,7 +81,7 @@ object RuleBook {
     if (!winPlayerNameKillALlOtherRabbits.equals(PlayerNameEnum.NONE))
       return Option(WinCommand(field, winPlayerNameKillALlOtherRabbits))
 
-    val winPlayerPassiveCantMove = WinCondition.winByPassivePlayerCantMove(field, actionManager)
+    val winPlayerPassiveCantMove = WinCondition.winByPassivePlayerCantMove(field, turnManager)
     if (!winPlayerPassiveCantMove.equals(PlayerNameEnum.NONE))
       return Option(WinCommand(field, winPlayerPassiveCantMove))
 

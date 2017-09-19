@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.ActionManager
+import controller.impl.command.TurnManager
 import controller.impl.messages.MessageType
 import model.FieldTrait
 import model.impl.PlayerNameEnum
@@ -32,30 +32,30 @@ object WinCondition {
     PlayerNameEnum.NONE
   }
 
-  def winByPassivePlayerCantMove(field: FieldTrait, actionManager: ActionManager): PlayerNameEnum = {
+  def winByPassivePlayerCantMove(field: FieldTrait, turnManager: TurnManager): PlayerNameEnum = {
     val passivePlayer = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
 
-    if (isPlayerNotMoveAble(field, actionManager, passivePlayer))
+    if (isPlayerNotMoveAble(field, turnManager, passivePlayer))
       return field.actualPlayerName
 
     PlayerNameEnum.NONE
   }
 
-  private def isPlayerNotMoveAble(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum): Boolean = {
+  private def isPlayerNotMoveAble(field: FieldTrait, turnManager: TurnManager, playerName: PlayerNameEnum): Boolean = {
     val playerTiles = field.getPlayerTiles(playerName)
 
     val countPossibleMoves: Int = playerTiles.count(tile => {
       val posFrom = tile.pos
-      hasPossibleMove(field, actionManager, playerName, posFrom)
+      hasPossibleMove(field, turnManager, playerName, posFrom)
     })
 
     countPossibleMoves == 0
   }
 
-  private def hasPossibleMove(field: FieldTrait, actionManager: ActionManager, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
+  private def hasPossibleMove(field: FieldTrait, turnManager: TurnManager, playerName: PlayerNameEnum, posFrom: Position): Boolean = {
     val possiblePosTo = Position.getSurround(posFrom)
     val countPossiblePosTo: Int = possiblePosTo.count(posTo => {
-      val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, actionManager, playerName, posFrom, posTo)
+      val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, turnManager, playerName, posFrom, posTo)
       ruleComplaint.isValid
     })
 

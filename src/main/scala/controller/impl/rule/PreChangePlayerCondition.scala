@@ -1,24 +1,26 @@
 package controller.impl.rule
 
-import controller.impl.command.ActionManager
+import controller.impl.command.TurnManager
 
 object PreChangePlayerCondition {
-  def isMoveThirdTimeRepetition(actionManager: ActionManager): Boolean = {
-    actionManager.isLastActionThirdTimeRepetition
+  def isMoveThirdTimeRepetition(turnManager: TurnManager): Boolean = {
+    // turnManager.isLastActionThirdTimeRepetition
+    false
   }
 
 
-  def isPushNotFinish(actionManager: ActionManager): Boolean = {
-    if (!actionManager.isLastAPushCommand)
+  def isPushNotFinish(turnManager: TurnManager): Boolean = {
+    if (!turnManager.isLastAPushCommand)
       return false
 
     true
   }
 
-  def isNoTileMovedFromPlayer(actionManager: ActionManager): Boolean = {
-    if (!actionManager.hasPlayerCommand)
-      return true
+  def isNoTileMovedFromPlayer(turnManager: TurnManager): Boolean = {
+    /*    if (!turnManager.hasPlayerCommand)
+          return true
 
-    actionManager.isLastCommandAChangePlayer
+        turnManager.isLastCommandAChangePlayer
+     */ false
   }
 }
