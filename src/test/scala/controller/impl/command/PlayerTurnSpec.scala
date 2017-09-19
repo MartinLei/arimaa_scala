@@ -58,5 +58,22 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
 
     playerTurn.isActionStackEmpty should be(false)
   }
+  "getLastActionPosFrom" should "get last action posFrom" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+
+    playerTurn.doAction(ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))) should
+      be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
+
+    playerTurn.getLastActionPosFrom should be(Some(new Position(1, 1)))
+  }
+  it should "null if action stack is empty" in {
+    val playerTurn = PlayerTurn(PlayerNameEnum.GOLD)
+
+    playerTurn.getLastActionPosFrom should be(Option(null))
+  }
 }
 

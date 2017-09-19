@@ -2,10 +2,20 @@ package controller.impl.command
 
 import controller.impl.messages.MessageText
 import model.impl.PlayerNameEnum.PlayerNameEnum
+import util.position.Position
 
 import scala.collection.mutable
 
 case class PlayerTurn(name: PlayerNameEnum) {
+
+  def getLastActionPosFrom: Option[Position] = {
+    if (actionStack.isEmpty)
+      return Option(null)
+    val lastAction = actionStack.last
+
+    lastAction.getLastCommandPosFrom
+  }
+
   def isActionStackEmpty: Boolean = {
     actionStack.isEmpty
   }

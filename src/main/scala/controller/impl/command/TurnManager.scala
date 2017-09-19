@@ -2,10 +2,19 @@ package controller.impl.command
 
 import controller.impl.messages.MessageText
 import model.impl.PlayerNameEnum.PlayerNameEnum
+import util.position.Position
 
 import scala.collection.mutable
 
 class TurnManager {
+  def getActualPlayerLastActionPosFrom: Option[Position] = {
+    if (playerStack.isEmpty)
+      return Option(null)
+
+    val lastPlayer = playerStack.top
+    lastPlayer.getLastActionPosFrom
+  }
+
   var playerStack: mutable.ArrayStack[PlayerTurn] = mutable.ArrayStack()
 
   def addTurn(playerName: PlayerNameEnum): Any = {
