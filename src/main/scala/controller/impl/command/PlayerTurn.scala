@@ -16,6 +16,14 @@ case class PlayerTurn(name: PlayerNameEnum) {
     lastAction.getLastCommandPosFrom
   }
 
+  def getLastActionPosTo: Option[Position] = {
+    if (actionStack.isEmpty)
+      return Option(null)
+    val lastAction = actionStack.last
+
+    lastAction.getLastCommandPosTo
+  }
+
   def isActionStackEmpty: Boolean = {
     actionStack.isEmpty
   }

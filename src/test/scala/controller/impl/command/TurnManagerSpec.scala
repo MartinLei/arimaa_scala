@@ -63,6 +63,26 @@ class TurnManagerSpec extends FlatSpec with Matchers {
 
     turnManager.getActualPlayerLastActionPosFrom should be(Option(null))
   }
+  "getActualPlayerLastActionPosTo" should "get the players last action pos To" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionCommand = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.doAction(actionCommand) should
+      be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
+    turnManager.getActualPlayerLastActionPosTo should be(Some(new Position(1, 2)))
+  }
+  it should "null if stack is empty" in {
+    val turnManager = new TurnManager
+    turnManager.addTurn(PlayerNameEnum.GOLD)
+
+    turnManager.getActualPlayerLastActionPosFrom should be(Option(null))
+  }
 }
 
 

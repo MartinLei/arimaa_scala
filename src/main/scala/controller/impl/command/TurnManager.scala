@@ -15,6 +15,14 @@ class TurnManager {
     lastPlayer.getLastActionPosFrom
   }
 
+  def getActualPlayerLastActionPosTo: Option[Position] = {
+    if (playerStack.isEmpty)
+      return Option(null)
+
+    val lastPlayer = playerStack.top
+    lastPlayer.getLastActionPosTo
+  }
+
   var playerStack: mutable.ArrayStack[PlayerTurn] = mutable.ArrayStack()
 
   def addTurn(playerName: PlayerNameEnum): Any = {
