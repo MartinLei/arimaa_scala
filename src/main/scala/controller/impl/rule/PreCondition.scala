@@ -67,7 +67,10 @@ object PreCondition {
   }
 
   def isPushNotFinishWithPosTo(field: FieldTrait, posTo: Position, actionManager: ActionManager): Boolean = {
-    val posFromPushCommandOption = actionManager.getLastActionPushCommandPosFrom
+    if (!actionManager.isLastAPushCommand)
+      return false
+
+    val posFromPushCommandOption = actionManager.getLastActionCommandPosFrom
     if (posFromPushCommandOption.isDefined) {
       val posFromPushCommand: Position = posFromPushCommandOption.get
       if (!posFromPushCommand.equals(posTo))

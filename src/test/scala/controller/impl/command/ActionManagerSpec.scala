@@ -79,39 +79,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
     globalField.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
   }
-  "getLastActionPushCommandPosFrom" should "give the last actions first command" in {
-    val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
-      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
-    val field = new Field(playerGoldTiles, Set())
 
-    val actionManager = new ActionManager()
-    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-
-    actionManager.doAction(actionCommand1)
-    actionManager.doAction(actionCommand2)
-
-    actionManager.getLastActionPushCommandPosFrom should be(Some(new Position(1, 2)))
-  }
-  it should "null if no  push command action" in {
-    val playerGoldTiles = Set(
-      new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
-      new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
-    val field = new Field(playerGoldTiles, Set())
-    val actionManager = new ActionManager()
-    val actionCommand1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(8, 2), new Position(8, 3))))
-    val actionCommand2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-
-    actionManager.doAction(actionCommand1)
-    actionManager.doAction(actionCommand2)
-
-    actionManager.getLastActionPushCommandPosFrom should be(Option(null))
-  }
-  it should "null if empty" in {
-    val actionManager = new ActionManager()
-    actionManager.getLastActionPushCommandPosFrom should be(Option(null))
-  }
   "getLastActionCommandPosFrom" should "give the last actions first push command" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(8, 2)),
@@ -288,6 +256,7 @@ class ActionManagerSpec extends FlatSpec with Matchers {
 
     actionManager.hasPlayerCommand should be(false)
   }
+
   "isActionThirdTimeRepetition" should "true if action from player is third time repetition" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.DOG, new Position(1, 1)))

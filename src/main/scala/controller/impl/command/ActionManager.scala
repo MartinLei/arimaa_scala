@@ -22,14 +22,6 @@ class ActionManager {
     lastAction.undoAction()
   }
 
-  def getLastActionPushCommandPosFrom: Option[Position] = {
-    if (actionStack.isEmpty)
-      return Option(null)
-
-    val lastAction = actionStack.top
-    lastAction.getPushCommandPosFrom
-  }
-
   def getLastActionCommandPosFrom: Option[Position] = {
     if (actionStack.isEmpty)
       return Option(null)
