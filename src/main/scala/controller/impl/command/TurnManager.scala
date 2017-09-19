@@ -8,6 +8,11 @@ import scala.collection.mutable
 
 class TurnManager {
   def isLastActionThirdTimeRepetition: Boolean = {
+    if (playerStack.isEmpty)
+      return false
+    if (playerStack.size < 9)
+      return false
+
     false
   }
 
