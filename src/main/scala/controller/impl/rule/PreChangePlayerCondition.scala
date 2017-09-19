@@ -14,11 +14,6 @@ object PreChangePlayerCondition {
   }
 
   def isNoTileMovedFromPlayer(turnManager: TurnManager): Boolean = {
-    /*TODO    if (!turnManager.hasPlayerCommand)
-          return true
-
-        turnManager.isLastCommandAChangePlayer
-     */
     turnManager.isTurnEmpty
   }
 }
