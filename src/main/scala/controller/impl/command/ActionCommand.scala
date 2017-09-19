@@ -30,19 +30,6 @@ case class ActionCommand(commandList: List[CommandTrait]) {
   }
 
 
-  def getPushCommandPosFrom: Option[Position] = {
-    if (commandList.isEmpty)
-      return Option(null)
-
-    commandList.head match {
-      case pushCommand: PushCommand =>
-        return Option(pushCommand.posFrom)
-      case _ => return Option(null)
-    }
-
-    Option(null)
-  }
-
   def getLastCommandPosFrom: Option[Position] = {
     if (commandList.isEmpty)
       return Option(null)

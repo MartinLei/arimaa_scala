@@ -46,18 +46,6 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(2, 3)) should be(TileNameEnum.NONE)
   }
 
-  "getPushCommandPosFrom" should "give the first command on list" in {
-    val actionCommand1 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
-    actionCommand1.getPushCommandPosFrom should be(Some(new Position(1, 2)))
-  }
-  it should "null if first command is no push command" in {
-    actionCommand.getPushCommandPosFrom should be(Option(null))
-  }
-  it should "null if empty" in {
-    val actionCommand1 = ActionCommand(List())
-    actionCommand1.getPushCommandPosFrom should be(Option(null))
-  }
-
   "getLastCommandPosFrom" should "give the posFrom, if last command was a move or push command" in {
     val actionCommand1 = ActionCommand(List(PushCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
     actionCommand1.getLastCommandPosFrom should be(Some(new Position(1, 2)))
