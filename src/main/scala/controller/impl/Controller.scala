@@ -10,8 +10,6 @@ import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
 
-import scala.collection.mutable.ListBuffer
-
 class Controller extends ControllerTrait {
   private var field: FieldTrait = new Field()
   private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
@@ -49,14 +47,15 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): List[String] = {
-    val messageList: ListBuffer[String] = ListBuffer()
-    messageList.+=(mode.changePlayer())
+    val changePlayerMessage = mode.changePlayer()
+    if (!changePlayerMessage.isValid)
+      return List(changePlayerMessage.text)
 
     val winnerName = mode.getWinnerName
     if (!winnerName.equals(PlayerNameEnum.NONE))
-      messageList.+=(MessageText.doWin(winnerName))
+      return List(MessageText.doWin(winnerName))
 
-    messageList.toList
+    List(changePlayerMessage.text)
   }
 
 

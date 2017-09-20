@@ -48,10 +48,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.moveTile(new Position(1, 7), new Position(1, 8))
 
-    controller.changePlayer() should
-      be(List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.GOLD)))
+    controller.changePlayer() should be(List(MessageText.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if a rabbit reach the other side" in {
     val playerGoldTiles = Set(
@@ -65,9 +62,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(1, 1), new Position(1, 2))
 
     controller.changePlayer() should
-      be(List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.SILVER)))
+      be(List(MessageText.doWin(PlayerNameEnum.SILVER)))
   }
   it should "actual player win, if both player rabbit reach the other side" in {
     val playerGoldTiles = Set(
@@ -81,9 +76,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(1, 7), new Position(1, 8))
 
     controller.changePlayer() should
-      be(List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.GOLD)))
+      be(List(MessageText.doWin(PlayerNameEnum.GOLD)))
   }
 
   "PlayerHasNoRabbit" should "gold win, if silver has no rabbits" in {
@@ -98,9 +91,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(1, 1), new Position(1, 2))
 
     controller.changePlayer() should be(
-      List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.GOLD)))
+      List(MessageText.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if gold has no rabbits" in {
     val playerGoldTiles = Set(
@@ -118,9 +109,7 @@ class ControllerSpec extends FlatSpec with Matchers {
         MessageText.doTrap(new Position(3, 3))))
 
     controller.changePlayer() should be(
-      List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.SILVER)))
+      List(MessageText.doWin(PlayerNameEnum.SILVER)))
   }
 
   "PassivePlayerCantMakeAMove" should "active player win, if passive player cant move any tile" in {
@@ -137,9 +126,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(1, 2), new Position(1, 3))
 
     controller.changePlayer() should be(
-      List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER),
-        MessageText.doWin(PlayerNameEnum.GOLD)))
+      List(MessageText.doWin(PlayerNameEnum.GOLD)))
   }
 
 }

@@ -13,10 +13,10 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
-  override def changePlayer(): String = {
+  override def changePlayer(): MessageType = {
     val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
-      return changePlayerRuleComplaint.text
+      return changePlayerRuleComplaint
 
     val nextPlayer = field.changePlayer()
     turnManager.addTurn(nextPlayer)

@@ -1,7 +1,7 @@
 package controller.impl.command
 
 import controller.impl.command.impl.{MoveCommand, PushCommand, TrapCommand}
-import controller.impl.messages.MessageText
+import controller.impl.messages.{Message, MessageText}
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -22,7 +22,7 @@ class TurnManagerSpec extends FlatSpec with Matchers {
 
   "addTurn" should "add it to stack" in {
     val turnManager = new TurnManager
-    turnManager.addTurn(PlayerNameEnum.GOLD) should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    turnManager.addTurn(PlayerNameEnum.GOLD) should be(Message.changePlayer(PlayerNameEnum.GOLD))
   }
 
   "doAction" should "add it to last turn and execute action" in {

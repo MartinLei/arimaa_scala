@@ -1,7 +1,7 @@
 package controller.impl
 
 import controller.impl.command.TurnManager
-import controller.impl.messages.MessageText
+import controller.impl.messages.{Message, MessageText}
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -196,7 +196,7 @@ class GameModeSpec extends FlatSpec with Matchers {
     val gameMode = new GameMode(field, new TurnManager(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(3, 2), new Position(3, 3))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
 
     gameMode.moveTile(new Position(2, 4), new Position(3, 4)) should
       be(List(MessageText.doMove(new Position(2, 4), new Position(3, 4))))
@@ -247,7 +247,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(3, 2), new Position(3, 3))
 
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
 
     gameMode.moveTile(new Position(2, 4), new Position(3, 4)) should
       be(List(MessageText.doMove(new Position(2, 4), new Position(3, 4))))
@@ -422,12 +422,12 @@ class GameModeSpec extends FlatSpec with Matchers {
     gameMode.getActPlayerName should be(PlayerNameEnum.GOLD)
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 3))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
 
     gameMode.getActPlayerName should be(PlayerNameEnum.SILVER)
 
     gameMode.moveTile(new Position(1, 7), new Position(1, 6))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.GOLD))
     gameMode.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
   it should "do nothing, if actual player not finish his move" in {
@@ -441,7 +441,7 @@ class GameModeSpec extends FlatSpec with Matchers {
     gameMode.moveTile(new Position(5, 5), new Position(6, 5)) should
       be(List(MessageText.doPush(new Position(5, 5), new Position(6, 5))))
 
-    gameMode.changePlayer() should be(MessageText.pushNotFinish)
+    gameMode.changePlayer() should be(Message.pushNotFinish)
     gameMode.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
   it should "do nothing, if first move of game not move any tile" in {
@@ -452,7 +452,7 @@ class GameModeSpec extends FlatSpec with Matchers {
     val field = new Field(playerGoldTiles, playerSilverTiles)
     val gameMode = new GameMode(field, new TurnManager(PlayerNameEnum.GOLD))
 
-    gameMode.changePlayer() should be(MessageText.noTileMoved)
+    gameMode.changePlayer() should be(Message.noTileMoved)
     gameMode.getActPlayerName should be(PlayerNameEnum.GOLD)
   }
   it should "do nothing, if actual player not move any tile" in {
@@ -464,8 +464,8 @@ class GameModeSpec extends FlatSpec with Matchers {
     val gameMode = new GameMode(field, new TurnManager(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 3))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
-    gameMode.changePlayer() should be(MessageText.noTileMoved)
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.noTileMoved)
     gameMode.getActPlayerName should be(PlayerNameEnum.SILVER)
   }
   it should "do nothing, if actual move is third time repetition" in {
@@ -478,30 +478,30 @@ class GameModeSpec extends FlatSpec with Matchers {
     val gameMode = new GameMode(field, new TurnManager(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 1), new Position(1, 2))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
     gameMode.moveTile(new Position(8, 8), new Position(8, 7))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 1))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
     gameMode.moveTile(new Position(8, 7), new Position(8, 6))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 1), new Position(1, 2))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
     gameMode.moveTile(new Position(8, 6), new Position(8, 5))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 1))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
     gameMode.moveTile(new Position(8, 5), new Position(8, 4))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.GOLD))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.GOLD))
 
     gameMode.moveTile(new Position(1, 1), new Position(1, 2))
-    gameMode.changePlayer() should be(MessageText.thirdTimeRepetition)
+    gameMode.changePlayer() should be(Message.thirdTimeRepetition)
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 3))
-    gameMode.changePlayer() should be(MessageText.changePlayer(PlayerNameEnum.SILVER))
+    gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
   }
 
   "unDo" should "undo last move" in {

@@ -1,6 +1,6 @@
 package controller.impl.command
 
-import controller.impl.messages.MessageText
+import controller.impl.messages.{Message, MessageText, MessageType}
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
@@ -11,11 +11,12 @@ class TurnManager {
     this()
     this.addTurn(playerName)
   }
+
   var playerStack: mutable.ArrayStack[PlayerTurn] = mutable.ArrayStack()
 
-  def addTurn(playerName: PlayerNameEnum): String = {
+  def addTurn(playerName: PlayerNameEnum): MessageType = {
     playerStack.push(PlayerTurn(playerName))
-    MessageText.changePlayer(playerName)
+    Message.changePlayer(playerName)
   }
 
   def doAction(action: ActionCommand): List[String] = {
