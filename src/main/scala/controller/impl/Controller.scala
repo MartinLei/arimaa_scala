@@ -1,6 +1,7 @@
 package controller.impl
 
 import controller.ControllerTrait
+import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.TurnManager
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
@@ -11,9 +12,21 @@ import util.position.Position
 class Controller extends ControllerTrait {
   private val field: FieldTrait = new Field()
   private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
-  private val mode = new GameMode(field, turnManager)
+  private var mode = new GameMode(field, turnManager)
 
-  override def getActPlayerName: PlayerNameEnum = field.actualPlayerName
+  override def setMode(modeEnum: ModeEnum, field: FieldTrait): Boolean = modeEnum match {
+    case ModeEnum.GAME =>
+      mode = new GameMode(field, turnManager)
+      true
+    case _ => false
+  }
+
+  override def getMode: ModeEnum = {
+    if (mode.isInstanceOf[GameMode])
+      return ModeEnum.GAME
+
+    ModeEnum.NONE
+  }
 
   override def getFieldAsString: String = {
     field.toString
@@ -34,5 +47,6 @@ class Controller extends ControllerTrait {
   override def changePlayer(): List[String] = {
     mode.changePlayer()
   }
+
 
 }
