@@ -13,12 +13,13 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class Controller extends ControllerTrait {
-  private val field: FieldTrait = new Field()
+  private var field: FieldTrait = new Field()
   private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
   private var mode = new GameMode(field, turnManager)
 
   override def setMode(modeEnum: ModeEnum, field: FieldTrait): Boolean = modeEnum match {
     case ModeEnum.GAME =>
+      this.field = field
       mode = new GameMode(field, turnManager)
       true
     case _ => false
