@@ -232,6 +232,7 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     val actionGold2 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
     val actionGold3 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold4 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 1))))
+    val actionGold5 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
     val actionGold6 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))))
 
     val actionSilver1 = ActionCommand(List(MoveCommand(field, PlayerNameEnum.SILVER, new Position(8, 8), new Position(8, 7))))
@@ -258,7 +259,7 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.addTurn(PlayerNameEnum.SILVER)
     turnManager.doAction(actionSilver4)
     turnManager.addTurn(PlayerNameEnum.GOLD)
-
+    turnManager.doAction(actionGold5)
     turnManager.doAction(actionGold6)
     turnManager.isLastActionThirdTimeRepetition should be(false)
   }

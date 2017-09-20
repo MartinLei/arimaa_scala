@@ -7,6 +7,21 @@ import util.position.Position
 import scala.collection.mutable
 
 case class PlayerTurn(name: PlayerNameEnum) {
+  private val actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
+
+  def doAction(action: ActionCommand): List[String] = {
+    actionStack.push(action)
+    action.doAction()
+  }
+
+  def undoAction: List[String] = {
+    if (actionStack.isEmpty)
+      return List(MessageText.emptyStack)
+
+    val lastAction = actionStack.pop()
+    lastAction.undoAction()
+  }
+
   def isLastAPushCommand: Boolean = {
     if (actionStack.isEmpty)
       return false
@@ -14,7 +29,6 @@ case class PlayerTurn(name: PlayerNameEnum) {
 
     lastAction.isLastAPushCommand
   }
-
 
   def getLastActionPosFrom: Option[Position] = {
     if (actionStack.isEmpty)
@@ -36,18 +50,12 @@ case class PlayerTurn(name: PlayerNameEnum) {
     actionStack.isEmpty
   }
 
-  private val actionStack: mutable.ArrayStack[ActionCommand] = mutable.ArrayStack()
-
-  def doAction(action: ActionCommand): List[String] = {
-    actionStack.push(action)
-    action.doAction()
+  override def equals(that: Any): Boolean = that match {
+    case that: PlayerTurn => that.isInstanceOf[PlayerTurn] && that.hashCode() == this.hashCode()
+    case _ => false
   }
 
-  def undoAction: List[String] = {
-    if (actionStack.isEmpty)
-      return List(MessageText.emptyStack)
+  override def hashCode(): Int = toString.hashCode
 
-    val lastAction = actionStack.pop()
-    lastAction.undoAction()
-  }
+  override def toString: String = "{" + name + "," + actionStack + "}"
 }
