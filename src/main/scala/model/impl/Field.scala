@@ -1,6 +1,5 @@
 package model.impl
 
-import com.typesafe.scalalogging.Logger
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
@@ -22,9 +21,6 @@ class Field() extends FieldTrait {
     this.playerGold = new Player(PlayerNameEnum.GOLD, playerGoldTiles)
     this.playerSilver = new Player(PlayerNameEnum.SILVER, playerSilverTiles)
   }
-
-  private val logger = Logger[FieldTrait]
-
 
   override def getPlayerTiles(player: PlayerNameEnum): Set[Tile] = player match {
     case PlayerNameEnum.GOLD => playerGold.getTiles
@@ -135,10 +131,8 @@ class Field() extends FieldTrait {
   }
 
   override def changeTilePos(player: PlayerNameEnum, posFrom: Position, posTo: Position): Boolean = {
-    if (isOccupied(posTo)) {
-      logger.error("CANT MOVE TILE FROM " + posFrom + " TO " + posTo)
+    if (isOccupied(posTo))
       return false
-    }
 
     player match {
       case PlayerNameEnum.GOLD => playerGold.moveTile(posFrom, posTo)

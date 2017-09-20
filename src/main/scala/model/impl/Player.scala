@@ -1,13 +1,11 @@
 package model.impl
 
-import com.typesafe.scalalogging.Logger
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import util.position.Position
 
 
 class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
-  private val logger = Logger[Player]
   private var tiles: Set[Tile] = newTiles
 
 
@@ -30,10 +28,9 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
   def moveTile(posOld: Position, posNew: Position): Boolean = {
     val tileFiltered: Option[Tile] = tiles.find { t: Tile => t.pos.equals(posOld) }
 
-    if (tileFiltered.isEmpty) {
-      logger.error("Cant changeTile " + posOld + " to " + posNew)
+    if (tileFiltered.isEmpty)
       return false
-    }
+
 
     val tile: Tile = tileFiltered.get
     tiles = tiles - tile
