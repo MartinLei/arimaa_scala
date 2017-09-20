@@ -22,6 +22,21 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.getMode should be(ModeEnum.GAME)
   }
 
+  "changePlayer" should "change player" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(8, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+    val controller = new Controller()
+    controller.setMode(ModeEnum.GAME, field)
+
+    controller.moveTile(new Position(1, 1), new Position(1, 2))
+
+    controller.changePlayer() should
+      be(List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER)))
+  }
   "RabbitReachOtherSide" should "gold win, if a rabbit reach the other side" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 7)))
