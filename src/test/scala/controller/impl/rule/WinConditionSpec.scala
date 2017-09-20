@@ -1,6 +1,7 @@
 package controller.impl.rule
 
-import controller.impl.command.TurnManager
+import controller.impl.command.impl.MoveCommand
+import controller.impl.command.{ActionCommand, TurnManager}
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -78,17 +79,20 @@ class WinConditionSpec extends FlatSpec with Matchers {
     WinCondition.rabbitOnOtherSide(field) should be(PlayerNameEnum.SILVER)
   }
 
-  "passivePlayerCantMove" should "active player, if passive player tile can not move" in {
+  "activePlayerCantMove" should "passive player, if active can not move" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.CAT, new Position(1, 5)),
       new Tile(TileNameEnum.DOG, new Position(2, 4)),
-      new Tile(TileNameEnum.DOG, new Position(1, 3)))
+      new Tile(TileNameEnum.DOG, new Position(1, 2)))
     val playerSilverTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 4)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
     val turnManager = new TurnManager()
     turnManager.addTurn(PlayerNameEnum.GOLD)
+    turnManager.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)))))
+    field.changePlayer()
+    turnManager.addTurn(PlayerNameEnum.SILVER)
 
     WinCondition.passivePlayerCantMove(field, turnManager) should be(PlayerNameEnum.GOLD)
   }
