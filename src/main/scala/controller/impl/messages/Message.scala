@@ -51,4 +51,8 @@ object Message {
   def noTileMoved: MessageType = {
     MessageType(MessageText.noTileMoved, MessageEnum.NO_TILE_MOVED)
   }
+
+  def endGame: MessageType = {
+    MessageType(MessageText.endGame, MessageEnum.END_GAME)
+  }
 }

@@ -11,7 +11,7 @@ import util.position.Position
 class Controller extends ControllerTrait {
   private var field: FieldTrait = new Field()
   private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
-  private var mode = new GameMode(field, turnManager)
+  private var mode: Mode = new GameMode(field, turnManager)
 
   override def setMode(modeEnum: ModeEnum, field: FieldTrait): Boolean = modeEnum match {
     case ModeEnum.GAME =>
@@ -37,17 +37,19 @@ class Controller extends ControllerTrait {
   }
 
   override def moveTileUndo(): List[String] = {
-    mode.moveTileUndo()
+    mode.moveTileUndo
   }
 
   override def changePlayer(): List[String] = {
-    val changePlayerMessage = mode.changePlayer()
+    val changePlayerMessage = mode.changePlayer
     if (!changePlayerMessage.isValid)
       return List(changePlayerMessage.text)
 
     val winnerName = mode.getWinnerName
-    if (!winnerName.equals(PlayerNameEnum.NONE))
+    if (!winnerName.equals(PlayerNameEnum.NONE)) {
+      mode = new EndMode()
       return List(MessageText.doWin(winnerName))
+    }
 
     List(changePlayerMessage.text)
   }

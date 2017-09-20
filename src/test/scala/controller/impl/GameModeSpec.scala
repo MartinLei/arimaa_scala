@@ -504,6 +504,7 @@ class GameModeSpec extends FlatSpec with Matchers {
     gameMode.changePlayer() should be(Message.changePlayer(PlayerNameEnum.SILVER))
   }
 
+
   "unDo" should "undo last move" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
@@ -534,4 +535,5 @@ class GameModeSpec extends FlatSpec with Matchers {
     gameMode.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     gameMode.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
   }
+
 }

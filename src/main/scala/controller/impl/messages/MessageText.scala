@@ -97,4 +97,8 @@ object MessageText {
   def errorAddTile(pos: Position): String = {
     "ERROR: addTile(" + pos + ")"
   }
+
+  def endGame: String = {
+    "game is over"
+  }
 }
