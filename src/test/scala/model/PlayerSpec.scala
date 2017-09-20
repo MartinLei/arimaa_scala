@@ -201,3 +201,4 @@ class PlayerSpec extends FlatSpec with Matchers {
     player.hasRabbitOnRow(9) should be(false)
   }
 }
+

@@ -116,6 +116,47 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
     playerTurn.isLastAPushCommand should be(false)
   }
 
+  "equals" should "true, if player turn has same name and same action commands" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+
+    val playerTurn1 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn1.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    val playerTurn2 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn2.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    playerTurn1 should be(playerTurn2)
+  }
+  it should "false, if name are not the same" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val playerTurn1 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn1.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    val playerTurn2 = PlayerTurn(PlayerNameEnum.SILVER)
+    playerTurn2.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    playerTurn1 should not be playerTurn2
+  }
+  it should "false, if action command list are different" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+
+    val playerTurn1 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn1.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    val playerTurn2 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn2.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 3)))))
+
+    playerTurn1 should not be playerTurn2
+  }
 }
 
 
