@@ -157,6 +157,16 @@ class PlayerTurnSpec extends FlatSpec with Matchers {
 
     playerTurn1 should not be playerTurn2
   }
+  it should "false, if class is not a player turn" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+
+    val playerTurn1 = PlayerTurn(PlayerNameEnum.GOLD)
+    playerTurn1.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2)))))
+
+    playerTurn1 should not be new Position(1, 1)
+  }
 }
 
 

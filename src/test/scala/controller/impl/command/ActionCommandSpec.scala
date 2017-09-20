@@ -104,4 +104,11 @@ class ActionCommandSpec extends FlatSpec with Matchers {
 
     actionCommand1 should not be actionCommand2
   }
+  it should "false, if class is not a action command" in {
+    val actionCommand1 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+
+    actionCommand1 should not be new Position(1, 1)
+  }
 }
