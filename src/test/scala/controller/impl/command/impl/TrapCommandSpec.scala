@@ -8,23 +8,29 @@ import util.position.Position
 class TrapCommandSpec extends FlatSpec with Matchers {
 
   val playerGoldTiles = Set(new Tile(TileNameEnum.RABBIT, new Position(3, 3)))
-  val field = new Field(playerGoldTiles, Set())
+  val fieldGlobal = new Field(playerGoldTiles, Set())
 
-  val trapCommand = TrapCommand(field, PlayerNameEnum.GOLD, new Position(3, 3))
+  val trapCommandGlobal = TrapCommand(fieldGlobal, PlayerNameEnum.GOLD, new Position(3, 3))
 
   "doCommand" should "remove tile from the given position" in {
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.RABBIT)
 
-    trapCommand.doCommand() should be(MessageText.doTrap(new Position(3, 3)))
+    trapCommandGlobal.doCommand() should be(MessageText.doTrap(new Position(3, 3)))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+  }
+  it should "get error if change tile is not possible" in {
+    val field = new Field()
+    val trapCommand = TrapCommand(field, PlayerNameEnum.GOLD, new Position(5, 5))
+    trapCommand.doCommand() should
+      be(MessageText.errorChangeTile(PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 5)))
   }
   "undoCommand" should "respawn the tile back to the given position" in {
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
 
-    trapCommand.undoCommand() should be(MessageText.undoTrap(new Position(3, 3)))
+    trapCommandGlobal.undoCommand() should be(MessageText.undoTrap(new Position(3, 3)))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.RABBIT)
   }
 
   "equals" should "true, if name and pos are the same" in {

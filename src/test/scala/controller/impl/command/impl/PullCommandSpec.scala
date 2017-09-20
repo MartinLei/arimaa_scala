@@ -7,26 +7,32 @@ import util.position.Position
 
 class PullCommandSpec extends FlatSpec with Matchers {
 
-  val field = new Field()
-  val pullCommand = PullCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+  val fieldGlobal = new Field()
+  val pullCommandGlobal = PullCommand(fieldGlobal, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
 
   "doCommand" should "pull the tile to the given position" in {
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
 
-    pullCommand.doCommand() should be(MessageText.doPull(new Position(1, 2), new Position(1, 3)))
+    pullCommandGlobal.doCommand() should be(MessageText.doPull(new Position(1, 2), new Position(1, 3)))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+  }
+  it should "get error if change tile is not possible" in {
+    val field = new Field()
+    val pullCommand = PullCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 6))
+    pullCommand.doCommand() should
+      be(MessageText.errorChangeTile(PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 6)))
   }
   "undoCommand" should "pull the tile back to the given position" in {
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
-    pullCommand.undoCommand() should be(MessageText.undoPull(new Position(1, 2), new Position(1, 3)))
+    pullCommandGlobal.undoCommand() should be(MessageText.undoPull(new Position(1, 2), new Position(1, 3)))
 
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
-    field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
+    fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
   }
 
   "equals" should "true, if name and pos are the same" in {
