@@ -22,12 +22,18 @@ object WinCondition {
   }
 
   def winByRabbitOnOtherSide(field: FieldTrait): PlayerNameEnum = {
-    if (field.hasRabbitOnOtherSide(field.actualPlayerName))
+    val actualPlayerRabbitOnSide = field.hasRabbitOnOtherSide(field.actualPlayerName)
+    val passivePlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
+    val passivePlayerRabbitOnSide = field.hasRabbitOnOtherSide(passivePlayerName)
+
+    if (actualPlayerRabbitOnSide && passivePlayerRabbitOnSide)
+      return passivePlayerName
+
+    if (actualPlayerRabbitOnSide)
       return field.actualPlayerName
 
-    val pasPlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
-    if (field.hasRabbitOnOtherSide(pasPlayerName))
-      return pasPlayerName
+    if (passivePlayerRabbitOnSide)
+      return passivePlayerName
 
     PlayerNameEnum.NONE
   }

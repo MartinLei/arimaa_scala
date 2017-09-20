@@ -75,7 +75,6 @@ class WinConditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    field.actualPlayerName = PlayerNameEnum.SILVER
     WinCondition.winByRabbitOnOtherSide(field) should be(PlayerNameEnum.SILVER)
   }
 
