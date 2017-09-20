@@ -8,6 +8,18 @@ import util.position.Position
 
 class TurnManagerSpec extends FlatSpec with Matchers {
 
+  "TurnManager" should "have a construct for init it with a turn" in {
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val field = new Field(playerGoldTiles, Set())
+    val actionCommand = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 1), new Position(1, 2))))
+
+    val turnManager = new TurnManager(PlayerNameEnum.GOLD)
+    turnManager.doAction(actionCommand) should
+      be(List(MessageText.doMove(new Position(1, 1), new Position(1, 2))))
+  }
+
   "addTurn" should "add it to stack" in {
     val turnManager = new TurnManager
     turnManager.addTurn(PlayerNameEnum.GOLD) should be(MessageText.changePlayer(PlayerNameEnum.GOLD))

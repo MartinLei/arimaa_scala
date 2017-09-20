@@ -7,6 +7,10 @@ import util.position.Position
 import scala.collection.mutable
 
 class TurnManager {
+  def this(playerName: PlayerNameEnum) {
+    this()
+    this.addTurn(playerName)
+  }
   var playerStack: mutable.ArrayStack[PlayerTurn] = mutable.ArrayStack()
 
   def addTurn(playerName: PlayerNameEnum): String = {
