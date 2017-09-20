@@ -5,6 +5,7 @@ import util.Coordinate
 import util.position.Position
 
 object MessageText {
+
   def thirdTimeRepetition: String = {
     "Your hole move is the 3th time of appearance"
   }
@@ -87,5 +88,9 @@ object MessageText {
 
   def errorChangeTile(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): String = {
     "ERROR: changeTile(" + playerName + "," + posFrom + "," + posTo + ")"
+  }
+
+  def errorRemoveTile(pos: Position): String = {
+    "ERROR: removeTile(" + pos + ")"
   }
 }

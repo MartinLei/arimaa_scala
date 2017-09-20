@@ -54,11 +54,12 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     name.toString + ":" + tiles.toString()
   }
 
-  def remove(pos: Position): Unit = {
+  def remove(pos: Position): Boolean = {
     if (!isATileThere(pos))
-      return
+      return false
 
     tiles = tiles.filter(tile => !tile.pos.equals(pos))
+    true
   }
 
   def add(tileName: TileNameEnum, pos: Position): Unit = {

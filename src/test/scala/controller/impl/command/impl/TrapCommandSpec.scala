@@ -19,11 +19,11 @@ class TrapCommandSpec extends FlatSpec with Matchers {
 
     fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)
   }
-  it should "get error if change tile is not possible" in {
+  it should "get error if remove tile is not possible" in {
     val field = new Field()
     val trapCommand = TrapCommand(field, PlayerNameEnum.GOLD, new Position(5, 5))
     trapCommand.doCommand() should
-      be(MessageText.errorChangeTile(PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 5)))
+      be(MessageText.errorRemoveTile(new Position(5, 5)))
   }
   "undoCommand" should "respawn the tile back to the given position" in {
     fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.NONE)

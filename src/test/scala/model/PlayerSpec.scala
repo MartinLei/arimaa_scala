@@ -119,7 +119,7 @@ class PlayerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
 
     val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
-    player.remove(new Position(1, 1))
+    player.remove(new Position(1, 1)) should be(true)
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.NONE)
   }
 
@@ -128,7 +128,7 @@ class PlayerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
 
     val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
-    player.remove(new Position(2, 2))
+    player.remove(new Position(2, 2)) should be(false)
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
   }
 

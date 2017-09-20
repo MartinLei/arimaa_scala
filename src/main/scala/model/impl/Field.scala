@@ -198,12 +198,12 @@ class Field() extends FieldTrait {
     PlayerNameEnum.NONE
   }
 
-  override def removeTile(pos: Position): Unit = {
+  override def removeTile(pos: Position): Boolean = {
     val player = getPlayerName(pos)
     player match {
       case PlayerNameEnum.GOLD => playerGold.remove(pos)
       case PlayerNameEnum.SILVER => playerSilver.remove(pos)
-      case PlayerNameEnum.NONE =>
+      case PlayerNameEnum.NONE => false
     }
   }
 

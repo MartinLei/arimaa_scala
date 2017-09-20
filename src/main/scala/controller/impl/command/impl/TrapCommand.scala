@@ -14,7 +14,9 @@ case class TrapCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Posit
   override def doCommand(): String = {
     tileName = field.getTileName(playerName, pos)
 
-    field.removeTile(pos)
+    if (!field.removeTile(pos))
+      return MessageText.errorRemoveTile(pos)
+
     MessageText.doTrap(pos)
   }
 
