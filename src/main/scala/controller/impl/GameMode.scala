@@ -1,32 +1,33 @@
 package controller.impl
 
-import controller.ControllerTrait
 import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
 import controller.impl.messages.{MessageEnum, MessageType}
 import controller.impl.rule.RuleBook
 import model.FieldTrait
+import model.impl.PlayerNameEnum
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import model.impl.{Field, PlayerNameEnum, Tile}
 import util.position.Position
 
 import scala.collection.mutable.ListBuffer
 
-class Controller extends ControllerTrait {
-  private var field: FieldTrait = new Field()
-  private val turnManager = new TurnManager
-  turnManager.addTurn(PlayerNameEnum.GOLD)
+class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
+  override def changePlayer(): List[String] = {
+    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
+    if (!changePlayerRuleComplaint.isValid)
+      return List(changePlayerRuleComplaint.text)
 
-  def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
-    this()
-    this.field = new Field(playerGoldTiles, playerSilverTiles)
-  }
+    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
+    if (winCommandOption.isDefined) {
+      val winCommand = winCommandOption.get
+      val action = ActionCommand(List(winCommand))
+      return turnManager.doAction(action)
+    }
 
-  override def getActPlayerName: PlayerNameEnum = field.actualPlayerName
 
-  override def getFieldAsString: String = {
-    field.toString
+    val nextPlayer = field.changePlayer()
+    List(turnManager.addTurn(nextPlayer))
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
@@ -55,26 +56,9 @@ class Controller extends ControllerTrait {
     turnManager.undoAction()
   }
 
-  override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
+  def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
     field.getTileName(player, pos)
   }
 
-  override def changePlayer(): List[String] = {
-    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
-    if (!changePlayerRuleComplaint.isValid)
-      return List(changePlayerRuleComplaint.text)
-
-    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
-    if (winCommandOption.isDefined) {
-      val winCommand = winCommandOption.get
-      val action = ActionCommand(List(winCommand))
-      return turnManager.doAction(action)
-    }
-
-
-    val nextPlayer = field.changePlayer()
-    List(turnManager.addTurn(nextPlayer))
-
-  }
-
+  def getActPlayerName: PlayerNameEnum = field.actualPlayerName
 }
