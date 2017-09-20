@@ -9,7 +9,7 @@ import util.position.Position
 
 object WinCondition {
 
-  def winByKillAllOtherRabbits(field: FieldTrait): PlayerNameEnum = {
+  def allOtherRabbitsDown(field: FieldTrait): PlayerNameEnum = {
     val actPlayerName = field.actualPlayerName
     val pasPlayerName = PlayerNameEnum.getInvertPlayer(actPlayerName)
 
@@ -21,7 +21,7 @@ object WinCondition {
     PlayerNameEnum.NONE
   }
 
-  def winByRabbitOnOtherSide(field: FieldTrait): PlayerNameEnum = {
+  def rabbitOnOtherSide(field: FieldTrait): PlayerNameEnum = {
     val actualPlayerRabbitOnSide = field.hasRabbitOnOtherSide(field.actualPlayerName)
     val passivePlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
     val passivePlayerRabbitOnSide = field.hasRabbitOnOtherSide(passivePlayerName)
@@ -38,7 +38,7 @@ object WinCondition {
     PlayerNameEnum.NONE
   }
 
-  def winByPassivePlayerCantMove(field: FieldTrait, turnManager: TurnManager): PlayerNameEnum = {
+  def passivePlayerCantMove(field: FieldTrait, turnManager: TurnManager): PlayerNameEnum = {
     val passivePlayer = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
 
     if (isPlayerNotMoveAble(field, turnManager, passivePlayer))

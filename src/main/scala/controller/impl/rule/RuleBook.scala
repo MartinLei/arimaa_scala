@@ -73,17 +73,17 @@ object RuleBook {
   }
 
   def getWinner(field: FieldTrait, turnManager: TurnManager): PlayerNameEnum = {
-    val winPlayerNameRabbitOnOtherSide = WinCondition.winByRabbitOnOtherSide(field)
-    if (!winPlayerNameRabbitOnOtherSide.equals(PlayerNameEnum.NONE))
-      return winPlayerNameRabbitOnOtherSide
+    val rabbitOnOtherSide = WinCondition.rabbitOnOtherSide(field)
+    if (!rabbitOnOtherSide.equals(PlayerNameEnum.NONE))
+      return rabbitOnOtherSide
 
-    val winPlayerNameKillALlOtherRabbits = WinCondition.winByKillAllOtherRabbits(field)
-    if (!winPlayerNameKillALlOtherRabbits.equals(PlayerNameEnum.NONE))
-      return winPlayerNameKillALlOtherRabbits
+    val allOtherRabbitsDown = WinCondition.allOtherRabbitsDown(field)
+    if (!allOtherRabbitsDown.equals(PlayerNameEnum.NONE))
+      return allOtherRabbitsDown
 
-    val winPlayerPassiveCantMove = WinCondition.winByPassivePlayerCantMove(field, turnManager)
-    if (!winPlayerPassiveCantMove.equals(PlayerNameEnum.NONE))
-      return winPlayerPassiveCantMove
+    val passivePlayerCantMove = WinCondition.passivePlayerCantMove(field, turnManager)
+    if (!passivePlayerCantMove.equals(PlayerNameEnum.NONE))
+      return passivePlayerCantMove
 
     //TODO  Check if the only moves player B has are 3rd time repetitions. If so player A wins.
 
