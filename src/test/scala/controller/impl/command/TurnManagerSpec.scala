@@ -90,6 +90,12 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.undoAction should
       be(List(MessageText.emptyStack))
   }
+  it should "empty stack if stack is empty" in {
+    val turnManager = new TurnManager
+    turnManager.undoAction should
+      be(List(MessageText.emptyStack))
+  }
+
   "getActualPlayerLastActionPosFrom" should "get the players last action pos From" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)),
@@ -110,7 +116,6 @@ class TurnManagerSpec extends FlatSpec with Matchers {
   }
   it should "null if stack is empty" in {
     val turnManager = new TurnManager
-    turnManager.addTurn(PlayerNameEnum.GOLD)
 
     turnManager.getActualPlayerLastActionPosFrom should be(Option(null))
   }
@@ -134,10 +139,10 @@ class TurnManagerSpec extends FlatSpec with Matchers {
   }
   it should "null if stack is empty" in {
     val turnManager = new TurnManager
-    turnManager.addTurn(PlayerNameEnum.GOLD)
 
-    turnManager.getActualPlayerLastActionPosFrom should be(Option(null))
+    turnManager.getActualPlayerLastActionPosTo should be(Option(null))
   }
+
   "isLastAPushCommand" should "true if last command is a push command" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 2)))
@@ -163,6 +168,10 @@ class TurnManagerSpec extends FlatSpec with Matchers {
     turnManager.addTurn(PlayerNameEnum.GOLD)
     turnManager.doAction(actionCommand)
 
+    turnManager.isLastAPushCommand should be(false)
+  }
+  it should "false, if stack is empty" in {
+    val turnManager = new TurnManager
     turnManager.isLastAPushCommand should be(false)
   }
 
