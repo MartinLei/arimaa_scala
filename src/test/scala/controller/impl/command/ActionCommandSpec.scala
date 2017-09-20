@@ -82,4 +82,26 @@ class ActionCommandSpec extends FlatSpec with Matchers {
     actionCommand1.isLastAPushCommand should be(false)
   }
 
+  "equals" should "true, if stack is the same" in {
+    val actionCommand1 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+
+    val actionCommand2 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+
+    actionCommand1 should be(actionCommand2)
+  }
+  it should "false, if not same" in {
+    val actionCommand1 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))))
+
+    val actionCommand2 = ActionCommand(List(
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)),
+      MoveCommand(field, PlayerNameEnum.GOLD, new Position(2, 3), new Position(1, 4))))
+
+    actionCommand1 should not be actionCommand2
+  }
 }

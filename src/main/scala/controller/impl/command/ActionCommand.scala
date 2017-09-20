@@ -70,4 +70,12 @@ case class ActionCommand(commandList: List[CommandTrait]) {
     lastCommand.isInstanceOf[PushCommand]
   }
 
+  override def equals(that: Any): Boolean = that match {
+    case that: ActionCommand => that.isInstanceOf[ActionCommand] && that.hashCode() == this.hashCode()
+    case _ => false
+  }
+
+  override def hashCode(): Int = toString.hashCode
+
+  override def toString: String = "{" + commandList + "}"
 }

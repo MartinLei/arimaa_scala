@@ -16,4 +16,14 @@ case class MoveCommand(field: FieldTrait, playerName: PlayerNameEnum, posFrom: P
     field.changeTilePos(playerName, posTo, posFrom)
     MessageText.undoMove(posFrom, posTo)
   }
+
+  override def equals(that: Any): Boolean = that match {
+    case that: MoveCommand => that.isInstanceOf[MoveCommand] && that.hashCode() == this.hashCode()
+    case _ => false
+  }
+
+  override def hashCode(): Int = toString.hashCode
+
+  override def toString: String = "{" + playerName + " move" + " from" + posFrom + " to" + posTo + "}"
+
 }
