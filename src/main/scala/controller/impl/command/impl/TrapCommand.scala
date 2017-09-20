@@ -22,4 +22,13 @@ case class TrapCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Posit
     field.addTile(playerName, tileName, pos)
     MessageText.undoTrap(pos)
   }
+
+  override def equals(that: Any): Boolean = that match {
+    case that: TrapCommand => that.isInstanceOf[TrapCommand] && that.hashCode() == this.hashCode()
+    case _ => false
+  }
+
+  override def hashCode(): Int = toString.hashCode
+
+  override def toString: String = "{" + playerName + " trap" + " pos" + pos + "}"
 }

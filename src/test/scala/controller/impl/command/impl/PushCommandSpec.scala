@@ -28,4 +28,23 @@ class PushCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.RABBIT)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
   }
+
+  "equals" should "true, if name and pos are the same" in {
+    val field1 = new Field()
+    val pushCommand1 = PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+
+    val field2 = new Field()
+    val pushCommand2 = PushCommand(field2, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+
+    pushCommand1 should be(pushCommand2)
+  }
+  it should "false if not" in {
+    val field1 = new Field()
+    val pushCommand1 = PushCommand(field1, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3))
+
+    val field2 = new Field()
+    val pushCommand2 = PushCommand(field2, PlayerNameEnum.GOLD, new Position(1, 3), new Position(1, 4))
+
+    pushCommand1 should not be pushCommand2
+  }
 }

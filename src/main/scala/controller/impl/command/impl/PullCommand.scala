@@ -16,4 +16,13 @@ case class PullCommand(field: FieldTrait, playerName: PlayerNameEnum, posFrom: P
     field.changeTilePos(playerName, posTo, posFrom)
     MessageText.undoPull(posFrom, posTo)
   }
+
+  override def equals(that: Any): Boolean = that match {
+    case that: PullCommand => that.isInstanceOf[PullCommand] && that.hashCode() == this.hashCode()
+    case _ => false
+  }
+
+  override def hashCode(): Int = toString.hashCode
+
+  override def toString: String = "{" + playerName + " pull" + " from" + posFrom + " to" + posTo + "}"
 }
