@@ -15,12 +15,11 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 # TODO
 ## inf
 - get list of moves
-- start change tile set
+- start change tile mode
+- victory mode
 ## rules
 - coordinate should only be one tile distance
 - 4 steps per round (player)
-- detect third time same move
-- victory
 
 ## bug
 
