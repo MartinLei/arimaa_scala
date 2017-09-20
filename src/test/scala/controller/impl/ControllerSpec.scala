@@ -120,10 +120,12 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.setMode(ModeEnum.GAME, field)
 
     controller.moveTile(new Position(1, 2), new Position(1, 3))
-
+    print(controller.getFieldAsString)
     controller.changePlayer() should be(
       List(
         MessageText.doWin(PlayerNameEnum.GOLD)))
+
+    print(controller.getFieldAsString)
   }
 
 }

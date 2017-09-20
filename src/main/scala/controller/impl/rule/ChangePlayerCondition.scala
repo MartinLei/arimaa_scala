@@ -2,11 +2,10 @@ package controller.impl.rule
 
 import controller.impl.command.TurnManager
 
-object PreChangePlayerCondition {
+object ChangePlayerCondition {
   def isMoveThirdTimeRepetition(turnManager: TurnManager): Boolean = {
     turnManager.isLastActionThirdTimeRepetition
   }
-
 
   def isPushNotFinish(turnManager: TurnManager): Boolean = {
     turnManager.isLastAPushCommand

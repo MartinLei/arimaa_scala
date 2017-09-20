@@ -6,7 +6,7 @@ import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
-class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
+class ChangePlayerConditionSpec extends FlatSpec with Matchers {
 
   "isPushNotFinish" should "true if, last command is a push command" in {
     val playerGoldTiles = Set(
@@ -21,7 +21,7 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     turnManager.addTurn(PlayerNameEnum.GOLD)
     turnManager.doAction(action)
 
-    PreChangePlayerCondition.isPushNotFinish(turnManager) should be(true)
+    ChangePlayerCondition.isPushNotFinish(turnManager) should be(true)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -38,7 +38,7 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     turnManager.doAction(action1)
     turnManager.doAction(action2)
 
-    PreChangePlayerCondition.isPushNotFinish(turnManager) should be(false)
+    ChangePlayerCondition.isPushNotFinish(turnManager) should be(false)
   }
   "isNoTileMovedFromPlayer" should "true, if player no move any tile" in {
     val playerGoldTiles = Set(
@@ -48,12 +48,12 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     val turnManager = new TurnManager()
     turnManager.addTurn(PlayerNameEnum.GOLD)
 
-    PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
+    ChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
   }
   it should "true,if stack is empty" in {
     val turnManager = new TurnManager()
 
-    PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
+    ChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(true)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -66,7 +66,7 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     turnManager.addTurn(PlayerNameEnum.GOLD)
     turnManager.doAction(action)
 
-    PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(false)
+    ChangePlayerCondition.isNoTileMovedFromPlayer(turnManager) should be(false)
   }
 
   "isMoveThirdTimeRepetition" should "true, if the move is the 3th time of repetition in players game" in {
@@ -108,7 +108,7 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     turnManager.addTurn(PlayerNameEnum.GOLD)
     turnManager.doAction(actionGold5)
 
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(true)
+    ChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(true)
   }
   it should "false, if not" in {
     val playerGoldTiles = Set(
@@ -151,6 +151,6 @@ class PreChangePlayerConditionSpec extends FlatSpec with Matchers {
     turnManager.doAction(actionGold5)
 
     turnManager.doAction(actionGold6)
-    PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(false)
+    ChangePlayerCondition.isMoveThirdTimeRepetition(turnManager) should be(false)
   }
 }

@@ -42,7 +42,7 @@ object WinCondition {
     val passivePlayer = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
 
     if (isPlayerNotMoveAble(field, turnManager, passivePlayer))
-      return field.actualPlayerName
+      return passivePlayer
 
     PlayerNameEnum.NONE
   }

@@ -60,13 +60,13 @@ object RuleBook {
 
   def isChangePlayerRuleComplaint(field: FieldTrait, turnManager: TurnManager): MessageType = {
 
-    if (PreChangePlayerCondition.isNoTileMovedFromPlayer(turnManager))
+    if (ChangePlayerCondition.isNoTileMovedFromPlayer(turnManager))
       return Message.noTileMoved
 
-    if (PreChangePlayerCondition.isPushNotFinish(turnManager))
+    if (ChangePlayerCondition.isPushNotFinish(turnManager))
       return Message.pushNotFinish
 
-    if (PreChangePlayerCondition.isMoveThirdTimeRepetition(turnManager))
+    if (ChangePlayerCondition.isMoveThirdTimeRepetition(turnManager))
       return Message.thirdTimeRepetition
 
     Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
