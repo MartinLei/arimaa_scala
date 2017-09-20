@@ -19,6 +19,11 @@ class MoveCommandSpec extends FlatSpec with Matchers {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
   }
+  it should "get error if change tile is not possible" in {
+    val moveCommand = MoveCommand(field, PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 6))
+    moveCommand.doCommand() should
+      be(MessageText.errorChangeTile(PlayerNameEnum.GOLD, new Position(5, 5), new Position(5, 6)))
+  }
   "undoCommand" should "move the tile back to the given position" in {
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 2)) should be(TileNameEnum.NONE)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)

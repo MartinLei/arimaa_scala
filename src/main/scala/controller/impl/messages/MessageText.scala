@@ -84,4 +84,8 @@ object MessageText {
   def noTileMoved: String = {
     "You have not move any tile"
   }
+
+  def errorChangeTile(playerName: PlayerNameEnum, posFrom: Position, posTo: Position): String = {
+    "ERROR: changeTile(" + playerName + "," + posFrom + "," + posTo + ")"
+  }
 }

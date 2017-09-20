@@ -8,7 +8,9 @@ import util.position.Position
 
 case class MoveCommand(field: FieldTrait, playerName: PlayerNameEnum, posFrom: Position, posTo: Position) extends CommandTrait {
   override def doCommand(): String = {
-    field.changeTilePos(playerName, posFrom, posTo)
+    if (!field.changeTilePos(playerName, posFrom, posTo))
+      return MessageText.errorChangeTile(playerName, posFrom, posTo)
+
     MessageText.doMove(posFrom, posTo)
   }
 
