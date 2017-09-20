@@ -1,27 +1,17 @@
 package controller.impl
 
 import controller.ControllerTrait
-import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
-import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
-import controller.impl.messages.{MessageEnum, MessageType}
-import controller.impl.rule.RuleBook
+import controller.impl.command.TurnManager
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
-import model.impl.{Field, PlayerNameEnum, Tile}
+import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
 
-import scala.collection.mutable.ListBuffer
-
 class Controller extends ControllerTrait {
-  private var field: FieldTrait = new Field()
-  private val turnManager = new TurnManager
-  turnManager.addTurn(PlayerNameEnum.GOLD)
-
-  def this(playerGoldTiles: Set[Tile], playerSilverTiles: Set[Tile]) {
-    this()
-    this.field = new Field(playerGoldTiles, playerSilverTiles)
-  }
+  private val field: FieldTrait = new Field()
+  private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
+  private val mode = new GameMode(field, turnManager)
 
   override def getActPlayerName: PlayerNameEnum = field.actualPlayerName
 
@@ -29,52 +19,20 @@ class Controller extends ControllerTrait {
     field.toString
   }
 
-  override def moveTile(posFrom: Position, posTo: Position): List[String] = {
-    val actualPlayerName = field.actualPlayerName
-    val ruleComplaint: MessageType = RuleBook.isMoveRuleComplaint(field, turnManager, actualPlayerName, posFrom, posTo)
-    if (!ruleComplaint.isValid)
-      return List(ruleComplaint.text)
-
-    var commandList: ListBuffer[CommandTrait] = ListBuffer()
-
-    val actPlayerName = field.actualPlayerName
-    ruleComplaint.messageType match {
-      case MessageEnum.MOVE => commandList.+=(MoveCommand(field, actPlayerName, posFrom, posTo))
-      case MessageEnum.PUSH => commandList.+=(PushCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
-      case MessageEnum.PULL => commandList.+=(PullCommand(field, PlayerNameEnum.getInvertPlayer(actPlayerName), posFrom, posTo))
-    }
-
-    val postCommandList: List[CommandTrait] = RuleBook.postMoveCommand(field, posFrom, posTo)
-    commandList.++=(postCommandList)
-
-    val action = ActionCommand(commandList.toList)
-    turnManager.doAction(action)
-  }
-
-  override def moveTileUndo(): List[String] = {
-    turnManager.undoAction()
-  }
-
   override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
     field.getTileName(player, pos)
   }
 
+  override def moveTile(posFrom: Position, posTo: Position): List[String] = {
+    mode.moveTile(posFrom, posTo)
+  }
+
+  override def moveTileUndo(): List[String] = {
+    mode.moveTileUndo()
+  }
+
   override def changePlayer(): List[String] = {
-    val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
-    if (!changePlayerRuleComplaint.isValid)
-      return List(changePlayerRuleComplaint.text)
-
-    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
-    if (winCommandOption.isDefined) {
-      val winCommand = winCommandOption.get
-      val action = ActionCommand(List(winCommand))
-      return turnManager.doAction(action)
-    }
-
-
-    val nextPlayer = field.changePlayer()
-    List(turnManager.addTurn(nextPlayer))
-
+    mode.changePlayer()
   }
 
 }
