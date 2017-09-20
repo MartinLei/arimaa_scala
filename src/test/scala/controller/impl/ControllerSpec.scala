@@ -35,6 +35,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.changePlayer() should
       be(List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER),
         MessageText.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if a rabbit reach the other side" in {
@@ -50,6 +51,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.changePlayer() should
       be(List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER),
         MessageText.doWin(PlayerNameEnum.SILVER)))
   }
   it should "actual player win, if both player rabbit reach the other side" in {
@@ -65,6 +67,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.changePlayer() should
       be(List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER),
         MessageText.doWin(PlayerNameEnum.GOLD)))
   }
 
@@ -81,6 +84,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.changePlayer() should be(
       List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER),
         MessageText.doWin(PlayerNameEnum.GOLD)))
   }
   it should "silver win, if gold has no rabbits" in {
@@ -100,6 +104,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.changePlayer() should be(
       List(
+        MessageText.changePlayer(PlayerNameEnum.SILVER),
         MessageText.doWin(PlayerNameEnum.SILVER)))
   }
 

@@ -3,11 +3,14 @@ package controller.impl
 import controller.ControllerTrait
 import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.TurnManager
+import controller.impl.messages.MessageText
 import model.FieldTrait
 import model.impl.PlayerNameEnum.PlayerNameEnum
 import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
+
+import scala.collection.mutable.ListBuffer
 
 class Controller extends ControllerTrait {
   private val field: FieldTrait = new Field()
@@ -45,7 +48,14 @@ class Controller extends ControllerTrait {
   }
 
   override def changePlayer(): List[String] = {
-    mode.changePlayer()
+    val messageList: ListBuffer[String] = ListBuffer()
+    messageList.+=(mode.changePlayer())
+
+    val winnerName = mode.getWinnerName
+    if (!winnerName.equals(PlayerNameEnum.NONE))
+      messageList.+=(MessageText.doWin(winnerName))
+
+    messageList.toList
   }
 
 

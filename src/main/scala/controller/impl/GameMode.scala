@@ -13,21 +13,17 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
-  override def changePlayer(): List[String] = {
+  override def changePlayer(): String = {
     val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
-      return List(changePlayerRuleComplaint.text)
-
-    val winCommandOption: Option[CommandTrait] = RuleBook.winCommand(field, turnManager)
-    if (winCommandOption.isDefined) {
-      val winCommand = winCommandOption.get
-      val action = ActionCommand(List(winCommand))
-      return turnManager.doAction(action)
-    }
-
+      return changePlayerRuleComplaint.text
 
     val nextPlayer = field.changePlayer()
-    List(turnManager.addTurn(nextPlayer))
+    turnManager.addTurn(nextPlayer)
+  }
+
+  def getWinnerName: PlayerNameEnum = {
+    RuleBook.getWinner(field, turnManager)
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {

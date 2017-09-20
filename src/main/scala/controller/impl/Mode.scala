@@ -3,7 +3,7 @@ package controller.impl
 import util.position.Position
 
 trait Mode {
-  def changePlayer(): List[String]
+  def changePlayer(): String
 
   def moveTile(posFrom: Position, posTo: Position): List[String]
 

@@ -1,6 +1,6 @@
 package controller.impl.rule
 
-import controller.impl.command.impl.{TrapCommand, WinCommand}
+import controller.impl.command.impl.TrapCommand
 import controller.impl.command.{CommandTrait, TurnManager}
 import controller.impl.messages.{Message, MessageType}
 import model.FieldTrait
@@ -72,21 +72,21 @@ object RuleBook {
     Message.changePlayer(PlayerNameEnum.getInvertPlayer(field.actualPlayerName))
   }
 
-  def winCommand(field: FieldTrait, turnManager: TurnManager): Option[CommandTrait] = {
+  def getWinner(field: FieldTrait, turnManager: TurnManager): PlayerNameEnum = {
     val winPlayerNameRabbitOnOtherSide = WinCondition.winByRabbitOnOtherSide(field)
     if (!winPlayerNameRabbitOnOtherSide.equals(PlayerNameEnum.NONE))
-      return Option(WinCommand(field, winPlayerNameRabbitOnOtherSide))
+      return winPlayerNameRabbitOnOtherSide
 
     val winPlayerNameKillALlOtherRabbits = WinCondition.winByKillAllOtherRabbits(field)
     if (!winPlayerNameKillALlOtherRabbits.equals(PlayerNameEnum.NONE))
-      return Option(WinCommand(field, winPlayerNameKillALlOtherRabbits))
+      return winPlayerNameKillALlOtherRabbits
 
     val winPlayerPassiveCantMove = WinCondition.winByPassivePlayerCantMove(field, turnManager)
     if (!winPlayerPassiveCantMove.equals(PlayerNameEnum.NONE))
-      return Option(WinCommand(field, winPlayerPassiveCantMove))
+      return winPlayerPassiveCantMove
 
     //TODO  Check if the only moves player B has are 3rd time repetitions. If so player A wins.
 
-    Option(null)
+    PlayerNameEnum.NONE
   }
 }
