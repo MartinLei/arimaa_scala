@@ -286,23 +286,23 @@ class FieldSpec extends FlatSpec with Matchers {
   "addTile" should "add the tile to the given player" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.NONE)
-    field.addTile(PlayerNameEnum.GOLD, TileNameEnum.RABBIT, new Position(1, 3))
+    field.addTile(PlayerNameEnum.GOLD, TileNameEnum.RABBIT, new Position(1, 3)) should be(true)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 3)) should be(TileNameEnum.RABBIT)
 
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.NONE)
-    field.addTile(PlayerNameEnum.SILVER, TileNameEnum.RABBIT, new Position(1, 6))
+    field.addTile(PlayerNameEnum.SILVER, TileNameEnum.RABBIT, new Position(1, 6)) should be(true)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 6)) should be(TileNameEnum.RABBIT)
   }
   it should "do nothing if player is NONE" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 5)) should be(TileNameEnum.NONE)
-    field.addTile(PlayerNameEnum.NONE, TileNameEnum.RABBIT, new Position(1, 5))
+    field.addTile(PlayerNameEnum.NONE, TileNameEnum.RABBIT, new Position(1, 5)) should be(false)
     field.getTileName(PlayerNameEnum.GOLD, new Position(1, 5)) should be(TileNameEnum.NONE)
   }
   it should "do nothing if tile is already occupied by other player" in {
     val field = new Field()
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 2)) should be(TileNameEnum.NONE)
-    field.addTile(PlayerNameEnum.SILVER, TileNameEnum.RABBIT, new Position(1, 2))
+    field.addTile(PlayerNameEnum.SILVER, TileNameEnum.RABBIT, new Position(1, 2)) should be(false)
     field.getTileName(PlayerNameEnum.SILVER, new Position(1, 2)) should be(TileNameEnum.NONE)
   }
 

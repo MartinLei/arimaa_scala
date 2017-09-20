@@ -137,7 +137,7 @@ class PlayerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
 
     val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
-    player.add(TileNameEnum.RABBIT, new Position(1, 3))
+    player.add(TileNameEnum.RABBIT, new Position(1, 3)) should be(true)
 
     player.getTileName(new Position(1, 3)) should be(TileNameEnum.RABBIT)
   }
@@ -146,7 +146,7 @@ class PlayerSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
 
     val player: Player = new Player(PlayerNameEnum.GOLD, tiles)
-    player.add(TileNameEnum.RABBIT, new Position(1, 1))
+    player.add(TileNameEnum.RABBIT, new Position(1, 1)) should be(false)
 
     player.getTileName(new Position(1, 1)) should be(TileNameEnum.RABBIT)
     player.getTiles should contain theSameElementsAs tiles

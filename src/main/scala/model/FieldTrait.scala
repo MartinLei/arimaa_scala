@@ -22,7 +22,7 @@ trait FieldTrait {
 
   def removeTile(pos: Position): Boolean
 
-  def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Unit
+  def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Boolean
 
   var actualPlayerName: PlayerNameEnum
 

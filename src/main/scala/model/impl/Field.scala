@@ -201,14 +201,14 @@ class Field() extends FieldTrait {
     }
   }
 
-  override def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Unit = {
+  override def addTile(playerName: PlayerNameEnum, tileName: TileNameEnum, pos: Position): Boolean = {
     if (isOccupied(pos))
-      return
+      return false
 
     playerName match {
       case PlayerNameEnum.GOLD => playerGold.add(tileName, pos)
       case PlayerNameEnum.SILVER => playerSilver.add(tileName, pos)
-      case PlayerNameEnum.NONE =>
+      case PlayerNameEnum.NONE => false
     }
   }
 

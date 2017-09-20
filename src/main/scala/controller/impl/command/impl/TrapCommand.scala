@@ -21,7 +21,9 @@ case class TrapCommand(field: FieldTrait, playerName: PlayerNameEnum, pos: Posit
   }
 
   override def undoCommand(): String = {
-    field.addTile(playerName, tileName, pos)
+    if (!field.addTile(playerName, tileName, pos))
+      return MessageText.errorAddTile(pos)
+
     MessageText.undoTrap(pos)
   }
 

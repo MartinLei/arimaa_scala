@@ -59,11 +59,13 @@ class Player(val name: PlayerNameEnum, newTiles: Set[Tile]) {
     true
   }
 
-  def add(tileName: TileNameEnum, pos: Position): Unit = {
+  def add(tileName: TileNameEnum, pos: Position): Boolean = {
     if (isATileThere(pos))
-      return
+      return false
+
     val tile = new Tile(tileName, pos)
     tiles = tiles.+(tile)
+    true
   }
 
   def hasNoRabbits: Boolean = {

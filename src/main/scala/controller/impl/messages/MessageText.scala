@@ -93,4 +93,8 @@ object MessageText {
   def errorRemoveTile(pos: Position): String = {
     "ERROR: removeTile(" + pos + ")"
   }
+
+  def errorAddTile(pos: Position): String = {
+    "ERROR: addTile(" + pos + ")"
+  }
 }

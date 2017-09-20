@@ -32,6 +32,14 @@ class TrapCommandSpec extends FlatSpec with Matchers {
 
     fieldGlobal.getTileName(PlayerNameEnum.GOLD, new Position(3, 3)) should be(TileNameEnum.RABBIT)
   }
+  it should "get error if add tile is not possible" in {
+    val field = new Field()
+    val trapCommand = TrapCommand(field, PlayerNameEnum.GOLD, new Position(1, 1))
+    trapCommand.doCommand() should be(MessageText.doTrap(new Position(1, 1)))
+    field.addTile(PlayerNameEnum.GOLD, TileNameEnum.RABBIT, new Position(1, 1))
+
+    trapCommand.undoCommand() should be(MessageText.errorAddTile(new Position(1, 1)))
+  }
 
   "equals" should "true, if name and pos are the same" in {
     val field1 = new Field()
