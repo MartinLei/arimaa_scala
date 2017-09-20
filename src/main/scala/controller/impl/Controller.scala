@@ -5,8 +5,6 @@ import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.TurnManager
 import controller.impl.messages.MessageText
 import model.FieldTrait
-import model.impl.PlayerNameEnum.PlayerNameEnum
-import model.impl.TileNameEnum.TileNameEnum
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
 
@@ -32,10 +30,6 @@ class Controller extends ControllerTrait {
 
   override def getFieldAsString: String = {
     field.toString
-  }
-
-  override def getTileName(player: PlayerNameEnum, pos: Position): TileNameEnum = {
-    field.getTileName(player, pos)
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
