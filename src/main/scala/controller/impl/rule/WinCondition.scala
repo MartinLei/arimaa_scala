@@ -26,8 +26,8 @@ object WinCondition {
     val passivePlayerName = PlayerNameEnum.getInvertPlayer(field.actualPlayerName)
     val passivePlayerRabbitOnSide = field.hasRabbitOnOtherSide(passivePlayerName)
 
-    if (actualPlayerRabbitOnSide.equals(false) && passivePlayerRabbitOnSide.equals(false))
-      return passivePlayerName
+    if (actualPlayerRabbitOnSide && passivePlayerRabbitOnSide)
+      return field.actualPlayerName
 
     if (actualPlayerRabbitOnSide)
       return field.actualPlayerName

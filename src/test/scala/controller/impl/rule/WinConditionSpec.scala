@@ -76,7 +76,7 @@ class WinConditionSpec extends FlatSpec with Matchers {
       new Tile(TileNameEnum.RABBIT, new Position(8, 1)))
     val field = new Field(playerGoldTiles, playerSilverTiles)
 
-    WinCondition.rabbitOnOtherSide(field) should be(PlayerNameEnum.SILVER)
+    WinCondition.rabbitOnOtherSide(field) should be(PlayerNameEnum.GOLD)
   }
 
   "activePlayerCantMove" should "passive player, if active can not move" in {
