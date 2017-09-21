@@ -39,10 +39,10 @@ class Controller extends ControllerTrait {
     mode.moveTileUndo
   }
 
-  override def changePlayer(): List[String] = {
+  override def changePlayer: String = {
     val changePlayerMessage = mode.changePlayer
 
-    List(changePlayerMessage.text)
+    changePlayerMessage.text
   }
 
 

@@ -26,8 +26,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.moveTile(new Position(1, 1), new Position(1, 2))
 
     controller.changePlayer() should
-      be(List(
-        MessageText.changePlayer(PlayerNameEnum.SILVER)))
+      be(MessageText.changePlayer(PlayerNameEnum.SILVER))
   }
   it should "set Mode to endMode if message ist win" in {
     val playerGoldTiles = Set(

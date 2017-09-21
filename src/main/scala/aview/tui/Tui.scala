@@ -21,9 +21,9 @@ class Tui(controller: ControllerTrait) {
       logger.info("Bye")
       false
     case "c" =>
-      val messageList: List[String] = controller.changePlayer()
+      val message = controller.changePlayer
 
-      printControllerResponse(messageList)
+      printControllerResponse(List(message))
       true
     case "u" =>
       val messageList: List[String] = controller.moveTileUndo()

@@ -5,7 +5,7 @@ import model.FieldTrait
 import util.position.Position
 
 trait ControllerTrait {
-  def changePlayer(): List[String]
+  def changePlayer: String
 
   def moveTile(posFrom: Position, posTo: Position): List[String]
 
