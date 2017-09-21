@@ -13,13 +13,19 @@ class Controller extends ControllerTrait {
   private val turnManager = new TurnManager(PlayerNameEnum.GOLD)
   private var mode: Mode = new GameMode(field, turnManager)
 
-  override def getMode: ModeEnum = {
-    if (mode.isInstanceOf[GameMode])
-      return ModeEnum.GAME
-    if (mode.isInstanceOf[EndMode])
-      return ModeEnum.END
+  override def setMode(modeEnum: ModeEnum, field: FieldTrait): Boolean = modeEnum match {
+    case ModeEnum.GAME =>
+      this.field = field
+      mode = new GameMode(field, turnManager)
+      true
+    case ModeEnum.END =>
+      mode = new EndMode
+      true
+    case _ => false
+  }
 
-    ModeEnum.NONE
+  override def getMode: ModeEnum = {
+    mode.modeType
   }
 
   override def changePlayer: String = {
@@ -41,16 +47,6 @@ class Controller extends ControllerTrait {
     mode.moveTileUndo
   }
 
-  override def setMode(modeEnum: ModeEnum, field: FieldTrait): Boolean = modeEnum match {
-    case ModeEnum.GAME =>
-      this.field = field
-      mode = new GameMode(field, turnManager)
-      true
-    case ModeEnum.END =>
-      mode = new EndMode
-      true
-    case _ => false
-  }
 
 
 }

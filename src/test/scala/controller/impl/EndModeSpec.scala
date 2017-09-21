@@ -5,6 +5,10 @@ import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
 class EndModeSpec extends FlatSpec with Matchers {
+  "A End Mode" should "have a mode of END" in {
+    val endMode = new EndMode
+    endMode.modeType should be(ModeEnum.END)
+  }
   "changePlayer" should "get end game message" in {
     val endMode = new EndMode()
     endMode.changePlayer should be(Message.endGame)

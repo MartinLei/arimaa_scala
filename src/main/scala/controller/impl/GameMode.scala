@@ -1,5 +1,6 @@
 package controller.impl
 
+import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
 import controller.impl.messages.{Message, MessageEnum, MessageType}
@@ -13,6 +14,8 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
+  override val modeType: ModeEnum = ModeEnum.GAME
+
   override def changePlayer: MessageType = {
     val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
@@ -58,4 +61,5 @@ class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
   }
 
   def getActPlayerName: PlayerNameEnum = field.actualPlayerName
+
 }

@@ -14,6 +14,8 @@ class GameModeSpec extends FlatSpec with Matchers {
     val gameMode = new GameMode(new Field(), new TurnManager(PlayerNameEnum.GOLD))
     gameMode.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
     gameMode.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
+
+    gameMode.modeType should be(ModeEnum.GAME)
   }
   it should "have a constructor to can set specific tiles" in {
     val playerGoldTiles = Set(
