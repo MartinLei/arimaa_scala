@@ -18,6 +18,7 @@ object MessageEnum extends Enumeration {
   val NO_TILE_MOVED: Value = Value("NO_TILE_MOVED")
   val THIRD_TIME_REPETITION: Value = Value("THIRD_TIME_REPETITION")
   val END_GAME: Value = Value("END_GAME")
+  val WIN: Value = Value("WIN")
 
   def isValid(element: RuleEnum): Boolean = {
     if (element.equals(MessageEnum.MOVE) || element.equals(MessageEnum.PUSH) || element.equals(MessageEnum.PULL)

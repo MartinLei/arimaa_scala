@@ -2,7 +2,7 @@ package controller.impl
 
 import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
-import controller.impl.messages.{MessageEnum, MessageType}
+import controller.impl.messages.{Message, MessageEnum, MessageType}
 import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum
@@ -13,18 +13,19 @@ import util.position.Position
 import scala.collection.mutable.ListBuffer
 
 class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
-  override def changePlayer(): MessageType = {
+  override def changePlayer: MessageType = {
     val changePlayerRuleComplaint: MessageType = RuleBook.isChangePlayerRuleComplaint(field, turnManager)
     if (!changePlayerRuleComplaint.isValid)
       return changePlayerRuleComplaint
+
+    val winnerName = RuleBook.getWinner(field, turnManager)
+    if (!winnerName.equals(PlayerNameEnum.NONE))
+      return Message.winPlayer(winnerName)
 
     val nextPlayer = field.changePlayer()
     turnManager.addTurn(nextPlayer)
   }
 
-  def getWinnerName: PlayerNameEnum = {
-    RuleBook.getWinner(field, turnManager)
-  }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {
     val actualPlayerName = field.actualPlayerName
@@ -48,7 +49,7 @@ class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
     turnManager.doAction(action)
   }
 
-  override def moveTileUndo(): List[String] = {
+  override def moveTileUndo: List[String] = {
     turnManager.undoAction()
   }
 

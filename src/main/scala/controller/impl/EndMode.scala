@@ -1,8 +1,6 @@
 package controller.impl
 
 import controller.impl.messages.{Message, MessageType}
-import model.impl.PlayerNameEnum
-import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 class EndMode extends Mode {
@@ -19,7 +17,4 @@ class EndMode extends Mode {
     List(Message.endGame.text)
   }
 
-  override def getWinnerName: PlayerNameEnum = {
-    PlayerNameEnum.NONE
-  }
 }

@@ -1,7 +1,6 @@
 package controller.impl
 
 import controller.impl.messages.MessageType
-import model.impl.PlayerNameEnum.PlayerNameEnum
 import util.position.Position
 
 trait Mode {
@@ -11,5 +10,4 @@ trait Mode {
 
   def moveTileUndo: List[String]
 
-  def getWinnerName: PlayerNameEnum
 }

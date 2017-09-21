@@ -1,7 +1,6 @@
 package controller.impl
 
 import controller.impl.messages.Message
-import model.impl.PlayerNameEnum
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
 
@@ -20,10 +19,5 @@ class EndModeSpec extends FlatSpec with Matchers {
     val endMode = new EndMode()
     endMode.moveTileUndo should be(List(Message.endGame.text))
   }
-  "getWinnerName" should "get player NONE" in {
-    val endMode = new EndMode()
-    endMode.getWinnerName should be(PlayerNameEnum.NONE)
-  }
-
 
 }

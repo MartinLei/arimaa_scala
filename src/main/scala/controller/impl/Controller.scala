@@ -3,7 +3,6 @@ package controller.impl
 import controller.ControllerTrait
 import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.TurnManager
-import controller.impl.messages.MessageText
 import model.FieldTrait
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position
@@ -42,15 +41,6 @@ class Controller extends ControllerTrait {
 
   override def changePlayer(): List[String] = {
     val changePlayerMessage = mode.changePlayer
-    if (!changePlayerMessage.isValid)
-      return List(changePlayerMessage.text)
-
-    val winnerName = mode.getWinnerName
-    if (!winnerName.equals(PlayerNameEnum.NONE)) {
-      mode = new EndMode()
-      return List(MessageText.doWin(winnerName))
-    }
-
     List(changePlayerMessage.text)
   }
 

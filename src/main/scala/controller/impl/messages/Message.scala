@@ -52,6 +52,10 @@ object Message {
     MessageType(MessageText.noTileMoved, MessageEnum.NO_TILE_MOVED)
   }
 
+  def winPlayer(playerName: PlayerNameEnum): MessageType = {
+    MessageType(MessageText.doWin(playerName), MessageEnum.WIN)
+  }
+
   def endGame: MessageType = {
     MessageType(MessageText.endGame, MessageEnum.END_GAME)
   }
