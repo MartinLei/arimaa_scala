@@ -5,6 +5,8 @@ import controller.impl.mode.ModeEnum.ModeEnum
 import util.position.Position
 
 trait Mode {
+  def getFieldAsString: String
+
   val modeType: ModeEnum
 
   def changePlayer: MessageType

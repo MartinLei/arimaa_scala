@@ -20,7 +20,7 @@ class Controller extends ControllerTrait {
       mode = new GameMode(field, turnManager)
       true
     case ModeEnum.END =>
-      mode = new EndMode
+      mode = new EndMode(field)
       true
     case _ => false
   }
@@ -37,7 +37,7 @@ class Controller extends ControllerTrait {
   }
 
   override def getFieldAsString: String = {
-    field.toString
+    mode.getFieldAsString
   }
 
   override def moveTile(posFrom: Position, posTo: Position): List[String] = {

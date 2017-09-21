@@ -62,4 +62,5 @@ class GameMode(field: FieldTrait, turnManager: TurnManager) extends Mode {
 
   def getActPlayerName: PlayerNameEnum = field.actualPlayerName
 
+  override def getFieldAsString: String = field.toString
 }

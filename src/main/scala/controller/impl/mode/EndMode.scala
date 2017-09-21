@@ -2,9 +2,10 @@ package controller.impl.mode
 
 import controller.impl.messages.{Message, MessageType}
 import controller.impl.mode.ModeEnum.ModeEnum
+import model.FieldTrait
 import util.position.Position
 
-class EndMode extends Mode {
+class EndMode(field: FieldTrait) extends Mode {
   override val modeType: ModeEnum = ModeEnum.END
 
   override def changePlayer: MessageType = {
@@ -19,4 +20,5 @@ class EndMode extends Mode {
     List(Message.endGame.text)
   }
 
+  override def getFieldAsString: String = field.toString
 }
