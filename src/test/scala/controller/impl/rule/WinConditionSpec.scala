@@ -79,7 +79,7 @@ class WinConditionSpec extends FlatSpec with Matchers {
     WinCondition.rabbitOnOtherSide(field) should be(PlayerNameEnum.GOLD)
   }
 
-  "activePlayerCantMove" should "passive player, if active can not move" in {
+  "passivePlayerCantMove" should "active player, if passive can not move" in {
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.CAT, new Position(1, 5)),
       new Tile(TileNameEnum.DOG, new Position(2, 4)),
@@ -91,8 +91,6 @@ class WinConditionSpec extends FlatSpec with Matchers {
     val turnManager = new TurnManager()
     turnManager.addTurn(PlayerNameEnum.GOLD)
     turnManager.doAction(ActionCommand(List(MoveCommand(field, PlayerNameEnum.GOLD, new Position(1, 2), new Position(1, 3)))))
-    field.changePlayer()
-    turnManager.addTurn(PlayerNameEnum.SILVER)
 
     WinCondition.passivePlayerCantMove(field, turnManager) should be(PlayerNameEnum.GOLD)
   }

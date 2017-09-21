@@ -515,7 +515,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(1, 7), new Position(1, 8))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.GOLD)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.GOLD))
   }
   it should "silver win, if a rabbit reach the other side" in {
     val playerGoldTiles = Set(
@@ -527,7 +527,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(1, 1), new Position(1, 2))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.SILVER)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.SILVER))
   }
   it should "actual player win, if both player rabbit reach the other side" in {
     val playerGoldTiles = Set(
@@ -539,7 +539,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(1, 7), new Position(1, 8))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.GOLD)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.GOLD))
   }
 
   "PlayerHasNoRabbit" should "gold win, if silver has no rabbits" in {
@@ -552,7 +552,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(1, 1), new Position(1, 2))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.GOLD)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.GOLD))
   }
   it should "silver win, if gold has no rabbits" in {
     val playerGoldTiles = Set(
@@ -568,7 +568,7 @@ class GameModeSpec extends FlatSpec with Matchers {
         MessageText.doMove(new Position(3, 2), new Position(3, 3)),
         MessageText.doTrap(new Position(3, 3))))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.SILVER)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.SILVER))
   }
 
   "PassivePlayerCantMakeAMove" should "active player win, if passive player cant move any tile" in {
@@ -583,7 +583,7 @@ class GameModeSpec extends FlatSpec with Matchers {
 
     gameMode.moveTile(new Position(1, 2), new Position(1, 3))
 
-    gameMode.getWinnerName should be(PlayerNameEnum.GOLD)
+    gameMode.changePlayer should be(Message.winPlayer(PlayerNameEnum.GOLD))
   }
   "unDo" should "undo last move" in {
     val playerGoldTiles = Set(
