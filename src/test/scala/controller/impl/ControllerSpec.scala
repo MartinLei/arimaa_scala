@@ -1,6 +1,6 @@
 package controller.impl
 
-import controller.impl.messages.{Message, MessageText}
+import controller.impl.messages.MessageText
 import model.impl.{Field, PlayerNameEnum, Tile, TileNameEnum}
 import org.scalatest.{FlatSpec, Matchers}
 import util.position.Position
@@ -25,7 +25,7 @@ class ControllerSpec extends FlatSpec with Matchers {
 
     controller.moveTile(new Position(1, 1), new Position(1, 2))
 
-    controller.changePlayer() should
+    controller.changePlayer should
       be(MessageText.changePlayer(PlayerNameEnum.SILVER))
   }
   it should "set Mode to endMode if message ist win" in {
@@ -42,7 +42,7 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.changePlayer should be(MessageText.doWin(PlayerNameEnum.GOLD))
 
     controller.getMode should be(ModeEnum.END)
-    controller.moveTile(new Position(1, 8), new Position(2, 8)) should be(Message.endGame)
+    controller.moveTile(new Position(1, 8), new Position(2, 8)) should be(List(MessageText.endGame))
   }
 
 
