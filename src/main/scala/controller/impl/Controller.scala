@@ -41,6 +41,7 @@ class Controller extends ControllerTrait {
 
   override def changePlayer(): List[String] = {
     val changePlayerMessage = mode.changePlayer
+
     List(changePlayerMessage.text)
   }
 
