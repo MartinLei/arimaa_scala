@@ -1,7 +1,7 @@
-package controller.impl
+package controller.impl.mode
 
-import controller.impl.ModeEnum.ModeEnum
 import controller.impl.messages.{Message, MessageType}
+import controller.impl.mode.ModeEnum.ModeEnum
 import util.position.Position
 
 class EndMode extends Mode {

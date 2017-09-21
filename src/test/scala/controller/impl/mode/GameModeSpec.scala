@@ -1,5 +1,4 @@
-package controller.impl
-
+package controller.impl.mode
 
 import controller.impl.command.TurnManager
 import controller.impl.messages.{Message, MessageText}

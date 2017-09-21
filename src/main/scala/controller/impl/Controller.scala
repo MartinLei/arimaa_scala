@@ -1,9 +1,10 @@
 package controller.impl
 
 import controller.ControllerTrait
-import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.TurnManager
 import controller.impl.messages.MessageEnum
+import controller.impl.mode.ModeEnum.ModeEnum
+import controller.impl.mode.{EndMode, GameMode, Mode, ModeEnum}
 import model.FieldTrait
 import model.impl.{Field, PlayerNameEnum}
 import util.position.Position

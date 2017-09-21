@@ -1,4 +1,4 @@
-package controller.impl
+package controller.impl.mode
 
 import controller.impl.messages.Message
 import org.scalatest.{FlatSpec, Matchers}

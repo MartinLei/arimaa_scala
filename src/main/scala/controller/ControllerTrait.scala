@@ -1,6 +1,6 @@
 package controller
 
-import controller.impl.ModeEnum.ModeEnum
+import controller.impl.mode.ModeEnum.ModeEnum
 import model.FieldTrait
 import util.position.Position
 

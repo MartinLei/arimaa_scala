@@ -1,4 +1,4 @@
-package controller.impl
+package controller.impl.mode
 
 object ModeEnum extends Enumeration {
   type ModeEnum = Value

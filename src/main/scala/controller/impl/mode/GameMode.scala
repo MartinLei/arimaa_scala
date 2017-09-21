@@ -1,9 +1,9 @@
-package controller.impl
+package controller.impl.mode
 
-import controller.impl.ModeEnum.ModeEnum
 import controller.impl.command.impl.{MoveCommand, PullCommand, PushCommand}
 import controller.impl.command.{ActionCommand, CommandTrait, TurnManager}
 import controller.impl.messages.{Message, MessageEnum, MessageType}
+import controller.impl.mode.ModeEnum.ModeEnum
 import controller.impl.rule.RuleBook
 import model.FieldTrait
 import model.impl.PlayerNameEnum

@@ -1,7 +1,7 @@
-package controller.impl
+package controller.impl.mode
 
-import controller.impl.ModeEnum.ModeEnum
 import controller.impl.messages.MessageType
+import controller.impl.mode.ModeEnum.ModeEnum
 import util.position.Position
 
 trait Mode {
