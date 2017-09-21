@@ -10,11 +10,32 @@ class GameModeSpec extends FlatSpec with Matchers {
 
 
   "A gameMode" should "give the tile on the given position" in {
-    val gameMode = new GameMode(new Field(), new TurnManager(PlayerNameEnum.GOLD))
+    val playerGoldTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
+    val playerSilverTiles = Set(
+      new Tile(TileNameEnum.RABBIT, new Position(1, 8)))
+    val field = new Field(playerGoldTiles, playerSilverTiles)
+
+    val gameMode = new GameMode(field, new TurnManager(PlayerNameEnum.GOLD))
     gameMode.getTileName(PlayerNameEnum.GOLD, new Position(1, 1)) should be(TileNameEnum.RABBIT)
     gameMode.getTileName(PlayerNameEnum.SILVER, new Position(1, 1)) should be(TileNameEnum.NONE)
 
     gameMode.modeType should be(ModeEnum.GAME)
+
+    val fieldString: String = "\n" +
+      "  +-----------------+\n" +
+      "8 | r               |\n" +
+      "7 |                 |\n" +
+      "6 |     X     X     |\n" +
+      "5 |                 |\n" +
+      "4 |                 |\n" +
+      "3 |     X     X     |\n" +
+      "2 |                 |\n" +
+      "1 | R               |\n" +
+      "  +-----------------+\n" +
+      "    a b c d e f g h  \n"
+
+    gameMode.getFieldAsString should be(fieldString)
   }
   it should "have a constructor to can set specific tiles" in {
     val playerGoldTiles = Set(

@@ -16,19 +16,6 @@ class ControllerSpec extends FlatSpec with Matchers {
   }
 
   "getFieldAsString" should "get the actual filed as string" in {
-    val fieldString: String = "\n" +
-      "  +-----------------+\n" +
-      "8 |                 |\n" +
-      "7 |                 |\n" +
-      "6 |     X     X     |\n" +
-      "5 |                 |\n" +
-      "4 |                 |\n" +
-      "3 |     X     X     |\n" +
-      "2 | R               |\n" +
-      "1 |                 |\n" +
-      "  +-----------------+\n" +
-      "    a b c d e f g h  \n"
-
     val playerGoldTiles = Set(
       new Tile(TileNameEnum.RABBIT, new Position(1, 1)))
     val playerSilverTiles = Set(
@@ -38,6 +25,19 @@ class ControllerSpec extends FlatSpec with Matchers {
     controller.setMode(ModeEnum.GAME, field)
 
     controller.moveTile(new Position(1, 1), new Position(1, 2))
+
+    val fieldString: String = "\n" +
+      "  +-----------------+\n" +
+      "8 |               r |\n" +
+      "7 |                 |\n" +
+      "6 |     X     X     |\n" +
+      "5 |                 |\n" +
+      "4 |                 |\n" +
+      "3 |     X     X     |\n" +
+      "2 | R               |\n" +
+      "1 |                 |\n" +
+      "  +-----------------+\n" +
+      "    a b c d e f g h  \n"
 
     controller.getFieldAsString should be(fieldString)
   }
