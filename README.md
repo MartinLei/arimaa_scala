@@ -16,11 +16,12 @@ For future licences of the game itself, look up at [Arimaa](http://arimaa.com/).
 ## inf
 - get list of moves
 - start change tile mode
-- victory mode
+
 ## rules
 - coordinate should only be one tile distance
 - 4 steps per round (player)
-
+- victory
+    - Check if the only moves player B has are 3rd time repetitions. If so player A wins.
 ## bug
 
  
